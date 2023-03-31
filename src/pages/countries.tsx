@@ -8,9 +8,12 @@ import Header from "../components/Header";
 import arrow from "../assets/img/arrow.svg";
 import photo from "../assets/img/countries/photo.png";
 import cardphotosm from "../assets/img/countries/cardphoto.png";
+import { countriesApi } from "../store/services/countriesService";
 
 const Countries = () => {
   const [active, setActive] = useState(false);
+
+  const { data } = countriesApi.useGetAllCountriesQuery("");
 
   useEffect(() => {
     setTimeout(() => {
@@ -63,14 +66,14 @@ const Countries = () => {
         {/* cards  */}
         <div className="mb-20">
           <Container border>
-            <h2 className="mb-4 font-medium text-title text-2xl">Популярное</h2>
+            <h2 className="mb-4 font-medium text-title text-2xl">Страны</h2>
             <div className="flex justify-between">
-              {[1, 2, 3, 4, 5].map((item, index) => {
+              {data?.map((item) => {
                 return (
                   <Card
-                    size="sm"
-                    img={cardphotosm}
-                    title="Япония"
+                    size="xs"
+                    img={item.image}
+                    title={item.name}
                     subtitle="1247 экспонатов"
                   />
                 );

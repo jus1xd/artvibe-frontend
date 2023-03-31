@@ -73,14 +73,14 @@ const Start = () => {
             {/* text  */}
             <div className="w-[60%]">
               <h1 className="text-title w-full text-6xl font-bold">
-                Artvibe - выставки для любителей искусства древнего рима
+                Artvibe - выставки для любителей искусства всех времен
               </h1>
-              <p className="mt-7 text-link text-lg w-2/3">
+              <p className="mt-10 text-link text-lg w-2/3">
                 Каждая из выставок представляет широкий спектр художественных
                 произведений, включая живопись, скульптуру, фотографию, графику
                 и многое другое
               </p>
-              <div className="mt-[5%]">
+              <div className="mt-[7%]">
                 <NavLink className="relative z-20" to={"/show"}>
                   <Button text="Смотреть" type="primary" size="md" />
                 </NavLink>

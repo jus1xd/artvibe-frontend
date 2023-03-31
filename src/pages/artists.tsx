@@ -7,13 +7,17 @@ import arrow from "../assets/img/arrow.svg";
 import photo from "../assets/img/artists/photo.png";
 import cardphoto from "../assets/img/artists/cardphoto.png";
 import Button from "../components/Button";
+import { authorsApi } from "../store/services/authorService";
 
 const Artists = () => {
   const [active, setActive] = useState(false);
 
+  const { data } = authorsApi.useGetAllAuthorsQuery("");
+
   useEffect(() => {
-    setTimeout(() => {
+    setTimeout(async () => {
       setActive(true);
+      
     }, 300);
   }, []);
 
@@ -64,16 +68,19 @@ const Artists = () => {
           <Container border>
             <h2 className="mb-4 font-medium text-title text-2xl">Художники</h2>
             <div className="flex justify-between flex-wrap">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((item) => {
-                return (
-                  <Card
-                    size="sm"
-                    img={cardphoto}
-                    title="Эдуард Мане"
-                    subtitle="477 экспонатов"
-                  />
-                );
-              })}
+              {data?.map(
+                (item) => {
+                  return (
+                    <Card
+                      size="sm"
+                      img={item.image ? `http://localhost:5003/${item.image}` : cardphoto}
+                      title={item.fullname}
+                      subtitle="477 экспонатов"
+                      key={item.fullname}
+                    />
+                  );
+                }
+              )}
             </div>
           </Container>
         </div>
