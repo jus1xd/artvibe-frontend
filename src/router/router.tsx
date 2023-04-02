@@ -13,6 +13,10 @@ import NotFoundPage from "../pages/notfound";
 import Register from "../pages/register";
 import Show from "../pages/show";
 import Start from "../pages/start";
+import Picture from "../pages/picture";
+import Artist from "../pages/artist";
+import Country from "../pages/country";
+import Colors from "../pages/colors";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +42,22 @@ export const router = createBrowserRouter([
   {
     path: "/contacts",
     element: <Contacts />,
+  },
+  {
+    path: "/picture/:id",
+    element: <Picture />,
+  },
+  {
+    path: "/artist/:id",
+    element: <Artist />,
+  },
+  {
+    path: "/show/colors",
+    element: <Colors />,
+  },
+  {
+    path: "/country/:id",
+    element: <Country />,
   },
   {
     path: "/login",

@@ -96,11 +96,13 @@ const Show = () => {
           <Container border>
             <h2 className="mb-4 font-medium text-title text-2xl">Новинки</h2>
             <div className="flex justify-between">
-              {data?.map((item, index) => {
+              {data?.slice(-5)?.map((item, index) => {
                 return (
                   <Card
                     size="sm"
+                    key={item._id}
                     img={item.image}
+                    link={`/picture/${item._id}`}
                     title={item.title}
                     subtitle={item.author}
                   />

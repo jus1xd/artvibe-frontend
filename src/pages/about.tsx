@@ -12,9 +12,12 @@ import pic2 from "../assets/img/about/pic2.svg";
 import pic3 from "../assets/img/about/pic3.svg";
 
 import cardphotosm from "../assets/img/popular.png";
+import { picturesApi } from "../store/services/pictureService";
 
 const About = () => {
   const [active, setActive] = useState(false);
+
+  const { data } = picturesApi.useGetAllPicturesQuery("");
 
   useEffect(() => {
     setTimeout(() => {
@@ -50,11 +53,7 @@ const About = () => {
                   смогли насладиться ими вместе с нами
                 </p>
                 <div className="mt-[5%]">
-                  <Button
-                    text="Наши цели"
-                    type="primary"
-                    size="md"
-                  />
+                  <Button text="Наши цели" type="primary" size="md" />
                 </div>
               </div>
               {/* image  */}
@@ -153,15 +152,17 @@ const About = () => {
         {/* cards  */}
         <div className="mb-20">
           <Container border>
-            <h2 className="mb-4 font-medium text-title text-2xl">Популярное</h2>
+            <h2 className="mb-4 font-medium text-title text-2xl">Новинки</h2>
             <div className="flex justify-between">
-              {[1, 2, 3, 4, 5].map((item, index) => {
+              {data?.slice(-5)?.map((item, index) => {
                 return (
                   <Card
                     size="sm"
-                    img={cardphotosm}
-                    title="Чинкве-Терре"
-                    subtitle="1247 экспонатов"
+                    key={item._id}
+                    img={item.image}
+                    link={`/picture/${item._id}`}
+                    title={item.title}
+                    subtitle={item.author}
                   />
                 );
               })}

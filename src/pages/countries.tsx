@@ -8,11 +8,13 @@ import Header from "../components/Header";
 import arrow from "../assets/img/arrow.svg";
 import photo from "../assets/img/countries/photo.png";
 import { countriesApi } from "../store/services/countriesService";
+import { authorsApi } from "../store/services/authorService";
+import { picturesApi } from "../store/services/pictureService";
 
 const Countries = () => {
   const [active, setActive] = useState(false);
 
-  const { data } = countriesApi.useGetAllCountriesQuery("");
+  const countries = countriesApi.useGetAllCountriesQuery("");
 
   useEffect(() => {
     setTimeout(() => {
@@ -66,14 +68,16 @@ const Countries = () => {
         <div className="mb-20">
           <Container border>
             <h2 className="mb-4 font-medium text-title text-2xl">Страны</h2>
-            <div className="flex justify-between">
-              {data?.map((item) => {
+            <div className="flex flex-wrap">
+              {countries?.data?.map((item) => {
                 return (
                   <Card
+                    useMargin
                     size="xs"
                     img={item.image}
                     title={item.name}
-                    subtitle="1247 экспонатов"
+                    link={`/country/${item._id}`}
+                    subtitle=""
                   />
                 );
               })}

@@ -145,7 +145,7 @@ const CreateCard: React.FC<TProps> = ({ model }) => {
           />
           <label
             htmlFor="fileLoader"
-            className="px-3 w-full cursor-pointer py-1 mb-2 outline-accent rounded-md border border-accent"
+            className="px-3 w-full cursor-pointer py-1 mb-2 outline-accent rounded-md border border-accent opacity-80 transition hover:opacity-100"
           >
             <input
               type="file"
@@ -196,7 +196,7 @@ const CreateCard: React.FC<TProps> = ({ model }) => {
           />
           <label
             htmlFor="fileLoader2"
-            className="px-3 w-full cursor-pointer py-1 mb-2 outline-accent rounded-md border border-accent"
+            className="px-3 w-full cursor-pointer py-1 mb-2 outline-accent rounded-md border border-accent opacity-80 transition hover:opacity-100"
           >
             <input
               type="file"
@@ -224,7 +224,7 @@ const CreateCard: React.FC<TProps> = ({ model }) => {
           />
           <label
             htmlFor="fileLoader3"
-            className="px-3 w-full cursor-pointer py-1 mb-2 outline-accent rounded-md border border-accent"
+            className="px-3 w-full cursor-pointer py-1 mb-2 outline-accent rounded-md border border-accent opacity-80 transition hover:opacity-100"
           >
             <input
               type="file"
@@ -285,7 +285,7 @@ const CreateCard: React.FC<TProps> = ({ model }) => {
         </div>
       ) : null}
       <div
-        className="w-full mt-2 bg-accent text-white rounded cursor-pointer text-center py-1 px-4"
+        className="w-full mt-2 bg-accent text-white rounded cursor-pointer text-center py-1 px-4 opacity-80 transition hover:opacity-100"
         onClick={submitHandler}
       >
         Создать

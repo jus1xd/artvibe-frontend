@@ -8,16 +8,17 @@ import photo from "../assets/img/artists/photo.png";
 import cardphoto from "../assets/img/artists/cardphoto.png";
 import Button from "../components/Button";
 import { authorsApi } from "../store/services/authorService";
+import { picturesApi } from "../store/services/pictureService";
 
 const Artists = () => {
   const [active, setActive] = useState(false);
 
   const { data } = authorsApi.useGetAllAuthorsQuery("");
+  const dataPictures = picturesApi.useGetAllPicturesQuery("");
 
   useEffect(() => {
     setTimeout(async () => {
       setActive(true);
-      
     }, 300);
   }, []);
 
@@ -68,19 +69,24 @@ const Artists = () => {
           <Container border>
             <h2 className="mb-4 font-medium text-title text-2xl">Художники</h2>
             <div className="flex justify-between flex-wrap">
-              {data?.map(
-                (item) => {
-                  return (
-                    <Card
-                      size="sm"
-                      img={item.image ? `http://localhost:5003/${item.image}` : cardphoto}
-                      title={item.fullname}
-                      subtitle="477 экспонатов"
-                      key={item.fullname}
-                    />
-                  );
-                }
-              )}
+              {data?.map((item) => {
+                return (
+                  <Card
+                    size="sm"
+                    // @ts-ignore
+                    img={item.image}
+                    title={item.fullname}
+                    link={`/artist/${item._id}`}
+                    // @ts-ignore
+                    subtitle={`${
+                      dataPictures?.data?.filter(
+                        (el) => el.author === item.fullname
+                      ).length
+                    } экспонатов`}
+                    key={item.fullname}
+                  />
+                );
+              })}
             </div>
           </Container>
         </div>

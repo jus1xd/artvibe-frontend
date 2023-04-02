@@ -9,9 +9,12 @@ import cardphotosm from "../assets/img/popular.png";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import { NavLink } from "react-router-dom";
+import { picturesApi } from "../store/services/pictureService";
 
 const Contacts = () => {
   const [active, setActive] = useState(false);
+
+  const { data } = picturesApi.useGetAllPicturesQuery("");
 
   useEffect(() => {
     setTimeout(() => {
@@ -47,7 +50,10 @@ const Contacts = () => {
                   группу в Вконтакте.
                 </p>
                 <div className="mt-[5%]">
-                  <NavLink to={"https://vk.com/im?media=&sel=-219450777"} target="_blank"> 
+                  <NavLink
+                    to={"https://vk.com/im?media=&sel=-219450777"}
+                    target="_blank"
+                  >
                     <Button
                       text="Написать в ВКонтакте"
                       type="primary"
@@ -73,18 +79,23 @@ const Contacts = () => {
         {/* cards  */}
         <div className="mb-20">
           <Container border>
-            <h2 className="mb-4 font-medium text-title text-2xl">Популярное</h2>
+            <h2 className="mb-4 font-medium text-title text-2xl">Новинки</h2>
             <div className="flex justify-between">
-              {[1, 2, 3, 4, 5].map((item, index) => {
-                return (
-                  <Card
-                    size="sm"
-                    img={cardphotosm}
-                    title="Чинкве-Терре"
-                    subtitle="1247 экспонатов"
-                  />
-                );
-              })}
+              {
+                // @ts-ignore
+                data?.slice(-5)?.map((item, index) => {
+                  return (
+                    <Card
+                      size="sm"
+                      key={item._id}
+                      img={item.image}
+                      link={`/picture/${item._id}`}
+                      title={item.title}
+                      subtitle={item.author}
+                    />
+                  );
+                })
+              }
             </div>
           </Container>
         </div>

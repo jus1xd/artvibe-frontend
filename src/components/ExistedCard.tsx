@@ -38,7 +38,15 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
     <div className="w-[calc(25%-10px)] min-w-[150px] h-max relative mr-[10px] mb-3 p-3 bg-white z-20 border border-inputBorder rounded-lg">
       {model === "author" ? (
         <div className="flex flex-col ">
-          <div className="font-bold mb-1">{data.fullname}</div>
+          <div className="mb-1">
+            <input
+              type="text"
+              disabled
+              value={data.fullname}
+              placeholder="Имя"
+              className="px-3 w-full py-1 outline-none rounded-md bg-[#D7D7D7]"
+            />
+          </div>
           <div className="max-h-[200px] overflow-hidden flex items-center rounded-md mb-2">
             <img
               src={`http://localhost:5003/${data.image}`}
@@ -53,7 +61,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
               disabled
               value={data.birthdate}
               placeholder="Дата рождения"
-              className="px-3 w-full py-1 outline-none rounded-md border border-inputBorder"
+              className="px-3 w-full py-1 outline-none rounded-md bg-[#D7D7D7]"
             />
           </div>
           <div className="mb-1">
@@ -61,9 +69,9 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
             <input
               type="text"
               disabled
-              value={data.birthdate}
+              value={data.deathdate}
               placeholder="Дата смерти"
-              className="px-3 w-full py-1 outline-none rounded-md border border-inputBorder"
+              className="px-3 w-full py-1 outline-none rounded-md bg-[#D7D7D7]"
             />
           </div>
           <div className="mb-1">
@@ -73,43 +81,53 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
               disabled
               value={data.country}
               placeholder="Страна"
-              className="px-3 w-full py-1 outline-none rounded-md border border-inputBorder"
+              className="px-3 w-full py-1 outline-none rounded-md bg-[#D7D7D7]"
             />
           </div>
         </div>
       ) : model === "picture" ? (
         <div className="flex flex-col">
-          <div className="font-bold mb-1">{data.title}</div>
-          <div className="max-h-[200px] overflow-hidden flex items-center rounded-md mb-2">
+          <input
+            type="text"
+            required
+            disabled
+            value={data.title}
+            placeholder="Цвет"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
+          />
+          <div className="h-[150px] bg-[#D7D7D7] overflow-hidden flex items-center rounded-md mb-2">
             <img
               src={`http://localhost:5003/${data.image}`}
-              className="relative z-0"
+              className="relative z-0 rounded-md object-cover h-auto w-full"
               alt=""
             />
           </div>
+          <span className="text-sm mb-1">Цвет</span>
           <input
             type="text"
             required
             disabled
             value={data.color}
             placeholder="Цвет"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
           />
+          <span className="text-sm mb-1">Год написания</span>
           <input
             type="text"
             required
             disabled
             value={data.year}
             placeholder="Год написания"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
           />
+          <span className="text-sm mb-1">Автор</span>
           <input
             type="text"
             required
             disabled
             value={data.author}
             placeholder="Автор"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
           />
         </div>
       ) : model === "country" ? (
@@ -125,50 +143,55 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
         </div>
       ) : model === "user" ? (
         <div className="flex flex-col">
+          <span className="text-sm mb-1">Имя пользователя</span>
           <input
             type="text"
             required
             disabled
             value={data.username}
             placeholder="Имя"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
           />
+          <span className="text-sm mb-1">Имя</span>
           <input
             type="text"
             required
             disabled
             value={data.name}
             placeholder="Имя"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
           />
+          <span className="text-sm mb-1">Почта</span>
           <input
             type="text"
             required
             disabled
             value={data.email}
             placeholder="Почта"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
           />
+          <span className="text-sm mb-1">Роль</span>
           <input
             type="text"
             required
             disabled
             value={data.role}
             placeholder="Роль"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
           />
+          <span className="text-sm mb-1">Пароль</span>
           <input
             type="password"
             required
             disabled
             value={data.password}
-            placeholder="Роль"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+            placeholder="Пароль"
+            className="px-3 w-full py-1 mb-2 bg-[#D7D7D7] outline-none rounded-md"
           />
         </div>
       ) : null}
       <div
-        className="w-full mt-2 bg-red text-white rounded cursor-pointer text-center py-1 px-4"
+        className="w-full mt-2 bg-red text-white rounded cursor-pointer text-center py-1 px-4 opacity-80 transition hover:opacity-100"
         onClick={() => deleteHandler()}
       >
         Удалить

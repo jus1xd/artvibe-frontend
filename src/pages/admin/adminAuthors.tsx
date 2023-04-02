@@ -9,9 +9,13 @@ import { authorsApi } from "../../store/services/authorService";
 const AdminAuthors = () => {
   const { data } = authorsApi.useGetAllAuthorsQuery("");
 
-  useEffect(() => {
-    // authorsApi.endpoints.getAllAuthors.initiate('');
-  }, [data]);
+  function reverseEz(arr: any) {
+    let newData = [];
+    for (let i = arr.length - 1; i >= 0; i--) {
+      newData.push(arr[i]);
+    }
+    return newData;
+  }
 
   return (
     <>
@@ -29,9 +33,18 @@ const AdminAuthors = () => {
               </div>
               <div className="w-[80%] flex flex-wrap justify-start">
                 <CreateCard model="author" />
-                {data?.map((author) => (
-                  <ExistedCard model="author" data={author} key={author._id} />
-                ))}
+                {
+                  // @ts-ignore
+                  data?.length > 0
+                    ? reverseEz(data)?.map((author) => (
+                        <ExistedCard
+                          model="author"
+                          data={author}
+                          key={author._id}
+                        />
+                      ))
+                    : null
+                }
               </div>
             </div>
           </Container>
