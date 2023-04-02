@@ -1,6 +1,5 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IAuthor } from "../../models/IAuthor";
 import { IPicture } from "../../models/IPicture";
 
 export const picturesApi = createApi({

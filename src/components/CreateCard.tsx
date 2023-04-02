@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import ts from "typescript";
-import { IAuthor } from "../models/IAuthor";
+import React, { useState } from "react";
 import { authorsApi } from "../store/services/authorService";
+import { authApi } from "../store/services/authService";
 import { countriesApi } from "../store/services/countriesService";
 import { picturesApi } from "../store/services/pictureService";
 
@@ -28,6 +27,13 @@ const CreateCard: React.FC<TProps> = ({ model }) => {
   const [countryName, setCountryName] = useState<string>("");
   const [imageCountry, setImageCountry] = useState<File | null>(null);
 
+  // состояние для пользователей
+  const [name, setName] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [role, setRole] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
   const clearValues = () => {
     setFullname("");
     setBirthdate("");
@@ -41,11 +47,18 @@ const CreateCard: React.FC<TProps> = ({ model }) => {
     setImagePicture(null);
     setImageCountry(null);
     setImage(null);
+    // users
+    setName("");
+    setUsername("");
+    setEmail("");
+    setRole("");
+    setPassword("");
   };
 
-  const [createAuthor, {}] = authorsApi.useCreateAuthorMutation();
-  const [createPicture, {}] = picturesApi.useCreatePictureMutation();
-  const [createCountry, {}] = countriesApi.useCreateCountryMutation();
+  const [createAuthor] = authorsApi.useCreateAuthorMutation();
+  const [createPicture] = picturesApi.useCreatePictureMutation();
+  const [createCountry] = countriesApi.useCreateCountryMutation();
+  const [createUser] = authApi.useCreateUserMutation();
 
   const submitHandler = () => {
     switch (model) {
@@ -79,13 +92,24 @@ const CreateCard: React.FC<TProps> = ({ model }) => {
         createCountry(countryData).unwrap();
         clearValues();
         break;
+      case "user":
+        const userData = new FormData();
+        userData.append("name", name);
+        userData.append("username", username);
+        userData.append("email", email);
+        userData.append("role", role);
+        userData.append("password", password);
+        // @ts-ignore
+        createUser(userData).unwrap();
+        clearValues();
+        break;
       default:
         break;
     }
   };
 
   return (
-    <div className="w-[calc(25%-10px)] h-max mr-[10px] mb-3 p-3 border border-inputBorder rounded-lg">
+    <div className="w-[calc(25%-10px)] min-w-[150px] h-max mr-[10px] mb-3 p-3 bg-white border border-inputBorder rounded-lg">
       {model === "author" ? (
         <div className="flex flex-col">
           <input
@@ -215,6 +239,49 @@ const CreateCard: React.FC<TProps> = ({ model }) => {
             />
             <span className="text-accent cursor-pointer">Загрузить файл</span>
           </label>
+        </div>
+      ) : model === "user" ? (
+        <div className="flex flex-col">
+          <input
+            type="text"
+            required
+            placeholder="Имя"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+          />
+          <input
+            type="text"
+            required
+            placeholder="Имя пользователя"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+          />
+          <input
+            type="text"
+            required
+            placeholder="Почта"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+          />
+          <input
+            type="text"
+            required
+            placeholder="Роль"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+          />
+          <input
+            type="password"
+            required
+            placeholder="Пароль"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+          />
         </div>
       ) : null}
       <div

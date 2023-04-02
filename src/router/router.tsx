@@ -4,6 +4,7 @@ import About from "../pages/about";
 import AdminAuthors from "../pages/admin/adminAuthors";
 import AdminCountries from "../pages/admin/adminCountries";
 import AdminPictures from "../pages/admin/adminPictures";
+import AdminUsers from "../pages/admin/adminUsers";
 import Artists from "../pages/artists";
 import Contacts from "../pages/contacts";
 import Countries from "../pages/countries";
@@ -40,30 +41,62 @@ export const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <ProtectedRoute authSecure>
+        <Login />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/register",
-    element: <Register />,
+    element: (
+      <ProtectedRoute authSecure>
+        <Register />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin",
-    element: <AdminAuthors />,
+    element: (
+      <ProtectedRoute>
+        <AdminAuthors />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/artists",
-    element: <AdminAuthors />,
+    element: (
+      <ProtectedRoute>
+        <AdminAuthors />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/pictures",
-    element: <AdminPictures />,
+    element: (
+      <ProtectedRoute>
+        <AdminPictures />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/countries",
-    element: <AdminCountries />,
+    element: (
+      <ProtectedRoute>
+        <AdminCountries />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/users",
+    element: (
+      <ProtectedRoute>
+        <AdminUsers />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "*",
     element: <NotFoundPage />,
-  }
+  },
 ]);

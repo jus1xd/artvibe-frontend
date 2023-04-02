@@ -7,7 +7,6 @@ import Header from "../components/Header";
 
 import arrow from "../assets/img/arrow.svg";
 import photo from "../assets/img/countries/photo.png";
-import cardphotosm from "../assets/img/countries/cardphoto.png";
 import { countriesApi } from "../store/services/countriesService";
 
 const Countries = () => {

@@ -5,13 +5,19 @@ import Header from "../components/Header";
 import arrow from "../assets/img/arrow.svg";
 import photo from "../assets/img/show/photo.png";
 import cardphoto from "../assets/img/cardphoto.png";
+import cardphoto1 from "../assets/img/cardphoto1.png";
 import cardphotosm from "../assets/img/artists/cardphoto.png";
 import Button from "../components/Button";
 
 import Card from "../components/Card";
+import { NavLink } from "react-router-dom";
+import { picturesApi } from "../store/services/pictureService";
 
 const Show = () => {
   const [active, setActive] = useState(false);
+
+  const { data } = picturesApi.useGetAllPicturesQuery("");
+
 
   useEffect(() => {
     setTimeout(() => {
@@ -72,13 +78,15 @@ const Show = () => {
                 size="lg"
                 img={cardphoto}
                 title="Время"
+                link="/show/timeline"
                 subtitle="От доисторических артефактов до современных работ"
               />
               <Card
                 size="lg"
-                img={cardphoto}
-                title="Время"
-                subtitle="От доисторических артефактов до современных работ"
+                img={cardphoto1}
+                title="Цвета"
+                link="/show/colors"
+                subtitle="Ориентируйтесь среди экспонатов по цветам."
               />
             </div>
           </Container>
@@ -86,15 +94,15 @@ const Show = () => {
         {/* cards  */}
         <div className="mb-20">
           <Container border>
-            <h2 className="mb-4 font-medium text-title text-2xl">Популярное</h2>
+            <h2 className="mb-4 font-medium text-title text-2xl">Новинки</h2>
             <div className="flex justify-between">
-              {[1, 2, 3, 4, 5].map((item, index) => {
+              {data?.map((item, index) => {
                 return (
                   <Card
                     size="sm"
-                    img={cardphotosm}
-                    title="Время"
-                    subtitle="От доисторических артефактов до современных работ"
+                    img={item.image}
+                    title={item.title}
+                    subtitle={item.author}
                   />
                 );
               })}

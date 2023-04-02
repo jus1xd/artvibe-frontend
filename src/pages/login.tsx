@@ -4,15 +4,45 @@ import loginbg from "../assets/img/auth/loginbg.svg";
 import Container from "../components/Container";
 
 import logo from "../assets/img/logoLight.svg";
-import Button from "../components/Button";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import Input from "../components/Input";
+import { useActions } from "../hooks/actions";
+import { authApi } from "../store/services/authService";
 
 const Login = () => {
-  const [remember, setRemember] = useState<string>("nonchecked");
+  const [remember, setRemember] = useState<boolean>(false);
+
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const navigate = useNavigate();
+
+  const [loginUser, { data, error }] = authApi.useLoginUserMutation();
+  const { login } = useActions();
+
+  const loginHandler = () => {
+    // @ts-ignore
+    loginUser({
+      email,
+      password,
+    });
+  };
 
   useEffect(() => {
-    // console.log(remember + " запомнить меня");
-  }, [remember]);
+    if (data) {
+      // @ts-ignore
+      login(data);
+      navigate("/show");
+    }
+  });
+
+  useEffect(() => {
+    if (error) {
+      // @ts-ignore
+      setErrorMessage(error.data.message);
+    }
+  }, [error]);
 
   return (
     <>
@@ -29,27 +59,30 @@ const Login = () => {
                     <img className="w-max mr-auto" src={logo} alt="" />
                   </div>
                   <div className="relative z-50 w-full h-1/2 bg-white rounded-md p-5 shadow-md">
-                    <div className="text-title font-medium mt-5 mb-5 text-xl">
+                    <div className="text-title font-medium mt-3 mb-5 text-xl">
                       Войти в аккаунт
                     </div>
                     <div className="flex flex-col mb-4">
                       <div className="text-sm text-[#222222] mb-2 text-[#22222290]">
                         Почта
                       </div>
-                      <input
-                        className="outline-none px-[15px] py-2 border border-inputBorder rounded-md"
-                        type="text"
+                      <Input
+                        type="auth"
+                        value={email}
                         placeholder="d1xys@bk.ru"
+                        setValue={setEmail}
                       />
                     </div>
                     <div className="flex flex-col">
                       <div className="text-sm text-[#222222] mb-2 text-[#22222290]">
                         Пароль
                       </div>
-                      <input
-                        className="outline-none px-[15px] py-2 border border-inputBorder rounded-md"
-                        type="password"
-                        placeholder="Введите пароль.."
+                      <Input
+                        type="auth"
+                        hidden
+                        value={password}
+                        placeholder="Пароль"
+                        setValue={setPassword}
                       />
                     </div>
                     {/* write custom checkbox here  */}
@@ -57,11 +90,7 @@ const Login = () => {
                       <div className="checkbox_wrapper">
                         <input
                           onClick={() => {
-                            if (remember === "nonchecked") {
-                              setRemember("checked");
-                            } else {
-                              setRemember("nonchecked");
-                            }
+                            setRemember(!remember);
                           }}
                           type="checkbox"
                           id="checkbox"
@@ -75,8 +104,13 @@ const Login = () => {
                         </label>
                       </div>
                     </div>
-                    <div className="mt-5">
-                      <div className="py-2 cursor-pointer bg-accent text-white rounded-md text-center font-medium transition duration-300 hover:opacity-80">
+                    {/* error message here  */}
+                    <div className="text-redpal-500 mt-2 min-h-[25px]">{errorMessage}</div>
+                    <div className="mt-2">
+                      <div
+                        onClick={loginHandler}
+                        className="py-2 cursor-pointer bg-accent text-white rounded-md text-center font-medium transition duration-300 hover:opacity-80"
+                      >
                         Войти
                       </div>
                     </div>

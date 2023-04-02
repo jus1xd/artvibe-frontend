@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { authorsApi } from "../store/services/authorService";
+import { authApi } from "../store/services/authService";
 import { countriesApi } from "../store/services/countriesService";
 import { picturesApi } from "../store/services/pictureService";
 
@@ -9,9 +10,10 @@ type TProps = {
 };
 
 const ExistedCard: React.FC<TProps> = ({ model, data }) => {
-  const [deleteAuthor, {}] = authorsApi.useDeleteAuthorMutation();
-  const [deletePicture, {}] = picturesApi.useDeletePictureMutation();
-  const [deleteCountry, {}] = countriesApi.useDeleteCountryMutation();
+  const [deleteAuthor] = authorsApi.useDeleteAuthorMutation();
+  const [deletePicture] = picturesApi.useDeletePictureMutation();
+  const [deleteCountry] = countriesApi.useDeleteCountryMutation();
+  const [deleteUser] = authApi.useDeleteUserMutation();
 
   const deleteHandler = () => {
     switch (model) {
@@ -24,13 +26,16 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
       case "country":
         deleteCountry(data._id);
         break;
+      case "user":
+        deleteUser(data._id);
+        break;
       default:
         break;
     }
   };
 
   return (
-    <div className="w-[calc(25%-10px)] h-max relative mr-[10px] mb-3 p-3 border border-inputBorder rounded-lg">
+    <div className="w-[calc(25%-10px)] min-w-[150px] h-max relative mr-[10px] mb-3 p-3 bg-white z-20 border border-inputBorder rounded-lg">
       {model === "author" ? (
         <div className="flex flex-col ">
           <div className="font-bold mb-1">{data.fullname}</div>
@@ -117,6 +122,49 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
               alt=""
             />
           </div>
+        </div>
+      ) : model === "user" ? (
+        <div className="flex flex-col">
+          <input
+            type="text"
+            required
+            disabled
+            value={data.username}
+            placeholder="Имя"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+          />
+          <input
+            type="text"
+            required
+            disabled
+            value={data.name}
+            placeholder="Имя"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+          />
+          <input
+            type="text"
+            required
+            disabled
+            value={data.email}
+            placeholder="Почта"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+          />
+          <input
+            type="text"
+            required
+            disabled
+            value={data.role}
+            placeholder="Роль"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+          />
+          <input
+            type="password"
+            required
+            disabled
+            value={data.password}
+            placeholder="Роль"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+          />
         </div>
       ) : null}
       <div

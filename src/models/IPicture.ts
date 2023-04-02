@@ -4,4 +4,5 @@ export interface IPicture {
   color: string;
   year: number;
   author: string;
+  image: string;
 }

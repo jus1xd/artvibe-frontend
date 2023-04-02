@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import AdminNav from "../../components/AdminNav";
 import Container from "../../components/Container";
 import CreateCard from "../../components/CreateCard";
