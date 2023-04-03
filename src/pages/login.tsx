@@ -58,7 +58,7 @@ const Login = () => {
                   <div className="mb-8 pl-[15px] w-full">
                     <img className="w-max mr-auto" src={logo} alt="" />
                   </div>
-                  <div className="relative z-50 w-full h-1/2 bg-white rounded-md p-5 shadow-md">
+                  <div className="relative z-50 w-full bg-white rounded-md p-5 shadow-md">
                     <div className="text-title font-medium mt-3 mb-5 text-xl">
                       Войти в аккаунт
                     </div>
@@ -69,7 +69,7 @@ const Login = () => {
                       <Input
                         type="auth"
                         value={email}
-                        placeholder="d1xys@bk.ru"
+                        placeholder="example@gmail.com"
                         setValue={setEmail}
                       />
                     </div>

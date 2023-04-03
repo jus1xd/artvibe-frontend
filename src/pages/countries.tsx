@@ -6,10 +6,8 @@ import Container from "../components/Container";
 import Header from "../components/Header";
 
 import arrow from "../assets/img/arrow.svg";
-import photo from "../assets/img/countries/photo.png";
 import { countriesApi } from "../store/services/countriesService";
-import { authorsApi } from "../store/services/authorService";
-import { picturesApi } from "../store/services/pictureService";
+import Planet from "../components/planet";
 
 const Countries = () => {
   const [active, setActive] = useState(false);
@@ -53,14 +51,19 @@ const Countries = () => {
                   <Button text="Смотреть" type="primary" size="md" />
                 </div>
               </div>
-              {/* image  */}
-              <div className="w-[45%] mr-[-5%] mb-[5%]">
+              {/* 3d earth planet  */}
+              <div className="3d_planet_container w-[45%] mr-[-5%] mb-[5%]">
+                <div className="3d_planet">
+                  <Planet />
+                </div>
+              </div>
+              {/* <div className="w-[45%] mr-[-5%] mb-[5%]">
                 <img
                   className="w-full h-full object-cover"
                   src={photo}
                   alt="pic"
                 />
-              </div>
+              </div> */}
             </div>
           </Container>
         </div>

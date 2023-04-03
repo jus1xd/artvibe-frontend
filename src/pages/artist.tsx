@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { authorsApi } from "../store/services/authorService";
 import Container from "../components/Container";
@@ -19,13 +19,6 @@ const Artist = () => {
     (el) =>
       el.author === data?.find((picture) => picture._id === prodId)?.fullname
   );
-
-  // const picture = data?.find((picture) => picture._id === prodId);
-  // const fromThisAuthor = data?.filter((el) => el.author === picture?.author);
-
-  useEffect(() => {
-    console.log(picturesOfAuthor);
-  }, [data]);
 
   return (
     <div>

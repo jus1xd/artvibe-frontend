@@ -22,6 +22,15 @@ body {
   color: #22222270 !important;
 }
 
+.webgl {
+  position: fixed;
+  top: 0;
+  left: 0;
+  outline: none;
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
 /* custom checkbox style  */
 
 /* The container */
@@ -67,7 +76,7 @@ body {
 /* When the checkbox is checked, add a blue background */
 
 .checkbox_wrapper input:checked ~ .checkmark {
-  background-color: #635BFF;
+  background-color: #635bff;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -96,7 +105,7 @@ body {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
-} 
+}
 
 /* custom checkbox style  */
 

@@ -11,7 +11,6 @@ import pic1 from "../assets/img/about/pic1.svg";
 import pic2 from "../assets/img/about/pic2.svg";
 import pic3 from "../assets/img/about/pic3.svg";
 
-import cardphotosm from "../assets/img/popular.png";
 import { picturesApi } from "../store/services/pictureService";
 
 const About = () => {

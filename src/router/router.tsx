@@ -17,6 +17,7 @@ import Picture from "../pages/picture";
 import Artist from "../pages/artist";
 import Country from "../pages/country";
 import Colors from "../pages/colors";
+import Timeline from "../pages/timeline";
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
   {
     path: "/show/colors",
     element: <Colors />,
+  },
+  {
+    path: "/show/timeline",
+    element: <Timeline />,
   },
   {
     path: "/country/:id",

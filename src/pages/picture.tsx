@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import { picturesApi } from "../store/services/pictureService";
 import Container from "../components/Container";

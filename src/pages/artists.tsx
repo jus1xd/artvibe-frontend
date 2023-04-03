@@ -5,7 +5,6 @@ import Header from "../components/Header";
 
 import arrow from "../assets/img/arrow.svg";
 import photo from "../assets/img/artists/photo.png";
-import cardphoto from "../assets/img/artists/cardphoto.png";
 import Button from "../components/Button";
 import { authorsApi } from "../store/services/authorService";
 import { picturesApi } from "../store/services/pictureService";

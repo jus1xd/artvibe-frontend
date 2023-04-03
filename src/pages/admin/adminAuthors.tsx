@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import AdminNav from "../../components/AdminNav";
 import Container from "../../components/Container";
 import CreateCard from "../../components/CreateCard";

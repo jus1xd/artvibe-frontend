@@ -1,25 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Card from "../components/Card";
 import Container from "../components/Container";
 import Header from "../components/Header";
 import { picturesApi } from "../store/services/pictureService";
-import { useParams } from "react-router-dom";
-import { current } from "@reduxjs/toolkit";
 
 const Colors = () => {
-  const params = useParams();
-  const prodId = params.id;
-
   const [currentColor, setCurrentColor] = useState<string>("Красный");
 
   const { data } = picturesApi.useGetAllPicturesQuery("");
 
-  const picture = data?.find((picture) => picture._id === prodId);
-  const fromThisAuthor = data?.filter((el) => el.author === picture?.author);
-
-  useEffect(() => {
-    console.log(currentColor);
-  }, [currentColor]);
+  // const picture = data?.find((picture) => picture._id === prodId);
+  // const fromThisAuthor = data?.filter((el) => el.author === picture?.author);
 
   const colors = [
     { Красный: "#C53229" },

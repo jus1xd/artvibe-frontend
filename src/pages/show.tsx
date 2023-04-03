@@ -6,11 +6,9 @@ import arrow from "../assets/img/arrow.svg";
 import photo from "../assets/img/show/photo.png";
 import cardphoto from "../assets/img/cardphoto.png";
 import cardphoto1 from "../assets/img/cardphoto1.png";
-import cardphotosm from "../assets/img/artists/cardphoto.png";
 import Button from "../components/Button";
 
 import Card from "../components/Card";
-import { NavLink } from "react-router-dom";
 import { picturesApi } from "../store/services/pictureService";
 
 const Show = () => {
