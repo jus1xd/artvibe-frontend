@@ -44,13 +44,13 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
               disabled
               value={data.fullname}
               placeholder="Имя"
-              className="px-3 w-full py-1 outline-none rounded-md bg-[#D7D7D7]"
+              className="px-3 w-full py-1 outline-none rounded-md bg-[#EDEDED]"
             />
           </div>
-          <div className="max-h-[200px] overflow-hidden flex items-center rounded-md mb-2">
+          <div className="h-[150px] bg-[#EDEDED] overflow-hidden flex items-center rounded-md mb-2">
             <img
               src={`http://localhost:5003/${data.image}`}
-              className="relative z-0"
+              className="relative z-0 rounded-md object-cover h-auto w-full"
               alt=""
             />
           </div>
@@ -61,7 +61,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
               disabled
               value={data.birthdate}
               placeholder="Дата рождения"
-              className="px-3 w-full py-1 outline-none rounded-md bg-[#D7D7D7]"
+              className="px-3 w-full py-1 outline-none rounded-md bg-[#EDEDED]"
             />
           </div>
           <div className="mb-1">
@@ -71,7 +71,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
               disabled
               value={data.deathdate}
               placeholder="Дата смерти"
-              className="px-3 w-full py-1 outline-none rounded-md bg-[#D7D7D7]"
+              className="px-3 w-full py-1 outline-none rounded-md bg-[#EDEDED]"
             />
           </div>
           <div className="mb-1">
@@ -81,7 +81,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
               disabled
               value={data.country}
               placeholder="Страна"
-              className="px-3 w-full py-1 outline-none rounded-md bg-[#D7D7D7]"
+              className="px-3 w-full py-1 outline-none rounded-md bg-[#EDEDED]"
             />
           </div>
         </div>
@@ -93,9 +93,9 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
             disabled
             value={data.title}
             placeholder="Цвет"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#EDEDED]"
           />
-          <div className="h-[150px] bg-[#D7D7D7] overflow-hidden flex items-center rounded-md mb-2">
+          <div className="h-[150px] bg-[#EDEDED] overflow-hidden flex items-center rounded-md mb-2">
             <img
               src={`http://localhost:5003/${data.image}`}
               className="relative z-0 rounded-md object-cover h-auto w-full"
@@ -109,7 +109,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
             disabled
             value={data.color}
             placeholder="Цвет"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#EDEDED]"
           />
           <span className="text-sm mb-1">Год написания</span>
           <input
@@ -118,7 +118,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
             disabled
             value={data.year}
             placeholder="Год написания"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#EDEDED]"
           />
           <span className="text-sm mb-1">Автор</span>
           <input
@@ -127,7 +127,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
             disabled
             value={data.author}
             placeholder="Автор"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#EDEDED]"
           />
         </div>
       ) : model === "country" ? (
@@ -150,7 +150,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
             disabled
             value={data.username}
             placeholder="Имя"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#EDEDED]"
           />
           <span className="text-sm mb-1">Имя</span>
           <input
@@ -159,7 +159,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
             disabled
             value={data.name}
             placeholder="Имя"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#EDEDED]"
           />
           <span className="text-sm mb-1">Почта</span>
           <input
@@ -168,7 +168,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
             disabled
             value={data.email}
             placeholder="Почта"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#EDEDED]"
           />
           <span className="text-sm mb-1">Роль</span>
           <input
@@ -177,7 +177,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
             disabled
             value={data.role}
             placeholder="Роль"
-            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#D7D7D7]"
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md bg-[#EDEDED]"
           />
           <span className="text-sm mb-1">Пароль</span>
           <input
@@ -186,7 +186,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
             disabled
             value={data.password}
             placeholder="Пароль"
-            className="px-3 w-full py-1 mb-2 bg-[#D7D7D7] outline-none rounded-md"
+            className="px-3 w-full py-1 mb-2 bg-[#EDEDED] outline-none rounded-md"
           />
         </div>
       ) : null}
