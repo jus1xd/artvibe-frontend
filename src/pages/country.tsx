@@ -27,19 +27,9 @@ const Country = () => {
 
   const picturesOfAuthors = authorsOfCountry?.map((author) => {
     return pictures.data?.filter(
-      (picture) => picture.author === author.fullname
+      (picture: any) => picture.author === author.fullname
     );
   });
-
-  useEffect(() => {
-    console.log("Авторы страны");
-    console.log(authorsOfCountry);
-  }, [authorsOfCountry]);
-
-  useEffect(() => {
-    console.log("Картинки этих авторов");
-    console.log(picturesOfAuthors);
-  }, [picturesOfAuthors]);
 
   return (
     <div>

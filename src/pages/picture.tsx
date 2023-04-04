@@ -13,11 +13,6 @@ const Picture = () => {
 
   const picture = data?.find((picture) => picture._id === prodId);
   const fromThisAuthor = data?.filter((el) => el.author === picture?.author);
-
-  useEffect(() => {
-    console.log(picture);
-  }, [picture]);
-
   return (
     <>
       <Header />
