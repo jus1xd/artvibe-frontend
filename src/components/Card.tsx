@@ -27,7 +27,11 @@ const Card: React.FC<TProps> = ({
       ) : (
         <div className="absolute top-0 left-0 w-full h-full z-20 bg-gradient-to-t from-[#000000ee] to-[#ffffff00]"></div>
       )}
-      <img className="absolute top-0 left-0 w-full z-10 transition-transform duration-500 transform-gpu group-hover:scale-125" src={img} alt="pic" />
+      <img
+        className="absolute top-0 left-0 w-full z-10 transition-transform duration-500 transform-gpu group-hover:scale-125"
+        src={img}
+        alt="pic"
+      />
       {link ? (
         <NavLink to={link}>
           <div className="absolute left-4 bottom-4 z-30">
@@ -43,7 +47,11 @@ const Card: React.FC<TProps> = ({
       )}
     </div>
   ) : size === "xs" ? (
-    <div className={`${useMargin && "mr-[10px]"} relative group mb-3 cursor-pointer w-[calc(20%-10px)] h-[149px] rounded-xl overflow-hidden`}>
+    <div
+      className={`${
+        useMargin && "mr-[10px]"
+      } relative group mb-3 cursor-pointer w-[calc(20%-10px)] h-[149px] rounded-xl overflow-hidden`}
+    >
       {link ? (
         <NavLink to={link}>
           <div className="absolute top-0 left-0 w-full h-full z-20 bg-gradient-to-t from-[#000000ee] to-[#ffffff00]"></div>
@@ -51,7 +59,12 @@ const Card: React.FC<TProps> = ({
       ) : (
         <div className="absolute top-0 left-0 w-full h-full z-20 bg-gradient-to-t from-[#000000ee] to-[#ffffff00]"></div>
       )}
-      <img className="absolute top-0 left-0 w-full z-10 transition-transform duration-500 transform-gpu group-hover:scale-125" src={img} alt="pic" />
+      <img
+        className="absolute top-0 left-0 w-full z-10 transition-transform duration-500 transform-gpu group-hover:scale-125"
+        // src={img}
+        src={`https://artvibeapi.onrender.com/${img}`}
+        alt="pic"
+      />
       {link ? (
         <NavLink to={link}>
           <div className="absolute left-4 bottom-4 z-30">
