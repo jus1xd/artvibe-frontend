@@ -3,11 +3,13 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IUser } from "../../models/IUser";
 
 const token = localStorage.getItem("token")
+const BASE_URL = process.env.REACT_APP_BASE_URL || "https://artvibeapi.onrender.com/";
+
 
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://artvibeapi.onrender.com/",
+    baseUrl: BASE_URL,
   }),
   tagTypes: ["Auth"],
   endpoints: (builder) => ({

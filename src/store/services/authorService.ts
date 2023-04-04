@@ -2,10 +2,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IAuthor } from "../../models/IAuthor";
 
+const BASE_URL = process.env.REACT_APP_BASE_URL || "https://artvibeapi.onrender.com/";
+
 export const authorsApi = createApi({
   reducerPath: "authorsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://artvibeapi.onrender.com/",
+    baseUrl: BASE_URL,
   }),
   tagTypes: ["Author"],
   endpoints: (builder) => ({
@@ -15,7 +17,7 @@ export const authorsApi = createApi({
         method: "GET",
         mode: "cors",
       }),
-      providesTags: (result) => ['Author']
+      providesTags: (result) => ["Author"],
     }),
     createAuthor: builder.mutation<IAuthor, IAuthor>({
       query: (author) => ({
@@ -25,7 +27,7 @@ export const authorsApi = createApi({
         format: "formdata",
         body: author,
       }),
-      invalidatesTags: ['Author']
+      invalidatesTags: ["Author"],
     }),
     updateAuthor: builder.mutation<IAuthor, IAuthor>({
       query: (id) => ({
@@ -34,7 +36,7 @@ export const authorsApi = createApi({
         mode: "cors",
         body: id,
       }),
-      invalidatesTags: ['Author']
+      invalidatesTags: ["Author"],
     }),
     deleteAuthor: builder.mutation<IAuthor, IAuthor>({
       query: (id) => ({
@@ -43,7 +45,7 @@ export const authorsApi = createApi({
         mode: "cors",
         body: id,
       }),
-      invalidatesTags: ['Author']
+      invalidatesTags: ["Author"],
     }),
   }),
 });

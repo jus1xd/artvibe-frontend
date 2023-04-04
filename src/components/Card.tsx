@@ -1,6 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+//  || "http://localhost:5000";
+
 type TProps = {
   img: string;
   link?: string;
@@ -62,7 +65,7 @@ const Card: React.FC<TProps> = ({
       <img
         className="absolute top-0 left-0 w-full z-10 transition-transform duration-500 transform-gpu group-hover:scale-125"
         // src={img}
-        src={`https://artvibeapi.onrender.com/${img}`}
+        src={`${BASE_URL}/${img}`}
         alt="pic"
       />
       {link ? (
@@ -96,7 +99,7 @@ const Card: React.FC<TProps> = ({
         <img
           className="h-full object-cover transition-transform duration-500 transform-gpu group-hover:scale-125"
           // src={`http://localhost:5003/${img}`}
-          src={`https://artvibeapi.onrender.com/${img}`}
+          src={`${BASE_URL}${img}`}
           alt="pic"
         />
       </div>

@@ -2,10 +2,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IPicture } from "../../models/IPicture";
 
+const BASE_URL = process.env.REACT_APP_BASE_URL || "https://artvibeapi.onrender.com/";
+
 export const picturesApi = createApi({
   reducerPath: "picturesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://artvibeapi.onrender.com/",
+    baseUrl: BASE_URL,
   }),
   tagTypes: ["Picture"],
   endpoints: (builder) => ({
@@ -15,7 +17,7 @@ export const picturesApi = createApi({
         method: "GET",
         mode: "cors",
       }),
-      providesTags: (result) => ['Picture']
+      providesTags: (result) => ["Picture"],
     }),
     createPicture: builder.mutation<IPicture, IPicture>({
       query: (picture) => ({
@@ -24,7 +26,7 @@ export const picturesApi = createApi({
         mode: "cors",
         body: picture,
       }),
-      invalidatesTags: ['Picture']
+      invalidatesTags: ["Picture"],
     }),
     updatePicture: builder.mutation<IPicture, IPicture>({
       query: (id) => ({
@@ -33,7 +35,7 @@ export const picturesApi = createApi({
         mode: "cors",
         body: id,
       }),
-      invalidatesTags: ['Picture']
+      invalidatesTags: ["Picture"],
     }),
     deletePicture: builder.mutation<IPicture, IPicture>({
       query: (id) => ({
@@ -42,7 +44,7 @@ export const picturesApi = createApi({
         mode: "cors",
         body: id,
       }),
-      invalidatesTags: ['Picture']
+      invalidatesTags: ["Picture"],
     }),
   }),
 });

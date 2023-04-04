@@ -2,10 +2,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ICountry } from "../../models/ICountry";
 
+const BASE_URL = process.env.REACT_APP_BASE_URL 
+// || "https://artvibeapi.onrender.com/";
+
+
 export const countriesApi = createApi({
   reducerPath: "countriesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://artvibeapi.onrender.com/",
+    baseUrl: BASE_URL,
   }),
   tagTypes: ["Country"],
   endpoints: (builder) => ({
