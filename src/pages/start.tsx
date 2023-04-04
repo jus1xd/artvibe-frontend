@@ -8,6 +8,7 @@ import pic1 from "../assets/img/index/pic1.png";
 import pic2 from "../assets/img/index/pic2.png";
 import pic3 from "../assets/img/index/pic3.png";
 import pic4 from "../assets/img/index/pic4.png";
+import Footer from "../components/Footer";
 
 const Start = () => {
   return (
@@ -99,17 +100,17 @@ const Start = () => {
 
               <div className="flex items-start mb-4">
                 <div className="w-[45%] h-max mr-3">
-                  <img className="" src={pic3} alt="pic3"/>
+                  <img className="" src={pic3} alt="pic3" />
                 </div>
                 <div className="w-[55%] h-auto">
-                  <img className="" src={pic4} alt="pic4"/>
+                  <img className="" src={pic4} alt="pic4" />
                 </div>
               </div>
-
             </div>
           </div>
         </Container>
       </div>
+      {/* <Footer /> */}
     </>
   );
 };

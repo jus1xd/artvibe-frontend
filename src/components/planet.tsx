@@ -22,8 +22,8 @@ const Earth = () => {
 
 const Planet = () => {
   return (
-    <div className="ml-[50px] mb-[-80px] w-[600px] h-[600px] relative">
-      <div className="relative z-20  w-[470px] h-[470px]">
+    <div className="ml-[50px] select-none mb-[-80px] w-[600px] h-[600px] relative">
+      <div className="relative z-20 w-[470px] h-[470px]">
         <Suspense fallback={null}>
           <Canvas>
             <PerspectiveCamera makeDefault position={[0, 0, 4]} fov={92}>

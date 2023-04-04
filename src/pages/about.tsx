@@ -12,6 +12,8 @@ import pic2 from "../assets/img/about/pic2.svg";
 import pic3 from "../assets/img/about/pic3.svg";
 
 import { picturesApi } from "../store/services/pictureService";
+import Footer from "../components/Footer";
+import { Link } from "react-scroll";
 
 const About = () => {
   const [active, setActive] = useState(false);
@@ -51,9 +53,11 @@ const About = () => {
                   собрали для вас лучшие работы известных мастеров, чтобы вы
                   смогли насладиться ими вместе с нами
                 </p>
-                <div className="mt-[5%]">
-                  <Button text="Наши цели" type="primary" size="md" />
-                </div>
+                <Link smooth="ease-in" to="targets" offset={-70}>
+                  <div className="mt-[5%]">
+                    <Button text="Наши цели" type="primary" size="md" />
+                  </div>
+                </Link>
               </div>
               {/* image  */}
               <div className="relative w-[57%] mr-[-15%] mb-[-10%]">
@@ -70,7 +74,7 @@ const About = () => {
           </Container>
         </div>
         {/* benefits  */}
-        <div className="mb-20">
+        <div className="mb-20" id="targets">
           <Container>
             <h2 className="mb-10 font-medium text-title text-2xl">
               Цели нашего музея
@@ -169,6 +173,7 @@ const About = () => {
           </Container>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

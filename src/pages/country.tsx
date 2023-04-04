@@ -6,6 +6,7 @@ import { picturesApi } from "../store/services/pictureService";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import { countriesApi } from "../store/services/countriesService";
+import Footer from "../components/Footer";
 
 const Country = () => {
   const params = useParams();
@@ -72,6 +73,7 @@ const Country = () => {
           </div>
         </Container>
       </div>
+      <Footer />
     </div>
   );
 };

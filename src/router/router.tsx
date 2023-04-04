@@ -21,10 +21,6 @@ import Timeline from "../pages/timeline";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Start />,
-  },
-  {
     path: "/countries",
     element: <Countries />,
   },
@@ -119,6 +115,10 @@ export const router = createBrowserRouter([
         <AdminUsers />
       </ProtectedRoute>
     ),
+  },
+  {
+    path: "/",
+    element: <Start />,
   },
   {
     path: "*",

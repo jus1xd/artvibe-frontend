@@ -5,6 +5,7 @@ import Container from "../components/Container";
 import Card from "../components/Card";
 import { picturesApi } from "../store/services/pictureService";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const Artist = () => {
   const params = useParams();
@@ -57,6 +58,7 @@ const Artist = () => {
           </div>
         </Container>
       </div>
+      <Footer />
     </div>
   );
 };

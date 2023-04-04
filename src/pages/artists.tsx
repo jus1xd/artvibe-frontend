@@ -8,6 +8,8 @@ import photo from "../assets/img/artists/photo.png";
 import Button from "../components/Button";
 import { authorsApi } from "../store/services/authorService";
 import { picturesApi } from "../store/services/pictureService";
+import Footer from "../components/Footer";
+import { Link } from "react-scroll";
 
 const Artists = () => {
   const [active, setActive] = useState(false);
@@ -48,9 +50,11 @@ const Artists = () => {
                   художниками со всего мира, и узнать больше о творческих
                   воплощениях каждого из них
                 </p>
-                <div className="mt-[5%]">
-                  <Button text="Смотреть" type="primary" size="md" />
-                </div>
+                <Link smooth="ease-in" to="artists" offset={-30}>
+                  <div className="mt-[5%]">
+                    <Button text="Смотреть" type="primary" size="md" />
+                  </div>
+                </Link>
               </div>
               {/* image  */}
               <div className="w-[45%] mr-[-5%] mb-[5%]">
@@ -66,7 +70,7 @@ const Artists = () => {
         {/* cards  */}
         <div className="mb-20">
           <Container border>
-            <h2 className="mb-4 font-medium text-title text-2xl">Художники</h2>
+            <h2 className="mb-4 font-medium text-title text-2xl" id="artists">Художники</h2>
             <div className="flex justify-between flex-wrap">
               {data?.map((item) => {
                 return (
@@ -90,6 +94,7 @@ const Artists = () => {
           </Container>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

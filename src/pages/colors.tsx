@@ -3,15 +3,13 @@ import Card from "../components/Card";
 import Container from "../components/Container";
 import Header from "../components/Header";
 import { picturesApi } from "../store/services/pictureService";
+import Footer from "../components/Footer";
 
 const Colors = () => {
   const [currentColor, setCurrentColor] = useState<string>("Красный");
 
   const { data } = picturesApi.useGetAllPicturesQuery("");
-
-  // const picture = data?.find((picture) => picture._id === prodId);
-  // const fromThisAuthor = data?.filter((el) => el.author === picture?.author);
-
+  
   const colors = [
     { Красный: "#C53229" },
     { Зеленый: "#29C54B" },
@@ -76,6 +74,7 @@ const Colors = () => {
           </div>
         </Container>
       </div>
+      <Footer />
     </>
   );
 };

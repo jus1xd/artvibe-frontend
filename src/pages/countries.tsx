@@ -4,10 +4,11 @@ import Button from "../components/Button";
 import Card from "../components/Card";
 import Container from "../components/Container";
 import Header from "../components/Header";
-
 import arrow from "../assets/img/arrow.svg";
 import { countriesApi } from "../store/services/countriesService";
 import Planet from "../components/planet";
+import Footer from "../components/Footer";
+import { Link, animateScroll as scroll } from "react-scroll";
 
 const Countries = () => {
   const [active, setActive] = useState(false);
@@ -47,9 +48,11 @@ const Countries = () => {
                   произведений, включая живопись, скульптуру, фотографию,
                   графику и многое другое
                 </p>
-                <div className="mt-[5%]">
-                  <Button text="Смотреть" type="primary" size="md" />
-                </div>
+                <Link smooth="ease-in" to="countries" offset={-30}>
+                  <div className="mt-[5%]">
+                    <Button text="Смотреть" type="primary" size="md" />
+                  </div>
+                </Link>
               </div>
               {/* 3d earth planet  */}
               <div className="3d_planet_container w-[45%] mr-[-5%] mb-[5%]">
@@ -70,7 +73,7 @@ const Countries = () => {
         {/* cards  */}
         <div className="mb-20">
           <Container border>
-            <h2 className="mb-4 font-medium text-title text-2xl">Страны</h2>
+            <h2 className="mb-4 font-medium text-title text-2xl" id="countries">Страны</h2>
             <div className="flex flex-wrap">
               {countries?.data?.map((item) => {
                 return (
@@ -88,6 +91,7 @@ const Countries = () => {
           </Container>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

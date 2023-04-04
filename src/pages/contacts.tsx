@@ -9,6 +9,7 @@ import Button from "../components/Button";
 import Card from "../components/Card";
 import { NavLink } from "react-router-dom";
 import { picturesApi } from "../store/services/pictureService";
+import Footer from "../components/Footer";
 
 const Contacts = () => {
   const [active, setActive] = useState(false);
@@ -99,6 +100,7 @@ const Contacts = () => {
           </Container>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

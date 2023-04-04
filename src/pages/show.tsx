@@ -10,6 +10,8 @@ import Button from "../components/Button";
 
 import Card from "../components/Card";
 import { picturesApi } from "../store/services/pictureService";
+import Footer from "../components/Footer";
+import { Link } from "react-scroll";
 
 const Show = () => {
   const [active, setActive] = useState(false);
@@ -50,9 +52,11 @@ const Show = () => {
                   произведений, включая живопись, скульптуру, фотографию,
                   графику и многое другое
                 </p>
-                <div className="mt-[5%]">
-                  <Button text="Смотреть" type="primary" size="md" />
-                </div>
+                <Link smooth="ease-in" to="show" offset={-30}>
+                  <div className="mt-[5%]">
+                    <Button text="Смотреть" type="primary" size="md" />
+                  </div>
+                </Link>
               </div>
               {/* image  */}
               <div className="w-[45%] mr-[-5%] mb-[5%]">
@@ -66,7 +70,7 @@ const Show = () => {
           </Container>
         </div>
         {/* cards  */}
-        <div className="mb-20">
+        <div className="mb-20" id="show">
           <Container border>
             <h2 className="mb-4 font-medium text-title text-2xl">
               Эпохи и цвета
@@ -110,6 +114,7 @@ const Show = () => {
           </Container>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

@@ -4,6 +4,7 @@ import Container from "../components/Container";
 import Header from "../components/Header";
 import { picturesApi } from "../store/services/pictureService";
 import { useParams } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const Timeline = () => {
   const [currentFilter, setCurrentFilter] = useState<boolean>(false);
@@ -35,7 +36,6 @@ const Timeline = () => {
               {currentFilter ? "сначала современные" : "сначала древние"}
             </h2>
           </div>
-
           <div className="flex justify-between flex-wrap">
             {
               // @ts-ignore
@@ -70,6 +70,7 @@ const Timeline = () => {
           </div>
         </Container>
       </div>
+      <Footer />
     </>
   );
 };
