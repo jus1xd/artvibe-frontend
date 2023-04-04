@@ -1,7 +1,6 @@
 {
   "name": "artvibe",
   "version": "0.1.0",
-  "proxy": "https://artvibeapi.onrender.com",
   "private": true,
   "dependencies": {
     "@react-three/drei": "^9.62.2",

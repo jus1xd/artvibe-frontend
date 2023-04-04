@@ -5,7 +5,7 @@ import { IAuthor } from "../../models/IAuthor";
 export const authorsApi = createApi({
   reducerPath: "authorsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "/",
+    baseUrl: "https://artvibeapi.onrender.com/",
   }),
   tagTypes: ["Author"],
   endpoints: (builder) => ({

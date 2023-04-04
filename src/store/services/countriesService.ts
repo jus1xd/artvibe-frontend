@@ -5,7 +5,7 @@ import { ICountry } from "../../models/ICountry";
 export const countriesApi = createApi({
   reducerPath: "countriesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "/",
+    baseUrl: "https://artvibeapi.onrender.com/",
   }),
   tagTypes: ["Country"],
   endpoints: (builder) => ({

@@ -5,7 +5,7 @@ import { IPicture } from "../../models/IPicture";
 export const picturesApi = createApi({
   reducerPath: "picturesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "/",
+    baseUrl: "https://artvibeapi.onrender.com/",
   }),
   tagTypes: ["Picture"],
   endpoints: (builder) => ({

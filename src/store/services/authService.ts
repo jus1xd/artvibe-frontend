@@ -7,7 +7,7 @@ const token = localStorage.getItem("token")
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "/",
+    baseUrl: "https://artvibeapi.onrender.com/",
   }),
   tagTypes: ["Auth"],
   endpoints: (builder) => ({
