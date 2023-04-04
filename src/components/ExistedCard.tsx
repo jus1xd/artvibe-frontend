@@ -49,7 +49,8 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
           </div>
           <div className="h-[150px] bg-[#EDEDED] overflow-hidden flex items-center rounded-md mb-2">
             <img
-              src={`http://localhost:5003/${data.image}`}
+              // src={`http://localhost:5003/${data.image}`}
+              src={`https://artvibeapi.onrender.com/${data.image}`}
               className="relative z-0 rounded-md object-cover h-auto w-full"
               alt=""
             />
@@ -97,7 +98,8 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
           />
           <div className="h-[150px] bg-[#EDEDED] overflow-hidden flex items-center rounded-md mb-2">
             <img
-              src={`http://localhost:5003/${data.image}`}
+              // src={`http://localhost:5003/${data.image}`}
+              src={`https://artvibeapi.onrender.com/${data.image}`}
               className="relative z-0 rounded-md object-cover h-auto w-full"
               alt=""
             />
@@ -135,7 +137,8 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
           <div className="font-bold mb-1">{data.name}</div>
           <div className="max-h-[200px] overflow-hidden flex items-center rounded-md mb-2">
             <img
-              src={`http://localhost:5003/${data.image}`}
+              src={`https://artvibeapi.onrender.com/${data.image}`}
+              // src={`http://localhost:5003/${data.image}`}
               className="relative z-0"
               alt=""
             />

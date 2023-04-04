@@ -28,7 +28,8 @@ const Picture = () => {
               <img
                 className="w-[80%] h-[80%] object-cover"
                 // @ts-ignore
-                src={`http://localhost:5003/${picture?.image}`}
+                // src={`http://localhost:5003/${picture?.image}`}
+                src={`https://artvibeapi.onrender.com/${picture?.image}`}
                 alt="pic"
               />
             </div>
@@ -49,8 +50,7 @@ const Picture = () => {
                   {picture?.author}
                 </div>
                 <div className="ml-1 text-link w-max opacity-80">
-                  {/* @ts-ignore */}
-                  - {picture?.year}
+                  {/* @ts-ignore */}- {picture?.year}
                 </div>
               </div>
 

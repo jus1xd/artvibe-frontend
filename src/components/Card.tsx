@@ -82,7 +82,8 @@ const Card: React.FC<TProps> = ({
       <div className="d-flex h-full items-center justify-center absolute top-0 left-0 z-10">
         <img
           className="h-full object-cover transition-transform duration-500 transform-gpu group-hover:scale-125"
-          src={`http://localhost:5003/${img}`}
+          // src={`http://localhost:5003/${img}`}
+          src={`https://artvibeapi.onrender.com/${img}`}
           alt="pic"
         />
       </div>
