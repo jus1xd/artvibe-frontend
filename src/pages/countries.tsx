@@ -8,7 +8,7 @@ import arrow from "../assets/img/arrow.svg";
 import { countriesApi } from "../store/services/countriesService";
 import Planet from "../components/planet";
 import Footer from "../components/Footer";
-import { Link, animateScroll as scroll } from "react-scroll";
+import { Link } from "react-scroll";
 
 const Countries = () => {
   const [active, setActive] = useState(false);

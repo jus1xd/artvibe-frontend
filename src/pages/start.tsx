@@ -8,7 +8,6 @@ import pic1 from "../assets/img/index/pic1.png";
 import pic2 from "../assets/img/index/pic2.png";
 import pic3 from "../assets/img/index/pic3.png";
 import pic4 from "../assets/img/index/pic4.png";
-import Footer from "../components/Footer";
 
 const Start = () => {
   return (

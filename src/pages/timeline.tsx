@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Card from "../components/Card";
 import Container from "../components/Container";
 import Header from "../components/Header";
 import { picturesApi } from "../store/services/pictureService";
-import { useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 
 const Timeline = () => {

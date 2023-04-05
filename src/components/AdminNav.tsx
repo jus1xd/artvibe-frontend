@@ -39,7 +39,7 @@ const AdminNav = () => {
         Страны
       </NavLink>
       <NavLink
-        to={"admin/models"}
+        to={"/admin/models"}
         className="p-3 cursor-pointer hover:bg-dark hover:text-white"
       >
         3D модели

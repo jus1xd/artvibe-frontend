@@ -18,6 +18,7 @@ import Artist from "../pages/artist";
 import Country from "../pages/country";
 import Colors from "../pages/colors";
 import Timeline from "../pages/timeline";
+import AdminModels from "../pages/admin/adminModels";
 
 export const router = createBrowserRouter([
   {
@@ -113,6 +114,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <AdminUsers />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/models",
+    element: (
+      <ProtectedRoute>
+        <AdminModels />
       </ProtectedRoute>
     ),
   },

@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import { picturesApi } from "../store/services/pictureService";
 import Container from "../components/Container";
 import Card from "../components/Card";
 import Footer from "../components/Footer";
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Picture = () => {
   const params = useParams();
@@ -27,7 +29,7 @@ const Picture = () => {
                     className="w-[80%] h-[80%] object-cover"
                     // @ts-ignore
                     // src={`http://localhost:5003/${picture?.image}`}
-                    src={`https://artvibeapi.onrender.com/${picture?.image}`}
+                    src={`${BASE_URL}/${picture?.image}`}
                     alt="pic"
                   />
                 </div>

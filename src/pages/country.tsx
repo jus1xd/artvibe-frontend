@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Card from "../components/Card";
 import Container from "../components/Container";
 import { authorsApi } from "../store/services/authorService";

@@ -1,35 +1,15 @@
-import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import React from "react";
+import { NavLink } from "react-router-dom";
 
 import logoDark from "../assets/img/logoDark.svg";
 
-import Button from "./Button";
 import Container from "./Container";
-import { useActions } from "../hooks/actions";
 
 type TProps = {
   theme?: "light";
 };
 
 const Footer: React.FC<TProps> = ({ theme }) => {
-  const [menuActive, setMenuActive] = useState<boolean>(false);
-  const token = localStorage.getItem("token");
-
-  // @ts-ignore
-  const userRole = token ? jwt_decode(token).roles : "guest";
-  // @ts-ignore
-  const userLogin = token ? jwt_decode(token).username : null;
-
-  const navigate = useNavigate();
-
-  const { logout } = useActions();
-
-  const logoutHandler = () => {
-    logout();
-    navigate("/");
-  };
-
   return (
     <footer className="absolute bottom-[-150px] bg-[#fff] w-full left-0 mt-5 py-3 z-10">
       <Container>

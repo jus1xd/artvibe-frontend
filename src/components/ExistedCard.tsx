@@ -4,6 +4,9 @@ import { authApi } from "../store/services/authService";
 import { countriesApi } from "../store/services/countriesService";
 import { picturesApi } from "../store/services/pictureService";
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+
 type TProps = {
   model: "author" | "picture" | "country" | "user" | "3d";
   data: any;
@@ -50,7 +53,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
           <div className="h-[150px] bg-[#EDEDED] overflow-hidden flex items-center rounded-md mb-2">
             <img
               // src={`http://localhost:5003/${data.image}`}
-              src={`https://artvibeapi.onrender.com/${data.image}`}
+              src={`${BASE_URL}/${data.image}`}
               className="relative z-0 rounded-md object-cover h-auto w-full"
               alt=""
             />
@@ -99,7 +102,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
           <div className="h-[150px] bg-[#EDEDED] overflow-hidden flex items-center rounded-md mb-2">
             <img
               // src={`http://localhost:5003/${data.image}`}
-              src={`https://artvibeapi.onrender.com/${data.image}`}
+              src={`${BASE_URL}/${data.image}`}
               className="relative z-0 rounded-md object-cover h-auto w-full"
               alt=""
             />
@@ -137,7 +140,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data }) => {
           <div className="font-bold mb-1">{data.name}</div>
           <div className="max-h-[200px] overflow-hidden flex items-center rounded-md mb-2">
             <img
-              src={`https://artvibeapi.onrender.com/${data.image}`}
+              src={`${BASE_URL}/${data.image}`}
               // src={`http://localhost:5003/${data.image}`}
               className="relative z-0"
               alt=""

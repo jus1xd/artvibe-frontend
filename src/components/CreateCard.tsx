@@ -283,6 +283,58 @@ const CreateCard: React.FC<TProps> = ({ model }) => {
             className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
           />
         </div>
+      ) : model === "3d" ? (
+        <div className="flex flex-col">
+          <input
+            type="text"
+            required
+            placeholder="Название"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+          />
+          <input
+            type="text"
+            required
+            placeholder="Цвет"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+          />
+          <input
+            type="text"
+            required
+            placeholder="Страна"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+          />
+          <input
+            type="text"
+            required
+            placeholder="Год создания"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="px-3 w-full py-1 mb-2 outline-none rounded-md border border-inputBorder"
+          />
+          <label
+            htmlFor="fileLoader"
+            className="px-3 w-full cursor-pointer py-1 mb-2 outline-accent rounded-md border border-accent opacity-80 transition hover:opacity-100"
+          >
+            <input
+              type="file"
+              required
+              id="fileLoader"
+              onChange={(e) =>
+                // @ts-ignore
+                setImage(e.target.files[0])
+              }
+              placeholder="Изображение"
+              className="appearance-none hidden"
+            />
+            <span className="text-accent cursor-pointer">Загрузить модель</span>
+          </label>
+        </div>
       ) : null}
       <div
         className="w-full mt-2 bg-accent text-white rounded cursor-pointer text-center py-1 px-4 opacity-80 transition hover:opacity-100"
