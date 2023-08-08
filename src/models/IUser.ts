@@ -1,8 +1,12 @@
+import { IFriend } from "./IFriend";
+
 export interface IUser {
-  _id?: number;
+  _id?: string;
   name: string;
-  email: string;
   username: string;
-  role: "admin" | "user";
+  email: string;
   password: string;
+  friends: IFriend[];
+  avatar: string;
+  role: string;
 }

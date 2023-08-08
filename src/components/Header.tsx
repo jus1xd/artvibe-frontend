@@ -4,6 +4,10 @@ import jwt_decode from "jwt-decode";
 
 import logoLight from "../assets/img/logoLight.svg";
 import logoDark from "../assets/img/logoDark.svg";
+import messagesDark from "../assets/img/header/messagesDark.svg";
+import messagesLight from "../assets/img/header/messagesLight.svg";
+import peoplesLight from "../assets/img/header/peoplesLight.svg";
+import peoplesDark from "../assets/img/header/peoplesDark.svg";
 
 import Button from "./Button";
 import Container from "./Container";
@@ -58,25 +62,47 @@ const Header: React.FC<TProps> = ({ theme }) => {
             </nav>
             {token ? (
               userRole === "admin" ? (
-                <NavLink to="/admin">
-                  <Button type="secondary" size="md" text={userLogin} />
-                </NavLink>
+                <div className="flex items-center justify-center">
+                  <NavLink
+                    to="/peoples"
+                    className="mr-7 font-medium text-title"
+                  >
+                    <img src={peoplesLight} alt="Люди" />
+                  </NavLink>
+                  <NavLink to="/im" className="mr-7 font-medium text-title">
+                    <img src={messagesLight} alt="Мессенджер" />
+                  </NavLink>
+                  <NavLink to="/admin">
+                    <Button type="secondary" size="md" text={userLogin} />
+                  </NavLink>
+                </div>
               ) : (
-                <div
-                  className="relative"
-                  onClick={() => setMenuActive(!menuActive)}
-                >
-                  <Button type="secondary" size="md" text={userLogin} />
-                  {menuActive && (
-                    <div className="absolute z-10 top-10 bg-white rounded-3xl overflow-hidden w-full">
-                      <div
-                        onClick={logoutHandler}
-                        className="p-1 bg-redpal-200 text-redpal-500 cursor-pointer text-center"
-                      >
-                        Выйти
+                <div className="flex items-center justify-center">
+                  <NavLink
+                    to="/peoples"
+                    className="mr-7 font-medium text-title"
+                  >
+                    <img src={peoplesLight} alt="Люди" />
+                  </NavLink>
+                  <NavLink to="/im" className="mr-7 font-medium text-title">
+                    <img src={messagesLight} alt="Мессенджер" />
+                  </NavLink>
+                  <div
+                    className="relative"
+                    onClick={() => setMenuActive(!menuActive)}
+                  >
+                    <Button type="secondary" size="md" text={userLogin} />
+                    {menuActive && (
+                      <div className="absolute z-10 top-10 bg-white rounded-3xl overflow-hidden w-full">
+                        <div
+                          onClick={logoutHandler}
+                          className="p-1 bg-redpal-200 text-redpal-500 cursor-pointer text-center"
+                        >
+                          Выйти
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               )
             ) : (
@@ -109,22 +135,47 @@ const Header: React.FC<TProps> = ({ theme }) => {
             </nav>
             {token ? (
               userRole === "admin" ? (
-                <NavLink to="/admin">
-                  <Button type="accent" size="md" text={userLogin} />
-                </NavLink>
+                <div className="flex items-center justify-center">
+                  <NavLink
+                    to="/peoples"
+                    className="mr-7 font-medium text-title"
+                  >
+                    <img src={peoplesDark} alt="Люди" />
+                  </NavLink>
+                  <NavLink to="/im" className="mr-7 font-medium text-title">
+                    <img src={messagesDark} alt="Мессенджер" />
+                  </NavLink>
+                  <NavLink to="/admin">
+                    <Button type="accent" size="md" text={userLogin} />
+                  </NavLink>
+                </div>
               ) : (
-                <div className="relative" onClick={() => setMenuActive(!menuActive)}>
-                  <Button type="primary" size="md" text={userLogin} />
-                  {menuActive && (
-                    <div className="absolute z-10 top-10 bg-white rounded-3xl overflow-hidden w-full">
-                      <div
-                        onClick={logoutHandler}
-                        className="p-1 bg-redpal-200 text-redpal-500 cursor-pointer text-center"
-                      >
-                        Выйти
+                <div className="flex items-center justify-center">
+                  <NavLink
+                    to="/peoples"
+                    className="mr-7 font-medium text-title"
+                  >
+                    <img src={peoplesDark} alt="Люди" />
+                  </NavLink>
+                  <NavLink to="/im" className="mr-7 font-medium text-title">
+                    <img src={messagesDark} alt="Мессенджер" />
+                  </NavLink>
+                  <div
+                    className="relative"
+                    onClick={() => setMenuActive(!menuActive)}
+                  >
+                    <Button type="primary" size="md" text={userLogin} />
+                    {menuActive && (
+                      <div className="absolute z-10 top-10 bg-white rounded-3xl overflow-hidden w-full">
+                        <div
+                          onClick={logoutHandler}
+                          className="p-1 bg-redpal-200 text-redpal-500 cursor-pointer text-center"
+                        >
+                          Выйти
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               )
             ) : (

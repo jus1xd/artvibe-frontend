@@ -2,12 +2,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IPicture } from "../../models/IPicture";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "https://artvibeapi.onrender.com/";
-
 export const picturesApi = createApi({
   reducerPath: "picturesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
+    baseUrl: "http://localhost:5003",
   }),
   tagTypes: ["Picture"],
   endpoints: (builder) => ({

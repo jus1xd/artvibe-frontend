@@ -6,8 +6,6 @@ import Container from "../components/Container";
 import Card from "../components/Card";
 import Footer from "../components/Footer";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 const Picture = () => {
   const params = useParams();
   const prodId = params.id;
@@ -28,8 +26,7 @@ const Picture = () => {
                   <img
                     className="w-[80%] h-[80%] object-cover"
                     // @ts-ignore
-                    // src={`http://localhost:5003/${picture?.image}`}
-                    src={`${BASE_URL}/${picture?.image}`}
+                    src={`http://localhost:5003/${picture?.image}`}
                     alt="pic"
                   />
                 </div>

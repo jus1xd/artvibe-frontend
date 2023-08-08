@@ -7,7 +7,16 @@ import Header from "../../components/Header";
 import { authorsApi } from "../../store/services/authorService";
 
 const AdminAuthors = () => {
-  const { data } = authorsApi.useGetAllAuthorsQuery("");
+  const { data, isLoading } = authorsApi.useGetAllAuthorsQuery("");
+
+  // spawn a lot skeletons
+  const elements = [];
+  for (let i = 1; i <= 20; i++) {
+    elements.push(
+      <ExistedCard model="author" isLoading={isLoading} data={0} key={i} />
+    );
+  }
+  // **
 
   function reverseEz(arr: any) {
     let newData = [];
@@ -33,7 +42,7 @@ const AdminAuthors = () => {
               </div>
               <div className="w-[80%] flex flex-wrap justify-start">
                 <CreateCard model="author" />
-                {
+                {/* {
                   // @ts-ignore
                   data?.length > 0
                     ? reverseEz(data)?.map((author) => (
@@ -44,7 +53,17 @@ const AdminAuthors = () => {
                         />
                       ))
                     : null
-                }
+                } */}
+                {isLoading
+                  ? elements
+                  : reverseEz(data)?.map((author) => (
+                      <ExistedCard
+                        model="author"
+                        isLoading={isLoading}
+                        data={author}
+                        key={author._id}
+                      />
+                    ))}
               </div>
             </div>
           </Container>

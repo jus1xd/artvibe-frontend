@@ -6,7 +6,16 @@ import Header from "../../components/Header";
 import { picturesApi } from "../../store/services/pictureService";
 
 const AdminPictures = () => {
-  const { data } = picturesApi.useGetAllPicturesQuery("");
+  const { data, isLoading } = picturesApi.useGetAllPicturesQuery("");
+
+  // spawn a lot skeletons
+  const elements = [];
+  for (let i = 1; i <= 10; i++) {
+    elements.push(
+      <ExistedCard model="picture" isLoading={isLoading} data={0} key={i} />
+    );
+  }
+  // **
 
   function reverseEz(arr: any) {
     let newData = [];
@@ -31,18 +40,16 @@ const AdminPictures = () => {
               </div>
               <div className="w-[80%] flex flex-wrap justify-start">
                 <CreateCard model="picture" />
-                {
-                  // @ts-ignore
-                  data?.length > 0
-                    ? reverseEz(data)?.map((picture) => (
-                        <ExistedCard
-                          model="picture"
-                          data={picture}
-                          key={picture._id}
-                        />
-                      ))
-                    : null
-                }
+                {isLoading
+                  ? elements
+                  : reverseEz(data)?.map((picture) => (
+                      <ExistedCard
+                        model="picture"
+                        isLoading={isLoading}
+                        data={picture}
+                        key={picture._id}
+                      />
+                    ))}
               </div>
             </div>
           </Container>

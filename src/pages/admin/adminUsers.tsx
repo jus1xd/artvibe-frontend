@@ -6,14 +6,25 @@ import Header from "../../components/Header";
 import { authApi } from "../../store/services/authService";
 
 const AdminUsers = () => {
-  const { data } = authApi.useGetAllUsersQuery("");
+  const { data, isLoading } = authApi.useGetAllUsersQuery("");
+
+  // spawn a lot skeletons
+  const elements = [];
+  for (let i = 1; i <= 10; i++) {
+    elements.push(
+      <ExistedCard model="user" isLoading={isLoading} data={0} key={i} />
+    );
+  }
+  // **
 
   function reverseEz(arr: any) {
-    let newData = [];
-    for (let i = arr.length - 1; i >= 0; i--) {
-      newData.push(arr[i]);
+    if (arr) {
+      let newData = [];
+      for (let i = arr.length - 1; i >= 0; i--) {
+        newData.push(arr[i]);
+      }
+      return newData;
     }
-    return newData;
   }
 
   return (
@@ -32,17 +43,16 @@ const AdminUsers = () => {
               </div>
               <div className="w-[80%] min-w-[600px] flex flex-wrap justify-start">
                 <CreateCard model="user" />
-                {
-                  // @ts-ignore
-                  data?.length > 0
-                    ? reverseEz(data)?.map((user) => (
-                        <ExistedCard model="user" data={user} key={user._id} />
-                      ))
-                    : null
-                  // reverseEz(data)?.map((user) => (
-                  //   <ExistedCard model="user" data={user} key={user._id} />
-                  // ))
-                }
+                {isLoading
+                  ? elements
+                  : reverseEz(data)?.map((user) => (
+                      <ExistedCard
+                        model="user"
+                        isLoading={isLoading}
+                        data={user}
+                        key={user._id}
+                      />
+                    ))}
               </div>
             </div>
           </Container>

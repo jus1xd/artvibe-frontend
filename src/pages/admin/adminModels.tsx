@@ -1,9 +1,7 @@
 import AdminNav from "../../components/AdminNav";
 import Container from "../../components/Container";
 import CreateCard from "../../components/CreateCard";
-import ExistedCard from "../../components/ExistedCard";
 import Header from "../../components/Header";
-import { authApi } from "../../store/services/authService";
 
 const AdminModels = () => {
   return (

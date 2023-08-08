@@ -19,6 +19,8 @@ import Country from "../pages/country";
 import Colors from "../pages/colors";
 import Timeline from "../pages/timeline";
 import AdminModels from "../pages/admin/adminModels";
+import Messenger from "../pages/messenger";
+import Peoples from "../pages/peoples";
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +30,14 @@ export const router = createBrowserRouter([
   {
     path: "/show",
     element: <Show />,
+  },
+  {
+    path: "/im",
+    element: <Messenger />,
+  },
+  {
+    path: "/im/:id",
+    element: <Messenger />,
   },
   {
     path: "/artists",
@@ -40,6 +50,10 @@ export const router = createBrowserRouter([
   {
     path: "/contacts",
     element: <Contacts />,
+  },
+  {
+    path: "/peoples",
+    element: <Peoples />,
   },
   {
     path: "/picture/:id",

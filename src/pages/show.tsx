@@ -18,7 +18,6 @@ const Show = () => {
 
   const { data } = picturesApi.useGetAllPicturesQuery("");
 
-
   useEffect(() => {
     setTimeout(() => {
       setActive(true);

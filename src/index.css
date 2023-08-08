@@ -2,10 +2,95 @@
 @tailwind components;
 @tailwind utilities;
 
+/* custom checkbox style  */
+
+@font-face {
+  font-family: Poppins;
+  src: url(assets/fonts/Poppins-Regular.ttf);
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url(assets/fonts/Poppins-Medium.ttf);
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url(assets/fonts/Poppins-SemiBold.ttf);
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url(assets/fonts/Poppins-Bold.ttf);
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url(assets/fonts/Poppins-ExtraBold.ttf);
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: Baton Turbo;
+  src: url(assets/fonts/BatonTurboRegular.otf);
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: Baton Turbo;
+  src: url(assets/fonts/BatonTurboRegular.otf);
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: Baton Turbo;
+  src: url(assets/fonts/BatonTurboBook.otf);
+  font-weight: 450;
+}
+
+@font-face {
+  font-family: Baton Turbo;
+  src: url(assets/fonts/BatonTurboMedium.otf);
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: Baton Turbo;
+  src: url(assets/fonts/BatonTurboBold.otf);
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: Baton Turbo;
+  src: url(assets/fonts/BatonTurboHeavy.otf);
+  font-weight: 900;
+}
+
+:root {
+  /* color-scheme: light; */
+}
+
 body {
+  margin: 0;
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif; */
+  font-family: Baton Turbo, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scrollbar-gutter: stable;
+
   min-height: calc(100vh - 60px);
   position: relative;
   overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .benefit_number,
@@ -109,85 +194,38 @@ body {
   transform: rotate(45deg);
 }
 
-/* custom checkbox style  */
+/* messenger  */
 
-@font-face {
-  font-family: Poppins;
-  src: url(assets/fonts/Poppins-Regular.ttf);
-  font-weight: 400;
+.messenger-content {
+  font-family: Open Sans, sans-serif;
 }
 
-@font-face {
-  font-family: Poppins;
-  src: url(assets/fonts/Poppins-Medium.ttf);
-  font-weight: 500;
+body:has(.messenger) {
+  background-color: #1c1e25;
 }
 
-@font-face {
-  font-family: Poppins;
-  src: url(assets/fonts/Poppins-SemiBold.ttf);
-  font-weight: 600;
+/* spinner loader  */
+
+/* Spinner.css */
+.spinner {
+  display: inline-block;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
-@font-face {
-  font-family: Poppins;
-  src: url(assets/fonts/Poppins-Bold.ttf);
-  font-weight: 700;
+.inner-spinner {
+  border-top-color: #635bff;
 }
 
-@font-face {
-  font-family: Poppins;
-  src: url(assets/fonts/Poppins-ExtraBold.ttf);
-  font-weight: 800;
-}
-
-@font-face {
-  font-family: Baton Turbo;
-  src: url(assets/fonts/BatonTurboRegular.otf);
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: Baton Turbo;
-  src: url(assets/fonts/BatonTurboRegular.otf);
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: Baton Turbo;
-  src: url(assets/fonts/BatonTurboBook.otf);
-  font-weight: 450;
-}
-
-@font-face {
-  font-family: Baton Turbo;
-  src: url(assets/fonts/BatonTurboMedium.otf);
-  font-weight: 500;
-}
-
-@font-face {
-  font-family: Baton Turbo;
-  src: url(assets/fonts/BatonTurboBold.otf);
-  font-weight: 700;
-}
-
-@font-face {
-  font-family: Baton Turbo;
-  src: url(assets/fonts/BatonTurboHeavy.otf);
-  font-weight: 900;
-}
-
-body {
-  margin: 0;
-  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif; */
-  font-family: Baton Turbo, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: scale(1.5);
+    transform: rotate(260deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -16,6 +16,10 @@ const Countries = () => {
   const countries = countriesApi.useGetAllCountriesQuery("");
 
   useEffect(() => {
+    console.log(countries);
+  }, [countries]);
+
+  useEffect(() => {
     setTimeout(() => {
       setActive(true);
     }, 300);
@@ -73,7 +77,9 @@ const Countries = () => {
         {/* cards  */}
         <div className="mb-20">
           <Container border>
-            <h2 className="mb-4 font-medium text-title text-2xl" id="countries">Страны</h2>
+            <h2 className="mb-4 font-medium text-title text-2xl" id="countries">
+              Страны
+            </h2>
             <div className="flex flex-wrap">
               {countries?.data?.map((item) => {
                 return (
