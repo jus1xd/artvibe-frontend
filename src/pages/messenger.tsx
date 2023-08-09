@@ -68,8 +68,8 @@ const Messenger = () => {
 
   // генерация аватарок
   function generateRandomColor() {
-    const minBrightness = 70; // Минимальная яркость (0-255), ближе к 0 - темнее
-    const maxBrightness = 110; // Максимальная яркость (0-255), ближе к 255 - светлее
+    const minBrightness = 60; // Минимальная яркость (0-255), ближе к 0 - темнее
+    const maxBrightness = 90; // Максимальная яркость (0-255), ближе к 255 - светлее
 
     const randomColor = () => Math.floor(Math.random() * 256); // Генерация случайного числа от 0 до 255
 
@@ -89,7 +89,7 @@ const Messenger = () => {
     <div className="messenger">
       <Header theme="light" />
       <Container>
-        <div className="messenger-content w-full text-white flex justify-between mt-24">
+        <div className="messenger-content w-full text-white flex justify-between mt-16">
           {/* dialogs */}
           <div className="rounded-xl bg-[#20232B] w-1/4 mr-7 min-w-[200px] min-h-[20rem]">
             {/* search */}

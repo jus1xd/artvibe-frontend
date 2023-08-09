@@ -20,7 +20,7 @@ const DialogCard: React.FC<TProps> = ({
         <div className="flex items-center w-full">
           <div className={`flex items-center justify-center overflow-hidden min-w-[35px] min-h-[35px] rounded-full`} style={{backgroundColor: avatar}}>
             {/* <img src={avatar} alt="" /> */}
-            <div className="text-sm text-white font-bold">{name!.slice(0, 2).toUpperCase()}</div>
+            <div className="text-sm text-white font-bold">{name!.slice(0, 1).toUpperCase()}</div>
           </div>
           <div className="flex flex-col ml-2 w-full">
             <div className="font-bold text-sm">{name}</div>

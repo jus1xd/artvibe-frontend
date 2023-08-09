@@ -89,10 +89,14 @@ const Conversation: React.FC<TProps> = ({
   useEffect(() => {
     // Проверяем, есть ли в store диалог с сообщениями для данного диалога
     const existingDialog = dialogs.find(
-      (dialog) => dialog.idOfFriend === friendId
+      (dialog) => dialog._id === friendId
     );
+    // Проверяем устарели ли данные в сторе 
+    const isDataDeprecated = dialogs.find(
+      (dialog) => dialog._id === friendId
+    )?.isDeprecated
 
-    if (!existingDialog) {
+    if (!existingDialog || isDataDeprecated) {
       getMessages({
         clientId: userId,
         friendId: friendId,
@@ -149,7 +153,7 @@ const Conversation: React.FC<TProps> = ({
             >
               {/* <img src={avatar} alt="" /> */}
               <div className="text-sm text-white font-bold">
-                {friendName.slice(0, 2).toUpperCase()}
+                {friendName.slice(0, 1).toUpperCase()}
               </div>
             </div>
             <span className="font-bold ml-2">{friendName}</span>{" "}

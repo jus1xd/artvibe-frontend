@@ -5,7 +5,7 @@ import { act } from "@react-three/fiber";
 export type TMessages = {
   dialogs: {
     _id: string;
-    idOfFriend: string;
+    isDeprecated: boolean;
     messages: IMessage[];
   }[];
 };
@@ -21,23 +21,30 @@ const messagesSlice = createSlice({
     setMessages: (state, action) => {
       const { friendId } = action.payload.length > 0 ? action.payload[0] : "";
 
-      const dialog = state.dialogs.find(
-        (dialog) => dialog.idOfFriend === friendId
-      );
+      const dialog = state.dialogs.find((dialog) => dialog._id === friendId);
 
       if (dialog) {
         dialog.messages.push(action.payload);
       } else {
         state.dialogs.push({
-          _id: "232323fdsfdsf",
-          idOfFriend: friendId,
+          _id: friendId,
+          isDeprecated: false,
           messages: action.payload,
         });
+      }
+    },
+    setMessagesDeprecated: (state, action) => {
+      const { friendId } = action.payload.length > 0 ? action.payload[0] : "";
+
+      const dialog = state.dialogs.find((dialog) => dialog._id === friendId);
+
+      if (dialog) {
+        dialog.isDeprecated = true;
       }
     },
   },
   extraReducers: {},
 });
 
-export const { setMessages } = messagesSlice.actions;
+export const { setMessages, setMessagesDeprecated } = messagesSlice.actions;
 export default messagesSlice;

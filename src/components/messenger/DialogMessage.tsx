@@ -57,7 +57,7 @@ const DialogMessage: React.FC<TProps> = ({
         <div className="ml-2 text-sm">{senderName}</div>
       </div>
       <div className="max-w-[60%] flex items-end flex-row">
-        <div className="flex flex-col w-full  py-[10px] px-3 bg-accent rounded-xl rounded-tl-none">
+        <div className="flex flex-col w-full  py-[10px] px-3 bg-darkBlueGray rounded-xl rounded-tl-none">
           <div className="flex items-center w-full">
             <div className="text-sm w-full break-words">{messageText}</div>
           </div>

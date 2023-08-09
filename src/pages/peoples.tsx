@@ -13,8 +13,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { IFriend } from "../models/IFriend";
 
 import { userApi } from "../store/services/userService";
-import { addFriend, setFriends } from "../store/slices/friendsSlice";
-import { deletePeople } from "../store/slices/peoplesSlice";
+import { addFriend, deleteFriend } from "../store/slices/friendsSlice";
 
 const socket = io("http://localhost:5003");
 
@@ -153,6 +152,8 @@ const Peoples = () => {
   ) => {
     addToFriends(dataForFriendsActions).then((res) => {
       socket.emit("friendAdded", { userId, peopleId });
+      // @ts-ignore 
+      dispatch(addFriend(res.data.friendUser))
     });
   };
 
@@ -163,6 +164,8 @@ const Peoples = () => {
   ) => {
     removeFromFriends(dataForFriendsActions).then((res) => {
       socket.emit("friendRemoved", { userId, peopleId });
+      // @ts-ignore 
+      dispatch(deleteFriend(res.data.friendUser))
     });
   };
 
@@ -171,8 +174,32 @@ const Peoples = () => {
       <Header theme="light" />
       <Container>
         <div className="messenger-content w-full text-white mt-24">
+          <h1 className="text-2xl font-semibold mb-7">Друзья</h1>
+          <div className="flex flex-wrap min-h-[100px] items-center">
+            {dataFriends && dataFriends.length > 0 ? (
+              dataFriends.map((item) => (
+                <PeopleCard
+                  key={item._id!}
+                  peopleId={item._id!}
+                  avatar={avatar1}
+                  clientId={userId}
+                  isFriend={true}
+                  isFriendLoading={getPeoples.isLoading}
+                  removeFromFriendsHandler={removeFromFriendsHandler}
+                  name={item.name}
+                  email={""}
+                />
+              ))
+            ) : (
+              <div className="w-full h-10 flex items-center justify-center">
+                <div className="text-[#ffffff80] text-lg py-5">
+                  У вас пока нет друзей
+                </div>
+              </div>
+            )}
+          </div>
           <h1 className="text-2xl font-semibold mt-10 mb-7">Люди</h1>
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap min-h-[100px] h-auto items-center">
             {dataPeoples && dataPeoples.length > 0 ? (
               dataPeoples.map((item: any) => (
                 <PeopleCard
@@ -188,30 +215,12 @@ const Peoples = () => {
                 />
               ))
             ) : (
-              <div className="w-full h-10 flex items-center justify-center">
-                <div className="text-[#ffffff80] text-lg mt-3">
+              <div className="w-full flex items-center justify-center">
+                <div className="text-[#ffffff80] text-lg">
                   Все люди у вас в друзьях
                 </div>
               </div>
             )}
-          </div>
-          <h1 className="text-2xl font-semibold mt-10 mb-7">Друзья</h1>
-          <div className="flex flex-wrap">
-            {dataFriends &&
-              dataFriends.length > 0 &&
-              dataFriends.map((item) => (
-                <PeopleCard
-                  key={item._id!}
-                  peopleId={item._id!}
-                  avatar={avatar1}
-                  clientId={userId}
-                  isFriend={true}
-                  isFriendLoading={getPeoples.isLoading}
-                  removeFromFriendsHandler={removeFromFriendsHandler}
-                  name={item.name}
-                  email={""}
-                />
-              ))}
           </div>
         </div>
       </Container>
