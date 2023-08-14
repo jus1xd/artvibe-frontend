@@ -200,6 +200,10 @@ body {
   font-family: Open Sans, sans-serif;
 }
 
+.profile-content {
+  font-family: "Baton Turbo", sans-serif;
+}
+
 body:has(.messenger) {
   background-color: #1c1e25;
 }

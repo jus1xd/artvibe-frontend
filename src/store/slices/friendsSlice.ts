@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IMessage } from "../../models/IMessage";
 import { IUser } from "../../models/IUser";
+import { IFriend } from "../../models/IFriend";
 
 export type TFriends = {
-  friends: Array<IUser>;
-  isDeprecated: boolean,
+  friends: Array<IFriend>;
+  isDeprecated: boolean;
   isLoading: boolean;
   error: string;
 };
@@ -26,6 +27,24 @@ const friendsSlice = createSlice({
     addFriend: (state, action) => {
       state.friends.push(action.payload);
     },
+    setMessages: (state, action) => {
+      const { friendId } = action.payload.length > 0 ? action.payload[0] : "";
+
+      const dialog = state.friends.find((dialog) => dialog._id === friendId);
+
+      if (dialog) {
+        dialog.messages.push(action.payload);
+      }
+    },
+    addMessage: (state, action) => {
+      const { friendId } = action.payload;
+
+      const dialog = state.friends.find((dialog) => dialog._id === friendId);
+
+      if (dialog) {
+        dialog.messages.push(action.payload);
+      }
+    },
     deleteFriend: (state, action) => {
       if (state.friends) {
         state.friends = state.friends.filter(
@@ -37,5 +56,6 @@ const friendsSlice = createSlice({
   extraReducers: {},
 });
 
-export const { setFriends, addFriend, deleteFriend } = friendsSlice.actions;
+export const { setFriends, setMessages, addFriend, addMessage, deleteFriend } =
+  friendsSlice.actions;
 export default friendsSlice;

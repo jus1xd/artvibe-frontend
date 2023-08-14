@@ -25,6 +25,8 @@ const Header: React.FC<TProps> = ({ theme }) => {
   const userRole = token ? jwt_decode(token).roles : "guest";
   // @ts-ignore
   const userLogin = token ? jwt_decode(token).username : null;
+  // @ts-ignore
+  const userId = token ? jwt_decode(token).id : null;
 
   const navigate = useNavigate();
 
@@ -35,6 +37,29 @@ const Header: React.FC<TProps> = ({ theme }) => {
     navigate("/");
   };
 
+  const navLinksList = [
+    {
+      title: "Страны",
+      link: "/countries",
+    },
+    {
+      title: "Выставки",
+      link: "/show",
+    },
+    {
+      title: "Художники",
+      link: "/artists",
+    },
+    {
+      title: "О нас",
+      link: "/about",
+    },
+    {
+      title: "Контакты",
+      link: "/contacts",
+    },
+  ];
+
   return (
     <header className="mt-5 relative z-10">
       <Container>
@@ -43,22 +68,16 @@ const Header: React.FC<TProps> = ({ theme }) => {
             <NavLink to="/">
               <img src={logoLight} alt="" />
             </NavLink>
-            <nav className="flex text-white">
-              <NavLink to="/countries" className="ml-7 font-medium text-white">
-                Страны
-              </NavLink>
-              <NavLink to="/show" className="ml-7 font-medium text-white">
-                Выставки
-              </NavLink>
-              <NavLink to="/artists" className="ml-7 font-medium text-white">
-                Художники
-              </NavLink>
-              <NavLink to="/about" className="ml-7 font-medium text-white">
-                О нас
-              </NavLink>
-              <NavLink to="/contacts" className="ml-7 font-medium text-white">
-                Контакты
-              </NavLink>
+            <nav className="text-white hidden sm:flex">
+              {navLinksList.map((item, index) => (
+                <NavLink
+                  key={index}
+                  to={item.link}
+                  className={`ml-4 font-medium text-sm md:text-base md:ml-7 text-white`}
+                >
+                  {item.title}
+                </NavLink>
+              ))}
             </nav>
             {token ? (
               userRole === "admin" ? (
@@ -88,20 +107,25 @@ const Header: React.FC<TProps> = ({ theme }) => {
                     <img src={messagesLight} alt="Мессенджер" />
                   </NavLink>
                   <div
-                    className="relative"
+                    className="relative min-w-[65px] flex justify-end"
                     onClick={() => setMenuActive(!menuActive)}
                   >
                     <Button type="secondary" size="md" text={userLogin} />
-                    {menuActive && (
-                      <div className="absolute z-10 top-10 bg-white rounded-3xl overflow-hidden w-full">
-                        <div
-                          onClick={logoutHandler}
-                          className="p-1 bg-redpal-200 text-redpal-500 cursor-pointer text-center"
-                        >
-                          Выйти
-                        </div>
+                    <div
+                      className={`${
+                        menuActive ? "h-[64px]" : "h-0"
+                      } transition-all absolute z-10 top-10 rounded-xl overflow-hidden w-auto`}
+                    >
+                      <NavLink to={`/${userId}`}>
+                        <Button type="secondary" size="sm" text={"Профиль"} />
+                      </NavLink>
+                      <div
+                        onClick={logoutHandler}
+                        className="px-2 py-1 text-redpal-400 cursor-pointer text-center"
+                      >
+                        <Button type="secondary" size="sm" text={"Выйти"} />
                       </div>
-                    )}
+                    </div>
                   </div>
                 </div>
               )
@@ -116,22 +140,16 @@ const Header: React.FC<TProps> = ({ theme }) => {
             <NavLink to="/">
               <img src={logoDark} alt="" />
             </NavLink>
-            <nav className="flex">
-              <NavLink to="/countries" className="ml-7 font-medium text-title">
-                Страны
-              </NavLink>
-              <NavLink to="/show" className="ml-7 font-medium text-title">
-                Выставки
-              </NavLink>
-              <NavLink to="/artists" className="ml-7 font-medium text-title">
-                Художники
-              </NavLink>
-              <NavLink to="/about" className="ml-7 font-medium text-title">
-                О нас
-              </NavLink>
-              <NavLink to="/contacts" className="ml-7 font-medium text-title">
-                Контакты
-              </NavLink>
+            <nav className="hidden sm:flex">
+              {navLinksList.map((item, index) => (
+                <NavLink
+                  key={index}
+                  to={item.link}
+                  className={`ml-4 font-medium text-sm md:text-base md:ml-7 text-title`}
+                >
+                  {item.title}
+                </NavLink>
+              ))}
             </nav>
             {token ? (
               userRole === "admin" ? (
@@ -165,16 +183,21 @@ const Header: React.FC<TProps> = ({ theme }) => {
                     onClick={() => setMenuActive(!menuActive)}
                   >
                     <Button type="primary" size="md" text={userLogin} />
-                    {menuActive && (
-                      <div className="absolute z-10 top-10 bg-white rounded-3xl overflow-hidden w-full">
-                        <div
-                          onClick={logoutHandler}
-                          className="p-1 bg-redpal-200 text-redpal-500 cursor-pointer text-center"
-                        >
-                          Выйти
-                        </div>
+                    <div
+                      className={`${
+                        menuActive ? "h-[67px]" : "h-0"
+                      } transition-all absolute z-10 top-10 rounded-xl overflow-hidden w-auto`}
+                    >
+                      <NavLink to={`/${userId}`}>
+                        <Button type="primary" size="sm" text={"Профиль"} />
+                      </NavLink>
+                      <div
+                        onClick={logoutHandler}
+                        className="px-2 py-1 cursor-pointer text-center"
+                      >
+                        <Button type="primary" size="sm" text={"Выйти"} />
                       </div>
-                    )}
+                    </div>
                   </div>
                 </div>
               )

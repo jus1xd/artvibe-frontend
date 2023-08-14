@@ -1,50 +1,55 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { IMessage } from "../../models/IMessage";
-import { act } from "@react-three/fiber";
+// import { createSlice } from "@reduxjs/toolkit";
+// import { IMessage } from "../../models/IMessage";
+// import { act } from "@react-three/fiber";
 
-export type TMessages = {
-  dialogs: {
-    _id: string;
-    isDeprecated: boolean;
-    messages: IMessage[];
-  }[];
-};
+// export type TMessages = {
+//   dialogs: {
+//     _id: string;
+//     messages: IMessage[];
+//   }[];
+// };
 
-const initialState: TMessages = {
-  dialogs: [],
-};
+// const initialState: TMessages = {
+//   dialogs: [],
+// };
 
-const messagesSlice = createSlice({
-  name: "friends",
-  initialState,
-  reducers: {
-    setMessages: (state, action) => {
-      const { friendId } = action.payload.length > 0 ? action.payload[0] : "";
+// const messagesSlice = createSlice({
+//   name: "messages",
+//   initialState,
+//   reducers: {
+//     setMessages: (state, action) => {
+//       const { friendId } = action.payload.length > 0 ? action.payload[0] : "";
 
-      const dialog = state.dialogs.find((dialog) => dialog._id === friendId);
+//       const dialog = state.dialogs.find((dialog) => dialog._id === friendId);
 
-      if (dialog) {
-        dialog.messages.push(action.payload);
-      } else {
-        state.dialogs.push({
-          _id: friendId,
-          isDeprecated: false,
-          messages: action.payload,
-        });
-      }
-    },
-    setMessagesDeprecated: (state, action) => {
-      const { friendId } = action.payload.length > 0 ? action.payload[0] : "";
+//       if (dialog) {
+//         dialog.messages.push(action.payload);
+//       } else {
+//         state.dialogs.push({
+//           _id: friendId,
+//           messages: action.payload,
+//         });
+//       }
+//     },
+    // addMessage: (state, action) => {
+    //   const { friendId } = action.payload;
 
-      const dialog = state.dialogs.find((dialog) => dialog._id === friendId);
+    //   const dialog = state.dialogs.find((dialog) => dialog._id === friendId);
 
-      if (dialog) {
-        dialog.isDeprecated = true;
-      }
-    },
-  },
-  extraReducers: {},
-});
+    //   if (dialog) {
+    //     dialog.messages.push(action.payload);
+    //   } else {
+    //     state.dialogs.push({
+    //       _id: friendId,
+    //       messages: [action.payload],
+    //     });
+    //   }
+    // },
+//   },
+//   extraReducers: {},
+// });
 
-export const { setMessages, setMessagesDeprecated } = messagesSlice.actions;
-export default messagesSlice;
+// export const { setMessages, addMessage } = messagesSlice.actions;
+// export default messagesSlice;
+
+export {}

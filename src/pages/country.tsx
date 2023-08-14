@@ -19,13 +19,6 @@ const Country = () => {
 
   // const [cardPictureLoaded, setCardPictureLoaded] = useState<boolean>(false)
 
-  useEffect(() => {
-    console.log(countries);
-  }, [countries]);
-
-  // useEffect(() => {
-  //   console.log("Pictures loaded" + cardPictureLoaded);
-  // }, [cardPictureLoaded]);
 
   let generalLoadingStatus: boolean =
     authors.isLoading || pictures.isLoading || countries.isLoading;
@@ -95,8 +88,7 @@ const Country = () => {
               </div>
             ) : generalStatus === "fullfilled" ? (
               elements
-            ) :
-            // @ts-ignore
+            ) : // @ts-ignore
             picturesOfAuthors?.length > 0 ? (
               // @ts-ignore
               picturesOfAuthors?.map((author) => {

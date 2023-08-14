@@ -1,34 +1,34 @@
 import { useEffect, useRef, useState } from "react";
 
-import avatar1 from "../assets/img/messenger/avatar1.png";
-import avatar3 from "../assets/img/messenger/avatar3.png";
 import sendBtn from "../assets/img/messenger/sendBtn.svg";
 
 import DialogMessage from "../components/messenger/DialogMessage";
 import { messagesApi } from "../store/services/messageService";
 import jwt_decode from "jwt-decode";
 import { IMessage } from "../models/IMessage";
-import { userApi } from "../store/services/userService";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { setMessages } from "../store/slices/messagesSlice";
+import { useAppDispatch } from "../hooks/redux";
 import { io } from "socket.io-client";
+import { addMessage } from "../store/slices/friendsSlice";
 
 const socket = io("http://localhost:5003");
 
 type TProps = {
   friendId: string;
-  avatar: string;
-  setLastMessage: (message: string) => void;
+  friendName: string;
+  friendAvatar: string;
+  messages: IMessage[];
 };
 
 const Conversation: React.FC<TProps> = ({
   friendId,
-  avatar,
-  setLastMessage,
+  friendName,
+  friendAvatar,
+  messages,
 }) => {
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
-  const [sortedMessages, setSortedMessages] = useState<IMessage[]>([]);
+  const infiniteScrollRef = useRef<HTMLDivElement | null>(null);
+  const [sortedMessages, setSortedMessages] = useState<IMessage[]>(messages);
   const [messageInputValue, setMessageInputValue] = useState<string>("");
 
   // получить токен из localStorage
@@ -36,81 +36,48 @@ const Conversation: React.FC<TProps> = ({
   // @ts-ignore
   const userId = token ? jwt_decode(token).id : "";
 
-  const dialogs = useAppSelector((state) => state.messages.dialogs); // Замените "messages" на имя вашего среза
-  const friends = useAppSelector((state) => state.friends.friends);
-
-  const [getMessages] = messagesApi.useGetMessagesMutation();
   const [sendMessage] = messagesApi.useSendMessageMutation();
-  const [getFriends] = userApi.useGetFriendsMutation();
 
-  // получить имя друга с которым общаемся по id
-  const [friendName, setFriendName] = useState<string>("");
-  const [friendAvatar, setFriendAvatar] = useState<string>("");
-
-  // form data для получения друзей
-  const dataForGetFriendlist = new FormData();
-  dataForGetFriendlist.append("userId", userId);
-
-  useEffect(() => {
-    if (!friends) {
-      getFriends(dataForGetFriendlist).then((res) => {
-        // @ts-ignore
-        console.log("hereResFr", res.data);
-        // @ts-ignore
-        res.data.map((item: any) => {
-          if (item._id === friendId) {
-            setFriendName(item.name);
-            setFriendAvatar(item.avatar);
-          }
-        });
-      });
-    } else {
-      console.log("friends", friends);
-      friends.map((item) => {
-        if (item._id === friendId) {
-          setFriendName(item.name);
-          setFriendAvatar(item.avatar);
-        }
+  // scrollToBottom
+  const scrollToBottom = () => {
+    if (infiniteScrollRef.current) {
+      infiniteScrollRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
       });
     }
-  }, [friendId, friends]);
+  };
+
+  // функция для получения сообщений
 
   useEffect(() => {
-    socket.on("sendMessage", (message) => {
-      setSortedMessages((prevMessages) => [...prevMessages, message]);
+    // автофокус на input при загрузке страницы
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+
+    setSortedMessages(messages);
+  }, [friendId]);
+
+  useEffect(() => {
+    socket.on("sendMessage", (message: any) => {
+      if (
+        (message.friendId === userId || message.senderId === userId) &&
+        (message.friendId === friendId || message.senderId === friendId)
+      ) {
+        dispatch(addMessage(message));
+        setSortedMessages((prevMessages) => [...prevMessages, message]);
+      }
     });
 
     return () => {
       socket.off("sendMessage");
     };
-  }, []);
+  }, [friendId]);
 
-  // получить сообщения с сервера
   useEffect(() => {
-    // Проверяем, есть ли в store диалог с сообщениями для данного диалога
-    const existingDialog = dialogs.find(
-      (dialog) => dialog._id === friendId
-    );
-    // Проверяем устарели ли данные в сторе 
-    const isDataDeprecated = dialogs.find(
-      (dialog) => dialog._id === friendId
-    )?.isDeprecated
-
-    if (!existingDialog || isDataDeprecated) {
-      getMessages({
-        clientId: userId,
-        friendId: friendId,
-      }).then((res) => {
-        // @ts-ignore
-        dispatch(setMessages(res.data));
-        // @ts-ignore
-        setSortedMessages(res.data);
-      });
-    } else {
-      // @ts-ignore
-      setSortedMessages(existingDialog?.messages);
-    }
-  }, [userId, friendId]);
+    console.log("что в сортед мессагес", sortedMessages);
+  }, [sortedMessages]);
 
   // новое сообщение
   const newMessageData = {
@@ -122,13 +89,9 @@ const Conversation: React.FC<TProps> = ({
   // sendMessage
   const sendMessageFunction = () => {
     if (messageInputValue) {
-      sendMessage(newMessageData);
-      socket.emit("sendMessage", {
-        id: userId,
-        friendId: friendId,
-        messageText: messageInputValue,
+      sendMessage(newMessageData).then((res: any) => {
+        setMessageInputValue("");
       });
-      setMessageInputValue("");
     }
   };
 
@@ -142,20 +105,29 @@ const Conversation: React.FC<TProps> = ({
   return (
     <div className="w-3/4 flex justify-between">
       {/* chat-section */}
-      <div className="rounded-xl bg-[#20232B] w-3/4 mr-7 min-w-[450px] h-[600px] overflow-hidden">
+      <div className="w-full rounded-xl bg-[#20232B] min-w-[450px] h-[600px] overflow-hidden">
         {/* black bar  */}
         <div className="bg-black w-full flex justify-between px-6 py-2">
           <div className="flex items-center text-sm">
             Беседа с
-            <div
-              className={`ml-2 flex items-center justify-center overflow-hidden min-w-[30px] min-h-[30px] rounded-full`}
-              style={{ backgroundColor: avatar }}
-            >
-              {/* <img src={avatar} alt="" /> */}
-              <div className="text-sm text-white font-bold">
-                {friendName.slice(0, 1).toUpperCase()}
+            {friendAvatar ? (
+              <div className="ml-2 flex items-center justify-center overflow-hidden w-[30px] h-[30px] rounded-full">
+                <img
+                  src={`http://localhost:5003/${friendAvatar}`}
+                  className="scale-[1.5]"
+                  alt=""
+                />
               </div>
-            </div>
+            ) : (
+              <div
+                className={`ml-2 flex items-center justify-center overflow-hidden min-w-[30px] min-h-[30px] rounded-full`}
+                style={{ backgroundColor: "#ffffff30" }}
+              >
+                <div className="text-sm text-white font-bold">
+                  {friendName.slice(0, 1).toUpperCase()}
+                </div>
+              </div>
+            )}
             <span className="font-bold ml-2">{friendName}</span>{" "}
           </div>
           <div className="text-sm cursor-pointer hover:bg-[#ffffff10] transition-colors rounded-md  px-3 py-1 w-max">
@@ -163,26 +135,34 @@ const Conversation: React.FC<TProps> = ({
           </div>
         </div>
         {/* messages */}
-        <div className="flex flex-col-reverse pt-3 overflow-y-scroll h-[calc(100%-110px)] mx-6">
-          {sortedMessages.length > 0 ? (
-            sortedMessages
-              .slice()
-              .reverse()
-              .map((item) => (
-                <DialogMessage
-                  key={item._id}
-                  senderId={item.senderId}
-                  senderName={item.senderName}
-                  avatar={item.senderAvatar || avatar1}
-                  messageText={item.text}
-                  date={item.date}
-                />
-              ))
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="text-[#ffffff80] text-sm mt-7">Нет сообщений</div>
+        <div className="flex justify-end items-end overflow-hidden h-[calc(100%-110px)] mx-6">
+          <div className="flex flex-col-reverse pt-3 w-full h-full overflow-y-scroll ">
+            <div ref={infiniteScrollRef} className="w-full h-max">
+              {sortedMessages.length > 0 ? (
+                sortedMessages.map((item: any, index) => (
+                  <DialogMessage
+                    key={item._id}
+                    senderId={item.senderId}
+                    senderName={item.senderName}
+                    avatar={item.senderAvatar || ""}
+                    messageText={item.text}
+                    date={item.date}
+                    isStacked={
+                      sortedMessages.length > 0 && index > 0
+                        ? sortedMessages[index - 1].senderId === item.senderId
+                        : false
+                    }
+                  />
+                ))
+              ) : (
+                <div className="w-full h-[52vh] flex items-center justify-center">
+                  <div className="text-[#ffffff80] text-sm mt-7">
+                    Нет сообщений
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
         {/* input */}
         <div className="flex justify-between items-center px-6 py-2 relative">
@@ -202,8 +182,6 @@ const Conversation: React.FC<TProps> = ({
           </div>
         </div>
       </div>
-      {/* карточка собеседника */}
-      <div className="rounded-xl bg-[#20232B] w-1/4 h-14"></div>
     </div>
   );
 };

@@ -26,20 +26,14 @@ const Card: React.FC<TProps> = ({
 }) => {
   const [cardPictureLoaded, setCardPictureLoaded] = useState<boolean>(false);
 
-  useEffect(() => {
-    console.log("Pictures loaded" + cardPictureLoaded);
-  }, [cardPictureLoaded]);
-
   // отображение картинки после полной загрузки
   useEffect(() => {
     const image = new Image();
     if (img.includes("/static")) {
-      image.src = `${img}`;;
+      image.src = `${img}`;
     } else {
       image.src = `http://localhost:5003/${img}`;
     }
-
-    console.log("image", img);
 
     const handleSetLoaded = () => {
       if (setCardPictureLoaded) {

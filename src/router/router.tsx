@@ -21,6 +21,7 @@ import Timeline from "../pages/timeline";
 import AdminModels from "../pages/admin/adminModels";
 import Messenger from "../pages/messenger";
 import Peoples from "../pages/peoples";
+import Profile from "../pages/profile";
 
 export const router = createBrowserRouter([
   {
@@ -138,6 +139,10 @@ export const router = createBrowserRouter([
         <AdminModels />
       </ProtectedRoute>
     ),
+  },
+  {
+    path: "/:id",
+    element: <Profile />,
   },
   {
     path: "/",

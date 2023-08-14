@@ -17,11 +17,11 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    register(state, action: PayloadAction<{ token: string }>) {
+    register(state, action) {
       state.token = action.payload.token;
       localStorage.setItem("token", action.payload.token);
     },
-    login(state, action: PayloadAction<{ token: string }>) {
+    login(state, action) {
       state.token = action.payload.token;
       localStorage.setItem("token", action.payload.token);
     },

@@ -14,6 +14,7 @@ const Register = () => {
   const [email, setEmail] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [avatar, setAvatar] = useState<File | null>(null);
   const [repeatPassword, setRepeatPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -23,20 +24,19 @@ const Register = () => {
   const { register } = useActions();
 
   const registerHandler = () => {
-    // @ts-ignore
-    createUser({
-      name,
-      email,
-      username,
-      password,
-      repeatPassword,
-    });
+    const userData = new FormData();
+    userData.append("name", name);
+    userData.append("avatar", avatar as File);
+    userData.append("username", username);
+    userData.append("email", email);
+    userData.append("role", "user");
+    userData.append("password", password);
+    createUser(userData).unwrap();
     // navigate("/show");
   };
 
   useEffect(() => {
     if (data) {
-      // @ts-ignore
       register(data);
       navigate("/show");
     }
@@ -123,6 +123,25 @@ const Register = () => {
                         placeholder="Повторите пароль"
                         setValue={setRepeatPassword}
                       />
+                    </div>
+
+                    <div className="mt-3 w-full">
+                      <label
+                        htmlFor="fileLoader"
+                        className="px-3 w-full cursor-pointer py-1 mb-2 outline-accent rounded-md border border-accent opacity-80 transition hover:opacity-100"
+                      >
+                        <input
+                          type="file"
+                          required
+                          id="fileLoader"
+                          onChange={(e) => setAvatar(e.target.files![0])}
+                          placeholder="Изображение"
+                          className="appearance-none hidden"
+                        />
+                        <span className="text-accent cursor-pointer">
+                          Загрузить фото
+                        </span>
+                      </label>
                     </div>
                     {/* write custom checkbox here  */}
                     <div className="flex items-center mt-4">

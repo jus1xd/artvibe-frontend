@@ -2,7 +2,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IUser } from "../../models/IUser";
 
-const token = localStorage.getItem("token")
+const token = localStorage.getItem("token");
 
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -17,28 +17,29 @@ export const authApi = createApi({
         method: "GET",
         mode: "cors",
         headers: {
-          "Authorization": `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }),
-      providesTags: (result) => ['Auth']
+      providesTags: (result) => ["Auth"],
     }),
-    createUser: builder.mutation<IUser, string>({
+    createUser: builder.mutation<string, FormData>({
       query: (user) => ({
         url: `api/registration`,
         method: "POST",
         mode: "cors",
+        format: "formdata",
         body: user,
       }),
-      invalidatesTags: ['Auth']
+      invalidatesTags: ["Auth"],
     }),
-    loginUser: builder.mutation<IUser, string>({
+    loginUser: builder.mutation<string, IUser>({
       query: (user) => ({
         url: `api/login`,
         method: "POST",
         mode: "cors",
         body: user,
       }),
-      invalidatesTags: ['Auth']
+      invalidatesTags: ["Auth"],
     }),
     updateUser: builder.mutation<IUser, IUser>({
       query: (id) => ({
@@ -47,7 +48,7 @@ export const authApi = createApi({
         mode: "cors",
         body: id,
       }),
-      invalidatesTags: ['Auth']
+      invalidatesTags: ["Auth"],
     }),
     deleteUser: builder.mutation<IUser, string>({
       query: (id) => ({
@@ -56,10 +57,10 @@ export const authApi = createApi({
         mode: "cors",
         body: id,
         headers: {
-          "Authorization": `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }),
-      invalidatesTags: ['Auth']
+      invalidatesTags: ["Auth"],
     }),
   }),
 });

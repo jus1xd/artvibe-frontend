@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "../components/Container";
 import Header from "../components/Header";
-import { IUser } from "../models/IUser";
-
-import avatar1 from "../assets/img/messenger/avatar1.png";
 
 import jwt_decode from "jwt-decode";
 import PeopleCard from "../components/PeopleCard";
@@ -14,6 +11,7 @@ import { IFriend } from "../models/IFriend";
 
 import { userApi } from "../store/services/userService";
 import { addFriend, deleteFriend } from "../store/slices/friendsSlice";
+import ProfileNav from "../components/ProfileNav";
 
 const socket = io("http://localhost:5003");
 
@@ -21,8 +19,8 @@ const Peoples = () => {
   const dispatch = useAppDispatch();
   const friends = useAppSelector((state) => state.friends.friends);
   // массив всех людей
-  const [dataPeoples, setDataPeoples] = useState<IUser[]>([]);
-  const [dataFriends, setDataFriends] = useState<IUser[]>([]);
+  const [dataPeoples, setDataPeoples] = useState<IFriend[]>([]);
+  const [dataFriends, setDataFriends] = useState<IFriend[]>([]);
 
   // запрос на получение моих друзей
   const [getFriends] = userApi.useGetFriendsMutation();
@@ -33,25 +31,20 @@ const Peoples = () => {
   const getPeoples = userApi.useGetPeoplesQuery("");
 
   // получить токен из localStorage
-  const token = localStorage.getItem("token");
+  const token: string = localStorage.getItem("token") || "";
   // @ts-ignore
   const userId: string = token ? jwt_decode(token).id : "";
 
-  // form data для получения друзей
-  const dataForGetFriendlist = new FormData();
-  dataForGetFriendlist.append("userId", userId);
-
   // получение друзей при загрузке страницы
+
   useEffect(() => {
     if (getPeoples.data && getPeoples.data.length > 0) {
       if (friends.length <= 0) {
-        getFriends(dataForGetFriendlist).then((res) => {
-          // @ts-ignore
+        getFriends(userId).then((res: any) => {
           setDataFriends(
             getPeoples
               .data!.filter((item: any) => item._id !== userId)
               .filter((item: any) =>
-                // @ts-ignore
                 res.data.some((friend: any) => friend._id === item._id)
               )
           );
@@ -60,7 +53,6 @@ const Peoples = () => {
               .data!.filter((item: any) => item._id !== userId)
               .filter(
                 (item: any) =>
-                  // @ts-ignore
                   !res.data.some((friend: any) => friend._id === item._id)
               )
           );
@@ -70,7 +62,6 @@ const Peoples = () => {
           getPeoples
             .data!.filter((item: any) => item._id !== userId)
             .filter((item: any) =>
-              // @ts-ignore
               friends.some((friend: any) => friend._id === item._id)
             )
         );
@@ -79,7 +70,6 @@ const Peoples = () => {
             .data!.filter((item: any) => item._id !== userId)
             .filter(
               (item: any) =>
-                // @ts-ignore
                 !friends.some((friend: any) => friend._id === item._id)
             )
         );
@@ -150,10 +140,15 @@ const Peoples = () => {
     dataForFriendsActions: FormData,
     peopleId: string
   ) => {
-    addToFriends(dataForFriendsActions).then((res) => {
+    addToFriends(dataForFriendsActions).then((res: any) => {
       socket.emit("friendAdded", { userId, peopleId });
-      // @ts-ignore 
-      dispatch(addFriend(res.data.friendUser))
+      let newFriend = {
+        _id: peopleId,
+        name: res.data.friendUser.name,
+        avatar: res.data.friendUser.avatar,
+        messages: [],
+      };
+      dispatch(addFriend(newFriend));
     });
   };
 
@@ -162,10 +157,9 @@ const Peoples = () => {
     dataForFriendsActions: FormData,
     peopleId: string
   ) => {
-    removeFromFriends(dataForFriendsActions).then((res) => {
+    removeFromFriends(dataForFriendsActions).then((res: any) => {
       socket.emit("friendRemoved", { userId, peopleId });
-      // @ts-ignore 
-      dispatch(deleteFriend(res.data.friendUser))
+      dispatch(deleteFriend(res.data.friendUser));
     });
   };
 
@@ -173,54 +167,54 @@ const Peoples = () => {
     <div className="messenger">
       <Header theme="light" />
       <Container>
-        <div className="messenger-content w-full text-white mt-24">
-          <h1 className="text-2xl font-semibold mb-7">Друзья</h1>
-          <div className="flex flex-wrap min-h-[100px] items-center">
-            {dataFriends && dataFriends.length > 0 ? (
-              dataFriends.map((item) => (
-                <PeopleCard
-                  key={item._id!}
-                  peopleId={item._id!}
-                  avatar={avatar1}
-                  clientId={userId}
-                  isFriend={true}
-                  isFriendLoading={getPeoples.isLoading}
-                  removeFromFriendsHandler={removeFromFriendsHandler}
-                  name={item.name}
-                  email={""}
-                />
-              ))
-            ) : (
-              <div className="w-full h-10 flex items-center justify-center">
-                <div className="text-[#ffffff80] text-lg py-5">
-                  У вас пока нет друзей
-                </div>
-              </div>
-            )}
+        <div className="flex mt-16">
+          <div className="messenger-sidebar mr-5">
+            <ProfileNav />
           </div>
-          <h1 className="text-2xl font-semibold mt-10 mb-7">Люди</h1>
-          <div className="flex flex-wrap min-h-[100px] h-auto items-center">
-            {dataPeoples && dataPeoples.length > 0 ? (
-              dataPeoples.map((item: any) => (
-                <PeopleCard
-                  key={item._id!}
-                  peopleId={item._id!}
-                  avatar={avatar1}
-                  clientId={userId}
-                  isFriend={false}
-                  isFriendLoading={getPeoples.isLoading}
-                  addToFriendsHandler={addToFriendsHandler}
-                  name={item.name}
-                  email={item.email}
-                />
-              ))
-            ) : (
-              <div className="w-full flex items-center justify-center">
-                <div className="text-[#ffffff80] text-lg">
-                  Все люди у вас в друзьях
+
+          <div className="messenger-content w-full text-white">
+            <h1 className="text-2xl font-semibold mb-7">Друзья</h1>
+            <div className="flex flex-wrap min-h-[100px] items-center">
+              {dataFriends && dataFriends.length > 0 ? (
+                dataFriends.map((item: IFriend) => (
+                  <PeopleCard
+                    key={item._id}
+                    dataFriend={item}
+                    clientId={userId}
+                    isFriend={true}
+                    addToFriendsHandler={addToFriendsHandler}
+                    removeFromFriendsHandler={removeFromFriendsHandler}
+                  />
+                ))
+              ) : (
+                <div className="w-full h-10 flex items-center justify-center">
+                  <div className="text-[#ffffff80] text-lg py-5">
+                    У вас пока нет друзей
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+            <h1 className="text-2xl font-semibold mt-10 mb-7">Люди</h1>
+            <div className="flex flex-wrap min-h-[64px] h-auto items-center">
+              {dataPeoples && dataPeoples.length > 0 ? (
+                dataPeoples.map((item: IFriend) => (
+                  <PeopleCard
+                    key={item._id}
+                    dataFriend={item}
+                    clientId={userId}
+                    isFriend={false}
+                    addToFriendsHandler={addToFriendsHandler}
+                    removeFromFriendsHandler={removeFromFriendsHandler}
+                  />
+                ))
+              ) : (
+                <div className="w-full flex items-center justify-center">
+                  <div className="text-[#ffffff80] text-lg">
+                    Все люди у вас в друзьях
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </Container>

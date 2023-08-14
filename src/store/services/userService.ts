@@ -10,7 +10,7 @@ export const userApi = createApi({
   }),
   tagTypes: ["User"],
   endpoints: (builder) => ({
-    getPeoples: builder.query<IUser[], string>({
+    getPeoples: builder.query<IFriend[], string>({
       query: () => ({
         url: `api/peoples`,
         method: "GET",
@@ -18,12 +18,29 @@ export const userApi = createApi({
       }),
       // providesTags: ["User"],
     }),
-    getFriends: builder.mutation<IFriend[], FormData>({
+    getUserById: builder.query<IUser, string>({
+      query: (id) => ({
+        url: `api/user/${id}`,
+        method: "GET",
+        mode: "cors",
+      }),
+      // providesTags: ["User"],
+    }),
+    getFriends: builder.mutation<IFriend[], string>({
       query: (id) => ({
         url: `api/friends`, // Подставьте правильный путь
         method: "POST",
-        body: id,
+        body: {userId: id},
         mode: "cors",
+      }),
+      invalidatesTags: ["User"],
+    }),
+    updateUserCover: builder.mutation<IUser, Object>({
+      query: (data) => ({
+        url: `api/user-cover`,
+        method: "POST",
+        mode: "cors",
+        body: data,
       }),
       invalidatesTags: ["User"],
     }),

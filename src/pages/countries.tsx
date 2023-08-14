@@ -16,10 +16,6 @@ const Countries = () => {
   const countries = countriesApi.useGetAllCountriesQuery("");
 
   useEffect(() => {
-    console.log(countries);
-  }, [countries]);
-
-  useEffect(() => {
     setTimeout(() => {
       setActive(true);
     }, 300);

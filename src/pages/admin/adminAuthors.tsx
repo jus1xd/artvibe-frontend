@@ -42,18 +42,6 @@ const AdminAuthors = () => {
               </div>
               <div className="w-[80%] flex flex-wrap justify-start">
                 <CreateCard model="author" />
-                {/* {
-                  // @ts-ignore
-                  data?.length > 0
-                    ? reverseEz(data)?.map((author) => (
-                        <ExistedCard
-                          model="author"
-                          data={author}
-                          key={author._id}
-                        />
-                      ))
-                    : null
-                } */}
                 {isLoading
                   ? elements
                   : reverseEz(data)?.map((author) => (

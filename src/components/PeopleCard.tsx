@@ -1,82 +1,96 @@
 import React from "react";
 
-import addToFriendsIcon from "../assets/img/peoples/add.svg";
-import removeFromFriendsIcon from "../assets/img/peoples/remove.svg";
-
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { NavLink } from "react-router-dom";
+import { IFriend } from "../models/IFriend";
 
 type TProps = {
-  peopleId: string;
+  dataFriend: IFriend;
   clientId: string;
-  avatar?: string;
-  name: string;
-  email: string;
   isFriend: boolean;
   isFriendLoading?: boolean;
-  addToFriendsHandler?: (
+  addToFriendsHandler: (
     dataForFriendsActions: FormData,
     peopleId: string
   ) => void;
-  removeFromFriendsHandler?: (
+  removeFromFriendsHandler: (
     dataForFriendsActions: FormData,
     peopleId: string
   ) => void;
 };
 
 const PeopleCard: React.FC<TProps> = ({
-  peopleId,
+  dataFriend,
   clientId,
-  avatar,
-  name,
-  email,
   isFriend,
   isFriendLoading,
   addToFriendsHandler,
   removeFromFriendsHandler,
 }) => {
+  const { _id: peopleId, name, avatar } = dataFriend;
   // form data для добавления/удаления из друзей
   const dataForFriendsActions = new FormData();
   dataForFriendsActions.append("userId", clientId);
   dataForFriendsActions.append("friendId", peopleId);
 
   return (
-    <div className="p-3 mb-4 bg-darkBlueGray mr-4 min-w-[240px] w-[calc(25%-16px)] rounded-xl flex items-center">
-      {isFriendLoading ? (
-        <Skeleton
-          circle
-          width={40}
-          height={40}
-          baseColor="#3B3D42"
-          highlightColor="#7B808C"
-          className="mb-[4px]"
-        />
-      ) : (
-        <img src={avatar} className="w-10" />
-      )}
-      <div className="w-full flex justify-between items-center">
-        <div className="ml-2">
-          {isFriendLoading ? (
-            <Skeleton
-              width={140}
-              height={15}
-              baseColor="#3B3D42"
-              highlightColor="#7B808C"
+    <div className="p-2 mb-2 bg-darkBlueGray mr-4 min-w-[240px] w-[calc(25%-16px)] rounded-xl flex items-center">
+      <NavLink to={`/${peopleId}`}>
+        {isFriendLoading ? (
+          <Skeleton
+            circle
+            width={40}
+            height={40}
+            baseColor="#3B3D42"
+            highlightColor="#7B808C"
+            className="mb-[4px]"
+          />
+        ) : avatar ? (
+          <div className="flex items-center justify-center w-[40px] h-[40px] overflow-hidden rounded-full">
+            <img
+              src={`http://localhost:5003/${avatar}`}
+              className="scale-[1.5]"
+              alt="avatar"
             />
-          ) : (
-            <div>{name}</div>
-          )}
-          {isFriendLoading ? (
-            <Skeleton
-              width={140}
-              height={15}
-              baseColor="#3B3D42"
-              highlightColor="#7B808C"
-            />
-          ) : (
-            <div>{email}</div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div
+            className={`flex items-center justify-center overflow-hidden w-[40px] h-[40px] rounded-full`}
+            style={{ backgroundColor: "#ffffff30" }}
+          >
+            <div className="text-sm text-white font-bold">
+              {name.slice(0, 1).toUpperCase()}
+            </div>
+          </div>
+        )}
+      </NavLink>
+
+      <div className="w-[calc(100%-40px)] flex justify-between items-center">
+        <NavLink to={`/${peopleId}`}>
+          <div className="ml-2">
+            {isFriendLoading ? (
+              <Skeleton
+                width={140}
+                height={15}
+                baseColor="#3B3D42"
+                highlightColor="#7B808C"
+              />
+            ) : (
+              <div>{name}</div>
+            )}
+            {/* {isFriendLoading ? (
+              <Skeleton
+                width={140}
+                height={15}
+                baseColor="#3B3D42"
+                highlightColor="#7B808C"
+              />
+            ) : (
+              <div>{email}</div>
+            )} */}
+          </div>
+        </NavLink>
         <div>
           {isFriendLoading ? (
             <Skeleton
@@ -88,23 +102,46 @@ const PeopleCard: React.FC<TProps> = ({
             />
           ) : isFriend ? (
             <button
-              // @ts-ignore
               onClick={() =>
-                removeFromFriendsHandler!(dataForFriendsActions, peopleId)
+                removeFromFriendsHandler(dataForFriendsActions, peopleId)
               }
               className="bg-redOpacity opacity-70 ml-4 hover:opacity-100 transition-all rounded-md p-2 text-white"
             >
-              <img className="w-6" src={removeFromFriendsIcon} alt="" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 17 17"
+                fill="none"
+              >
+                <path
+                  className="w-6 h-6 p-1"
+                  d="M8.5 17C9.61624 17 10.7215 16.7801 11.7528 16.353C12.7841 15.9258 13.7211 15.2997 14.5104 14.5104C15.2997 13.7211 15.9258 12.7841 16.353 11.7528C16.7801 10.7215 17 9.61624 17 8.5C17 7.38376 16.7801 6.27846 16.353 5.24719C15.9258 4.21592 15.2997 3.27889 14.5104 2.48959C13.7211 1.70029 12.7841 1.07419 11.7528 0.647024C10.7215 0.219859 9.61624 -1.66332e-08 8.5 0C6.24566 3.35923e-08 4.08365 0.895533 2.48959 2.48959C0.895533 4.08365 0 6.24566 0 8.5C0 10.7543 0.895533 12.9163 2.48959 14.5104C4.08365 16.1045 6.24566 17 8.5 17ZM12.9 13.95C11.555 15.0282 9.85937 15.5721 8.13813 15.4776C6.41688 15.3831 4.79104 14.6568 3.5721 13.4379C2.35317 12.219 1.62687 10.5931 1.53237 8.87187C1.43788 7.15063 1.98183 5.45505 3.06 4.11L12.89 13.95H12.9ZM13.95 12.89L4.11 3.05C5.45505 1.97183 7.15063 1.42788 8.87187 1.52237C10.5931 1.61687 12.219 2.34317 13.4379 3.5621C14.6568 4.78104 15.3831 6.40688 15.4776 8.12813C15.5721 9.84937 15.0282 11.545 13.95 12.89Z"
+                  fill="#FF5B5B"
+                />
+              </svg>
             </button>
           ) : (
             <button
-              // @ts-ignore
               onClick={() =>
-                addToFriendsHandler!(dataForFriendsActions, peopleId)
+                addToFriendsHandler(dataForFriendsActions, peopleId)
               }
               className="bg-accentOpacity opacity-70 ml-4 hover:opacity-100 transition-all rounded-md p-2 text-white"
             >
-              <img className="w-6" src={addToFriendsIcon} alt="" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M13 11H19.5C19.7652 11 20.0196 11.1054 20.2071 11.2929C20.3946 11.4804 20.5 11.7348 20.5 12C20.5 12.2652 20.3946 12.5196 20.2071 12.7071C20.0196 12.8946 19.7652 13 19.5 13H13V19.5C13 19.7652 12.8946 20.0196 12.7071 20.2071C12.5196 20.3946 12.2652 20.5 12 20.5C11.7348 20.5 11.4804 20.3946 11.2929 20.2071C11.1054 20.0196 11 19.7652 11 19.5V13H4.5C4.23478 13 3.98043 12.8946 3.79289 12.7071C3.60536 12.5196 3.5 12.2652 3.5 12C3.5 11.7348 3.60536 11.4804 3.79289 11.2929C3.98043 11.1054 4.23478 11 4.5 11H11V4.5C11 4.23478 11.1054 3.98043 11.2929 3.79289C11.4804 3.60536 11.7348 3.5 12 3.5C12.2652 3.5 12.5196 3.60536 12.7071 3.79289C12.8946 3.98043 13 4.23478 13 4.5V11Z"
+                  fill="#635BFF"
+                />
+              </svg>
             </button>
           )}
         </div>
