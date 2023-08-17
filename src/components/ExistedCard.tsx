@@ -7,6 +7,9 @@ import { picturesApi } from "../store/services/pictureService";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
+
 type TProps = {
   model: "author" | "picture" | "country" | "user" | "3d";
   isLoading?: boolean;
@@ -60,7 +63,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data, isLoading }) => {
               <Skeleton width={195} height={150} />
             ) : (
               <img
-                src={`http://localhost:5003/${data.image}`}
+                src={`${baseUrl}/${data.image}`}
                 className="relative z-0 rounded-md object-cover h-auto w-full"
                 alt=""
               />
@@ -144,7 +147,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data, isLoading }) => {
           ) : (
             <div className="h-[150px] bg-[#EDEDED] overflow-hidden flex items-center rounded-md mb-2">
               <img
-                src={`http://localhost:5003/${data.image}`}
+                src={`${baseUrl}/${data.image}`}
                 className="relative z-0 rounded-md object-cover h-auto w-full"
                 alt=""
               />
@@ -216,7 +219,7 @@ const ExistedCard: React.FC<TProps> = ({ model, data, isLoading }) => {
               <Skeleton width={195} height={125} />
             ) : (
               <img
-                src={`http://localhost:5003/${data.image}`}
+                src={`${baseUrl}/${data.image}`}
                 className="relative z-0 object-center"
                 alt=""
               />

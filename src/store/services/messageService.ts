@@ -2,6 +2,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IMessage } from "../../models/IMessage";
 
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL;
+
 type TData = {
   clientId: string;
   friendId: string;
@@ -11,7 +14,7 @@ type TData = {
 export const messagesApi = createApi({
   reducerPath: "messagesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5003",
+    baseUrl: baseUrl,
   }),
   tagTypes: ["Message"],
   endpoints: (builder) => ({

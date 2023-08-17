@@ -4,7 +4,10 @@ import { io } from "socket.io-client";
 import { TLastMessage } from "../../pages/messenger";
 import jwt_decode from "jwt-decode";
 
-const socket = io("http://localhost:5003");
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
+
+const socket = io(baseUrl);
 
 type TProps = {
   dataDialogs: TLastMessage;
@@ -85,7 +88,7 @@ const DialogCard: React.FC<TProps> = ({ dataDialogs, setLastMessage }) => {
           {avatar ? (
             <div className="flex items-center justify-center overflow-hidden w-[35px] h-[35px] rounded-full">
               <img
-                src={`http://localhost:5003/${avatar}`}
+                src={`${baseUrl}/${avatar}`}
                 className="scale-[1.5]"
                 alt=""
               />

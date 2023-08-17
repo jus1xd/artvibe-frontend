@@ -10,7 +10,11 @@ import { useAppDispatch } from "../hooks/redux";
 import { io } from "socket.io-client";
 import { addMessage } from "../store/slices/friendsSlice";
 
-const socket = io("http://localhost:5003");
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
+
+
+const socket = io(baseUrl);
 
 type TProps = {
   friendId: string;
@@ -113,7 +117,7 @@ const Conversation: React.FC<TProps> = ({
             {friendAvatar ? (
               <div className="ml-2 flex items-center justify-center overflow-hidden w-[30px] h-[30px] rounded-full">
                 <img
-                  src={`http://localhost:5003/${friendAvatar}`}
+                  src={`${baseUrl}/${friendAvatar}`}
                   className="scale-[1.5]"
                   alt=""
                 />

@@ -14,7 +14,10 @@ import { setFriends } from "../store/slices/friendsSlice";
 import { io } from "socket.io-client";
 import ProfileNav from "../components/ProfileNav";
 
-const socket = io("http://localhost:5003");
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
+
+const socket = io(baseUrl);
 
 export type TLastMessage = {
   friendId: string;

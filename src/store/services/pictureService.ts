@@ -2,10 +2,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IPicture } from "../../models/IPicture";
 
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL;
+
 export const picturesApi = createApi({
   reducerPath: "picturesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5003",
+    baseUrl: baseUrl,
   }),
   tagTypes: ["Picture"],
   endpoints: (builder) => ({

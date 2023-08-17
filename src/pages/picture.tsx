@@ -6,6 +6,9 @@ import Container from "../components/Container";
 import Card from "../components/Card";
 import Footer from "../components/Footer";
 
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
+
 const Picture = () => {
   const params = useParams();
   const prodId = params.id;
@@ -26,7 +29,7 @@ const Picture = () => {
                   <img
                     className="w-[80%] h-[80%] object-cover"
                     // @ts-ignore
-                    src={`http://localhost:5003/${picture?.image}`}
+                    src={`${baseUrl}/${picture?.image}`}
                     alt="pic"
                   />
                 </div>

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { userApi } from "../../store/services/userService";
 
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
+
 type TProps = {
   userId: string;
   pageCover: string;
@@ -16,7 +19,7 @@ const PageCover: React.FC<TProps> = ({
 }) => {
   const [currentPageCover, setCurrentPageCover] = useState<string>(pageCover);
   const [newPageCover, setNewPageCover] = useState<File | null>(null);
-  const imageUrl = `http://localhost:5003/${avatar}`;
+  const imageUrl = `${baseUrl}/${avatar}`;
 
   // обновить шапку пользователя запросом
 
@@ -134,7 +137,7 @@ const PageCover: React.FC<TProps> = ({
 
       {currentPageCover ? (
         <img
-          src={`http://localhost:5003/${currentPageCover}`}
+          src={`${baseUrl}/${currentPageCover}`}
           alt="Wallpaper"
           className="translate-y-[-12%]"
         />

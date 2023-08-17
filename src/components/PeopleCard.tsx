@@ -5,6 +5,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { NavLink } from "react-router-dom";
 import { IFriend } from "../models/IFriend";
 
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
+
 type TProps = {
   dataFriend: IFriend;
   clientId: string;
@@ -49,7 +52,7 @@ const PeopleCard: React.FC<TProps> = ({
         ) : avatar ? (
           <div className="flex items-center justify-center w-[40px] h-[40px] overflow-hidden rounded-full">
             <img
-              src={`http://localhost:5003/${avatar}`}
+              src={`${baseUrl}/${avatar}`}
               className="scale-[1.5]"
               alt="avatar"
             />

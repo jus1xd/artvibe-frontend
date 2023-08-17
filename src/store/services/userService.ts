@@ -3,10 +3,13 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IUser } from "../../models/IUser";
 import { IFriend } from "../../models/IFriend";
 
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL;
+
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5003",
+    baseUrl: baseUrl,
   }),
   tagTypes: ["User"],
   endpoints: (builder) => ({
@@ -30,7 +33,7 @@ export const userApi = createApi({
       query: (id) => ({
         url: `api/friends`, // Подставьте правильный путь
         method: "POST",
-        body: {userId: id},
+        body: { userId: id },
         mode: "cors",
       }),
       invalidatesTags: ["User"],

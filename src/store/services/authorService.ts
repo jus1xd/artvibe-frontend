@@ -2,10 +2,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IAuthor } from "../../models/IAuthor";
 
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL;
+
 export const authorsApi = createApi({
   reducerPath: "authorsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5003",
+    baseUrl: baseUrl,
   }),
   tagTypes: ["Author"],
   endpoints: (builder) => ({

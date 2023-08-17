@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 
 import jwt_decode from "jwt-decode";
 
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
+
 type TProps = {
   senderId: string;
   senderName: string;
@@ -43,7 +46,7 @@ const DialogMessage: React.FC<TProps> = ({
           {avatar ? (
             <div className="flex items-center justify-center overflow-hidden w-[25px] h-[25px] rounded-full">
               <img
-                src={`http://localhost:5003/${avatar}`}
+                src={`${baseUrl}/${avatar}`}
                 className="scale-[1.5]"
                 alt=""
               />
@@ -79,7 +82,7 @@ const DialogMessage: React.FC<TProps> = ({
           {avatar ? (
             <div className="flex items-center justify-center overflow-hidden w-[25px] h-[25px] rounded-full">
               <img
-                src={`http://localhost:5003/${avatar}`}
+                src={`${baseUrl}/${avatar}`}
                 className="scale-[1.5]"
                 alt=""
               />

@@ -13,7 +13,10 @@ import { addFriend, deleteFriend } from "../store/slices/friendsSlice";
 import ProfileNav from "../components/ProfileNav";
 import { IFriend } from "../models/IFriend";
 
-const socket = io("http://localhost:5003");
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
+
+const socket = io(baseUrl);
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -135,7 +138,7 @@ const Profile = () => {
                       } `}
                     >
                       <img
-                        src={`http://localhost:5003/${data.avatar}`}
+                        src={`${baseUrl}/${data.avatar}`}
                         alt="Avatar"
                         className="scale-[2]"
                       />

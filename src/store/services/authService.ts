@@ -2,12 +2,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IUser } from "../../models/IUser";
 
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL;
+
 const token = localStorage.getItem("token");
 
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5003",
+    baseUrl: baseUrl,
   }),
   tagTypes: ["Auth"],
   endpoints: (builder) => ({

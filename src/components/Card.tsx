@@ -3,6 +3,9 @@ import { NavLink } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
+// Define a service using a base URL and expected endpoints
+const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
+
 type TProps = {
   img: string;
   link?: string;
@@ -32,7 +35,7 @@ const Card: React.FC<TProps> = ({
     if (img.includes("/static")) {
       image.src = `${img}`;
     } else {
-      image.src = `http://localhost:5003/${img}`;
+      image.src = `${baseUrl}/${img}`;
     }
 
     const handleSetLoaded = () => {
@@ -103,7 +106,7 @@ const Card: React.FC<TProps> = ({
         )}
         <img
           className="absolute top-0 left-0 w-full z-10 transition-transform duration-500 transform-gpu group-hover:scale-125"
-          src={`http://localhost:5003/${img}`}
+          src={`${baseUrl}/${img}`}
           alt="pic"
         />
         {link ? (
@@ -146,7 +149,7 @@ const Card: React.FC<TProps> = ({
         <div className="d-flex h-full items-center justify-center absolute top-0 left-0 z-10">
           <img
             className="h-full object-cover transition-transform duration-500 transform-gpu group-hover:scale-125"
-            src={`http://localhost:5003/${img}`}
+            src={`${baseUrl}/${img}`}
             alt="pic"
           />
         </div>
