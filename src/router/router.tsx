@@ -34,11 +34,19 @@ export const router = createBrowserRouter([
   },
   {
     path: "/im",
-    element: <Messenger />,
+    element: (
+      <ProtectedRoute>
+        <Messenger />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/im/:id",
-    element: <Messenger />,
+    element: (
+      <ProtectedRoute>
+        <Messenger />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/artists",
@@ -54,7 +62,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/peoples",
-    element: <Peoples />,
+    element: (
+      <ProtectedRoute>
+        <Peoples />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/picture/:id",

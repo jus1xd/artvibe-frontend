@@ -167,17 +167,17 @@ const Peoples = () => {
   };
 
   return (
-    <div className="messenger">
+    <div className="messenger relative sm:static">
       <Header theme="light" />
       <Container>
-        <div className="flex mt-16">
-          <div className="messenger-sidebar mr-5">
+        <div className="sm:flex mt-10 mb-20 sm:mb-0 sm:mt-16">
+          <div className="sm:mr-5 fixed bottom-0 left-0 sm:static z-40">
             <ProfileNav />
           </div>
 
           <div className="messenger-content w-full text-white">
             <h1 className="text-2xl font-semibold mb-7">Друзья</h1>
-            <div className="flex flex-wrap min-h-[100px] items-center">
+            <div className="flex flex-wrap w-[100%+32px] min-h-[100px] items-center">
               {dataFriends && dataFriends.length > 0 ? (
                 dataFriends.map((item: IFriend) => (
                   <PeopleCard

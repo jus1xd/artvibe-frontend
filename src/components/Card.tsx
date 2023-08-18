@@ -70,13 +70,17 @@ const Card: React.FC<TProps> = ({
         {link ? (
           <NavLink to={link}>
             <div className="absolute left-4 bottom-4 z-30">
-              <p className="text-white text-lg font-medium">{title}</p>
+              <p className="w-3/4 text-white text-sm sm:text-lg  font-medium">
+                {title}
+              </p>
               <p className="text-white">{subtitle}</p>
             </div>
           </NavLink>
         ) : (
           <div className="absolute left-4 bottom-4 z-30">
-            <p className="text-white text-lg font-medium">{title}</p>
+            <p className="w-3/4 text-white text-sm sm:text-lg font-medium">
+              {title}
+            </p>
             <p className="text-white">{subtitle}</p>
           </div>
         )}
@@ -95,7 +99,7 @@ const Card: React.FC<TProps> = ({
       <div
         className={`${
           useMargin && "mr-[10px]"
-        } relative group mb-3 cursor-pointer w-[calc(20%-10px)] h-[149px] rounded-xl overflow-hidden`}
+        } relative group mb-3 cursor-pointer w-[calc(20%-10px)] min-w-[180px] h-[149px] rounded-xl overflow-hidden`}
       >
         {link ? (
           <NavLink to={link}>
@@ -112,13 +116,17 @@ const Card: React.FC<TProps> = ({
         {link ? (
           <NavLink to={link}>
             <div className="absolute left-4 bottom-4 z-30">
-              <p className="text-white text-md font-medium">{title}</p>
+              <p className="w-3/4 text-white text-sm sm:text-base font-medium">
+                {title}
+              </p>
               <p className="text-white text-sm">{subtitle}</p>
             </div>
           </NavLink>
         ) : (
           <div className="absolute left-4 bottom-4 z-30">
-            <p className="text-white text-md font-medium">{title}</p>
+            <p className="w-3/4 text-white text-sm sm:text-base text-md font-medium">
+              {title}
+            </p>
             <p className="text-white text-sm">{subtitle}</p>
           </div>
         )}
@@ -137,7 +145,7 @@ const Card: React.FC<TProps> = ({
       <div
         className={`${
           useMargin && "mr-[10px]"
-        } relative group cursor-pointer w-[calc(20%-10px)] mb-5 h-[310px] rounded-xl overflow-hidden`}
+        } relative group cursor-pointer w-[calc(20%-10px)] min-w-[180px] mb-5 h-[310px] rounded-xl overflow-hidden`}
       >
         {link ? (
           <NavLink to={link}>
@@ -156,13 +164,17 @@ const Card: React.FC<TProps> = ({
         {link ? (
           <NavLink to={link}>
             <div className="absolute left-4 bottom-4 z-30">
-              <p className="text-white font-medium">{title}</p>
+              <p className="w-3/4 text-white text-sm sm:text-base font-medium">
+                {title}
+              </p>
               <p className="text-white text-sm w-full pr-4">{subtitle}</p>
             </div>
           </NavLink>
         ) : (
           <div className="absolute left-4 bottom-4 z-30">
-            <p className="text-white font-medium">{title}</p>
+            <p className="w-3/4 text-white text-sm sm:text-base font-medium">
+              {title}
+            </p>
             <p className="text-white text-sm w-full pr-4">{subtitle}</p>
           </div>
         )}
@@ -171,7 +183,7 @@ const Card: React.FC<TProps> = ({
       <div
         className={`${
           useMargin && "mr-[10px]"
-        } relative group w-[calc(20%-10px)] mb-5 h-[310px] rounded-xl overflow-hidden`}
+        } relative group w-[calc(20%-10px)] mb-5 min-w-[180px] h-[310px] rounded-xl overflow-hidden`}
       >
         <Skeleton width={250} height={310} />
       </div>

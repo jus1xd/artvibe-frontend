@@ -14,7 +14,7 @@ const Register = () => {
   const [email, setEmail] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [avatar, setAvatar] = useState<File | null>(null);
+  const [avatar, setAvatar] = useState<File | "">("");
   const [repeatPassword, setRepeatPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -26,7 +26,7 @@ const Register = () => {
   const registerHandler = () => {
     const userData = new FormData();
     userData.append("name", name);
-    userData.append("avatar", avatar as File);
+    userData.append("avatar", avatar);
     userData.append("username", username);
     userData.append("email", email);
     userData.append("role", "user");

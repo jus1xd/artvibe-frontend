@@ -30,16 +30,16 @@ const Countries = () => {
         } "transition transform-gpu duration-700 mt-10 "`}
       >
         {/* intro  */}
-        <div className="mb-20">
+        <div className="sm:mb-20">
           <Container lBorder>
             {/* text  */}
             <div className="flex justify-between items-center h-max">
-              <div className="flex flex-col w-[60%] py-12">
+              <div className="flex flex-col w-full sm:w-[60%] py-12">
                 <div className="text-accent mb-5 flex select-none">
                   <span className="mr-1 flex items-center">В этом разделе</span>
                   <img className="mt-[2px]" src={arrow} alt="" />
                 </div>
-                <h1 className="text-5xl text-title font-bold">
+                <h1 className="text-4xl sm:text-5xl text-title font-bold">
                   Мы вам покажем, в каком уголке света была написана ваша
                   любимая картина
                 </h1>
@@ -55,7 +55,7 @@ const Countries = () => {
                 </Link>
               </div>
               {/* 3d earth planet  */}
-              <div className="3d_planet_container w-[45%] mr-[-5%] mb-[5%]">
+              <div className="hidden sm:block 3d_planet_container w-[45%] mr-[-5%] mb-[5%]">
                 <div className="3d_planet">
                   <Planet />
                 </div>

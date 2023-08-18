@@ -42,11 +42,11 @@ const ProfileNav = () => {
       text: "Мои друзья",
       icon: friendsIcon,
     },
-    {
-      link: `/community`,
-      text: "Мои сообщества",
-      icon: communityIcon,
-    },
+    // {
+    //   link: `/community`,
+    //   text: "Мои сообщества",
+    //   icon: communityIcon,
+    // },
   ];
 
   const Links = () => {
@@ -55,29 +55,29 @@ const ProfileNav = () => {
         <NavLink
           key={page.link}
           to={page.link}
-          className="flex items-center mb-1 py-2 px-3 cursor-pointer hover:bg-darkBlueGray transition-all rounded-xl"
+          className="flex items-center mr-2 sm:mr-0 sm:mb-1 py-2 px-3 cursor-pointer hover:bg-darkBlueGray transition-all rounded-xl"
         >
-          <div className="mr-2">
-            <img className="w-6" src={page.icon} alt={page.text} />
+          <div className="sm:mr-2">
+            <img className="min-w-[30px]" src={page.icon} alt={page.text} />
           </div>
-          <div className="mr-2">{page.text}</div>
+          <div className="mr-2 hidden sm:block">{page.text}</div>
         </NavLink>
       );
     });
   };
 
   return (
-    <div className="min-w-[200px] w-[200px] text-white mb-3 h-max flex flex-col">
-      <div className="mb-3 h-max flex flex-col border border-inputBorder transition-all">
+    <div className="py-2 sm:py-0 bg-darkBackground w-[100vw] justify-center sm:static sm:min-w-[200px] sm:w-[200px] text-white sm:mb-3 h-max flex sm:flex-col">
+      <div className="sm:mb-3 h-max flex sm:flex-col border border-inputBorder transition-all">
         {Links()}
         <div
           onClick={logoutHandler}
-          className="flex items-center mb-1 py-2 px-3 cursor-pointer hover:bg-[#ff21212c] transition-colors rounded-xl text-redpal-500 "
+          className="flex items-center sm:mb-1 py-2 px-3 cursor-pointer hover:bg-[#ff21212c] transition-colors rounded-xl text-redpal-500 "
         >
-          <div className="mr-2">
-            <img className="w-5" src={logoutIcon} alt="Logout" />
+          <div className="sm:mr-2">
+            <img className="min-w-[30px]" src={logoutIcon} alt="Logout" />
           </div>
-          <div className="mr-2">Выйти</div>
+          <div className="mr-2 hidden sm:block">Выйти</div>
         </div>
       </div>
     </div>

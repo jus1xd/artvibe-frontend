@@ -110,43 +110,68 @@ const Profile = () => {
   });
 
   return (
-    <div className="messenger">
+    <div className="messenger relative sm:static">
       <Header theme="light" />
       <Container>
-        <div className="flex mt-16">
-          <div className="mr-5">
+        <div className="w-full sm:flex mb-20 mt-5 sm:mt-16">
+          <div className="sm:mr-5 fixed bottom-0 left-0 sm:static z-40">
             <ProfileNav />
           </div>
           {data && (
             <div className="profile-content w-full text-white ">
               {/* profile */}
-              <div className="rounded-xl bg-[#20232B] w-[775px] min-w-[775px] mr-7 mb-3">
+              <div className="rounded-xl bg-[#20232B] sm:w-[775px] sm:min-w-[775px] sm:mr-7 mb-4">
                 <PageCover
                   isMyProfile={isMyProfile}
                   userId={data._id}
                   pageCover={data.pageCover}
                   avatar={data.avatar}
                 />
-                <div className="flex mt-[-35px] items-end pb-7">
+                <div className="sm:flex mt-[-80px] sm:mt-[-35px] items-end pb-2 sm:pb-7">
                   {/* avatar  */}
-                  <div className="z-10 w-[130px] h-[130px] ml-8 bg-[#20232B]  flex items-center justify-center rounded-full overflow-hidden cursor-pointer">
+                  <div className="z-10 w-[130px] h-[130px] mx-auto sm:ml-8 bg-[#20232B]  flex items-center justify-center rounded-full overflow-hidden cursor-pointer">
                     <div
                       className={`rounded-full overflow-hidden  ${
                         data.role === "admin"
-                          ? "w-[123px] h-[123px] border-4 border-accent"
+                          ? "w-[123px] h-[123px] border-4 z-10 border-accent"
                           : "w-[130px] h-[130px]"
                       } `}
                     >
-                      <img
-                        src={`${baseUrl}/${data.avatar}`}
-                        alt="Avatar"
-                        className="scale-[2]"
-                      />
+                      <div className="flex items-center justify-center h-full w-full">
+                        {data.avatar ? (
+                          <div
+                            className={`flex items-center justify-center overflow-hidden ${
+                              data.role === "admin"
+                                ? "w-[123px] h-[123px]"
+                                : "w-[130px] h-[130px]"
+                            } rounded-full`}
+                          >
+                            <img
+                              src={`${baseUrl}/${data.avatar}`}
+                              className="scale-[2]"
+                              alt="Avatar"
+                            />
+                          </div>
+                        ) : (
+                          <div
+                            className={`flex items-center justify-center overflow-hidden ${
+                              data.role === "admin"
+                                ? "w-[123px] h-[123px]"
+                                : "w-[130px] h-[130px]"
+                            } rounded-full`}
+                            style={{ backgroundColor: "#ffffff30" }}
+                          >
+                            <div className="text-3xl text-white font-bold">
+                              {data.name.slice(0, 1).toUpperCase()}
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                  <div className="ml-4 w-[calc(100%-210px)] flex flex-col">
+                  <div className="ml-4 w-[calc(100%-30px)] sm:w-[calc(100%-180px)] mr-8 flex flex-col">
                     {/* name  */}
-                    <div className="mb-1 w-full flex items-center justify-between">
+                    <div className="my-2 sm:mb-1 w-full flex items-center justify-between">
                       <div className="flex flex-col">
                         <div className="flex items-center mb-[6px]">
                           <div className="text-sm text-white opacity-70">
@@ -203,7 +228,11 @@ const Profile = () => {
                       )}
                     </div>
 
-                    <div className="flex min-h-[20px] max-w-[370px] cursor-pointer overflow-x-hidden group">
+                    <div
+                      className={`${
+                        data.status ? "" : "hidden"
+                      } mb-2 sm:mb-0 flex min-h-[20px] max-w-[370px] cursor-pointer overflow-x-hidden group`}
+                    >
                       <div className="w-full group-hover:opacity-80 transition-opacity text-sm whitespace-nowrap overflow-hidden text-ellipsis">
                         {data.status}
                       </div>
@@ -211,8 +240,8 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex">
-                <div className="relative rounded-xl bg-[#20232B] p-2 pt-6 pb-[2px] w-[240px] min-w-[254px] ">
+              <div className="sm:flex">
+                <div className="relative rounded-xl bg-[#20232B] p-2 pt-6 pb-[2px] sm:w-[240px] min-w-[254px] ">
                   <div className="z-20 absolute text-[12px] font-bold top-[-8px] left-[-10px] border-[3px] bg-darkBackground rounded-xl border-darkBackground text-accent py-0 px-2">
                     Друзья
                   </div>
@@ -220,6 +249,7 @@ const Profile = () => {
                     {dataFriends && dataFriends.length > 0 ? (
                       dataFriends.map((item: any) => (
                         <MemoizedPeopleCard
+                          noMargin
                           key={item._id}
                           dataFriend={item}
                           clientId={userId}

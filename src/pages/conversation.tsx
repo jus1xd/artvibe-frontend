@@ -13,7 +13,6 @@ import { addMessage } from "../store/slices/friendsSlice";
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
 
-
 const socket = io(baseUrl);
 
 type TProps = {
@@ -106,12 +105,22 @@ const Conversation: React.FC<TProps> = ({
     }
   };
 
+  const stepBackward = () => {
+    window.history.back();
+  };
+
   return (
-    <div className="w-3/4 flex justify-between">
+    <div className="w-full sm:w-2/3 flex justify-between">
       {/* chat-section */}
-      <div className="w-full rounded-xl bg-[#20232B] min-w-[450px] h-[600px] overflow-hidden">
+      <div className="w-full sm:rounded-xl bg-[#20232B] sm:min-w-[450px] h-[calc(100vh-180px)] sm:h-[600px] overflow-hidden">
         {/* black bar  */}
-        <div className="bg-black w-full flex justify-between px-6 py-2">
+        <div className="bg-black w-full flex justify-between px-3 sm:px-6 py-2">
+          <div
+            onClick={stepBackward}
+            className="sm:hidden block text-sm cursor-pointer hover:bg-[#ffffff10] transition-colors rounded-md  px-3 py-1 w-max"
+          >
+            Назад
+          </div>
           <div className="flex items-center text-sm">
             Беседа с
             {friendAvatar ? (
@@ -134,12 +143,12 @@ const Conversation: React.FC<TProps> = ({
             )}
             <span className="font-bold ml-2">{friendName}</span>{" "}
           </div>
-          <div className="text-sm cursor-pointer hover:bg-[#ffffff10] transition-colors rounded-md  px-3 py-1 w-max">
+          <div className="hidden sm:block text-sm cursor-pointer hover:bg-[#ffffff10] transition-colors rounded-md  px-3 py-1 w-max">
             Добавить в друзья
           </div>
         </div>
         {/* messages */}
-        <div className="flex justify-end items-end overflow-hidden h-[calc(100%-110px)] mx-6">
+        <div className="flex justify-end items-end overflow-hidden h-[calc(100%-110px)] mx-3 sm:mx-6">
           <div className="flex flex-col-reverse pt-3 w-full h-full overflow-y-scroll ">
             <div ref={infiniteScrollRef} className="w-full h-max">
               {sortedMessages.length > 0 ? (

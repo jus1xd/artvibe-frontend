@@ -9,6 +9,7 @@ import { IFriend } from "../models/IFriend";
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
 
 type TProps = {
+  noMargin?: boolean;
   dataFriend: IFriend;
   clientId: string;
   isFriend: boolean;
@@ -24,6 +25,7 @@ type TProps = {
 };
 
 const PeopleCard: React.FC<TProps> = ({
+  noMargin,
   dataFriend,
   clientId,
   isFriend,
@@ -38,7 +40,11 @@ const PeopleCard: React.FC<TProps> = ({
   dataForFriendsActions.append("friendId", peopleId);
 
   return (
-    <div className="p-2 mb-2 bg-darkBlueGray mr-4 min-w-[240px] w-[calc(25%-16px)] rounded-xl flex items-center">
+    <div
+      className={`${
+        noMargin ? "" : "sm:mr-4 sm:w-[calc(25%-16px)]"
+      } p-2 mb-2 bg-darkBlueGray  w-full min-w-[220px]  rounded-xl flex items-center`}
+    >
       <NavLink to={`/${peopleId}`}>
         {isFriendLoading ? (
           <Skeleton

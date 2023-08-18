@@ -4,9 +4,15 @@ type TProps = {
   children: React.ReactNode;
   border?: boolean;
   lBorder?: boolean;
+  noBorder?: boolean;
 };
 
-const Container: React.FC<TProps> = ({ children, lBorder, border }) => {
+const Container: React.FC<TProps> = ({
+  children,
+  lBorder,
+  border,
+  noBorder,
+}) => {
   return border ? (
     <div className="max-w-[1200px] bg-gradient-to-b from-white via-[#22222220] to-white w-full px-[1px] mx-auto">
       <div className="bg-white px-[14px] w-full">{children}</div>
@@ -16,7 +22,11 @@ const Container: React.FC<TProps> = ({ children, lBorder, border }) => {
       <div className="bg-white px-[14px] w-full">{children}</div>
     </div>
   ) : (
-    <div className="max-w-[1200px] w-full px-[15px] mx-auto">{children}</div>
+    <div
+      className={`max-w-[1200px] w-full ${noBorder ? "" : "px-[15px]"} mx-auto`}
+    >
+      {children}
+    </div>
   );
 };
 
