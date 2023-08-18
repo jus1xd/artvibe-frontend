@@ -64,7 +64,7 @@ const Messenger = () => {
   const friendId = params.id;
 
   // функция на получение друзей
-  const getFriendsAndSave = () => {
+  useEffect(() => {
     getFriends(userId).then((res: any) => {
       let dataDialogs = res.data.map((item: any) => ({
         friendId: item._id,
@@ -77,7 +77,7 @@ const Messenger = () => {
       dispatch(setFriends(res.data));
       setDataDialogsLoading(false);
     });
-  };
+  }, []);
 
   useEffect(() => {
     // получение сообщений друга
@@ -91,15 +91,15 @@ const Messenger = () => {
     // if (friends.length <= 0) {
     //   getFriendsAndSave();
     // } else {
-      let dataDialogs = friends.map((item: any) => ({
-        friendId: item._id,
-        avatar: item.avatar,
-        name: item.name,
-        date: item.messages[item.messages.length - 1]?.date || "",
-        text: item.messages[item.messages.length - 1]?.text,
-      }));
-      setDataDialogs(sortDialogsByTime(dataDialogs));
-      setDataDialogsLoading(false);
+    let dataDialogs = friends.map((item: any) => ({
+      friendId: item._id,
+      avatar: item.avatar,
+      name: item.name,
+      date: item.messages[item.messages.length - 1]?.date || "",
+      text: item.messages[item.messages.length - 1]?.text,
+    }));
+    setDataDialogs(sortDialogsByTime(dataDialogs));
+    setDataDialogsLoading(false);
     // }
   }, [friends]);
 
