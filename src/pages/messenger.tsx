@@ -88,9 +88,9 @@ const Messenger = () => {
 
   // // получение друзей при загрузке страницы
   useEffect(() => {
-    if (friends.length <= 0) {
-      getFriendsAndSave();
-    } else {
+    // if (friends.length <= 0) {
+    //   getFriendsAndSave();
+    // } else {
       let dataDialogs = friends.map((item: any) => ({
         friendId: item._id,
         avatar: item.avatar,
@@ -100,7 +100,7 @@ const Messenger = () => {
       }));
       setDataDialogs(sortDialogsByTime(dataDialogs));
       setDataDialogsLoading(false);
-    }
+    // }
   }, [friends]);
 
   const setLastMessage = (senderId: string, lastMessage: TLastMessage) => {

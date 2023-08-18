@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
   {
     path: "/im",
     element: (
-      <ProtectedRoute>
+      <ProtectedRoute notAuthSecure>
         <Messenger />
       </ProtectedRoute>
     ),
@@ -43,7 +43,7 @@ export const router = createBrowserRouter([
   {
     path: "/im/:id",
     element: (
-      <ProtectedRoute>
+      <ProtectedRoute notAuthSecure>
         <Messenger />
       </ProtectedRoute>
     ),
@@ -63,7 +63,7 @@ export const router = createBrowserRouter([
   {
     path: "/peoples",
     element: (
-      <ProtectedRoute>
+      <ProtectedRoute notAuthSecure>
         <Peoples />
       </ProtectedRoute>
     ),
