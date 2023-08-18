@@ -10,14 +10,10 @@ import { userApi } from "../store/services/userService";
 import Spinner from "../components/SpinnerLoader";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { setFriends } from "../store/slices/friendsSlice";
-import { io } from "socket.io-client";
+import { addMessage, setFriends } from "../store/slices/friendsSlice";
 import ProfileNav from "../components/ProfileNav";
-
-// Define a service using a base URL and expected endpoints
-const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
-
-const socket = io(baseUrl);
+import { socket } from "../hooks/socket";
+import { IMessage } from "../models/IMessage";
 
 export type TLastMessage = {
   friendId: string;
@@ -35,13 +31,9 @@ const Messenger = () => {
   // @ts-ignore
   const userId = token ? jwt_decode(token).id : null;
 
+  const [friendMessages, setFriendMessages] = useState<IMessage[]>([]);
   const [dataDialogs, setDataDialogs] = useState<TLastMessage[]>([]);
   const [dataDialogsLoading, setDataDialogsLoading] = useState<boolean>(true);
-
-  const MemoizedDialogCard = React.memo(DialogCard, (prevProps, nextProps) => {
-    console.log(prevProps.dataDialogs);
-    return prevProps.dataDialogs === nextProps.dataDialogs;
-  });
 
   // сортировка диалогов по времени последнего сообщения
   const sortDialogsByTime = (arr: any) => {
@@ -63,6 +55,10 @@ const Messenger = () => {
   const [getFriends] = userApi.useGetFriendsMutation();
   const friends = useAppSelector((state) => state.friends.friends);
 
+  const MemoizedDialogCard = React.memo(DialogCard, (prevProps, nextProps) => {
+    return prevProps.dataDialogs.date === nextProps.dataDialogs.date;
+  });
+
   // получить id друга из url
   const params = useParams();
   const friendId = params.id;
@@ -83,7 +79,14 @@ const Messenger = () => {
     });
   };
 
-  // получение друзей при загрузке страницы
+  useEffect(() => {
+    // получение сообщений друга
+    setFriendMessages(
+      friends.find((el) => el._id === friendId)?.messages || []
+    );
+  }, [friendId, friends]);
+
+  // // получение друзей при загрузке страницы
   useEffect(() => {
     if (friends.length <= 0) {
       getFriendsAndSave();
@@ -98,41 +101,7 @@ const Messenger = () => {
       setDataDialogs(sortDialogsByTime(dataDialogs));
       setDataDialogsLoading(false);
     }
-  }, []);
-
-  // если нас добавили в друзья WebSocket
-  useEffect(() => {
-    // Обработка события "friendAdded" от сервера
-    if (dataDialogs) {
-      socket.on("friendAdded", (updatedUsers) => {
-        if (updatedUsers) {
-          getFriendsAndSave();
-        }
-      });
-    }
-
-    // Очистка обработчика события при размонтировании компонента
-    return () => {
-      socket.off("friendAdded");
-    };
-  }, [dataDialogs]);
-
-  // если нас удалили из друзей WebSocket
-  useEffect(() => {
-    // Обработка события "friendAdded" от сервера
-    if (dataDialogs) {
-      socket.on("friendRemoved", (updatedUsers) => {
-        if (updatedUsers) {
-          getFriendsAndSave();
-        }
-      });
-    }
-
-    // Очистка обработчика события при размонтировании компонента
-    return () => {
-      socket.off("friendRemoved");
-    };
-  }, [dataDialogs]);
+  }, [friends]);
 
   const setLastMessage = (senderId: string, lastMessage: TLastMessage) => {
     if (
@@ -149,20 +118,17 @@ const Messenger = () => {
   };
 
   const handleConversation = () => {
-    if (friendId && friends.length > 0) {
+    if (friendId && friends.find((el) => el._id === friendId)) {
       let friendName = friends.find((el) => el._id === friendId)!.name || "";
       let friendAvatar =
         friends.find((el) => el._id === friendId)!.avatar || "";
-      let friendMessages =
-        friends.find((el) => el._id === friendId)?.messages || [];
-
-      console.log("handleConv", friendMessages);
       return (
         <Conversation
           friendId={friendId}
           friendName={friendName}
           friendAvatar={friendAvatar}
           messages={friendMessages}
+          setMessages={setFriendMessages}
         />
       );
     } else {
@@ -199,7 +165,6 @@ const Messenger = () => {
                 />
               </div>
               <div className="flex flex-col cursor-pointer justify-center items-center w-full p-2">
-                {/* {handleDialogs()} */}
                 {dataDialogs.length > 0 ? (
                   dataDialogs.map((item: TLastMessage) => (
                     <MemoizedDialogCard

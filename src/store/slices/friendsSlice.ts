@@ -2,6 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { IMessage } from "../../models/IMessage";
 import { IUser } from "../../models/IUser";
 import { IFriend } from "../../models/IFriend";
+import jwt_decode from "jwt-decode";
+
+// получить токен из localStorage
+const token = localStorage.getItem("token");
+// @ts-ignore
+const userId = token ? jwt_decode(token).id : null;
 
 export type TFriends = {
   friends: Array<IFriend>;
@@ -37,12 +43,20 @@ const friendsSlice = createSlice({
       }
     },
     addMessage: (state, action) => {
-      const { friendId } = action.payload;
+      const { friendId, senderId } = action.payload;
 
-      const dialog = state.friends.find((dialog) => dialog._id === friendId);
+      console.log(action.payload);
 
-      if (dialog) {
-        dialog.messages.push(action.payload);
+      if (userId === friendId) {
+        const dialog = state.friends.find((dialog) => dialog._id === senderId);
+        if (dialog) {
+          dialog.messages.push(action.payload);
+        }
+      } else {
+        const dialog = state.friends.find((dialog) => dialog._id === friendId);
+        if (dialog) {
+          dialog.messages.push(action.payload);
+        }
       }
     },
     deleteFriend: (state, action) => {

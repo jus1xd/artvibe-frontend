@@ -77,18 +77,21 @@ const PeopleCard: React.FC<TProps> = ({
 
       <div className="w-[calc(100%-40px)] flex justify-between items-center">
         <NavLink to={`/${peopleId}`}>
-          <div className="ml-2">
-            {isFriendLoading ? (
-              <Skeleton
-                width={140}
-                height={15}
-                baseColor="#3B3D42"
-                highlightColor="#7B808C"
-              />
-            ) : (
-              <div>{name}</div>
-            )}
-            {/* {isFriendLoading ? (
+          <div className="">
+            <div className="ml-2">
+              {isFriendLoading ? (
+                <Skeleton
+                  width={140}
+                  height={15}
+                  baseColor="#3B3D42"
+                  highlightColor="#7B808C"
+                />
+              ) : (
+                <div className="w-full max-w-[100px] whitespace-nowrap overflow-hidden text-ellipsis">
+                  {name}
+                </div>
+              )}
+              {/* {isFriendLoading ? (
               <Skeleton
                 width={140}
                 height={15}
@@ -98,6 +101,7 @@ const PeopleCard: React.FC<TProps> = ({
             ) : (
               <div>{email}</div>
             )} */}
+            </div>
           </div>
         </NavLink>
         <div>

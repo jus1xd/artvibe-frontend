@@ -12,11 +12,10 @@ import PeopleCard from "../components/PeopleCard";
 import { addFriend, deleteFriend } from "../store/slices/friendsSlice";
 import ProfileNav from "../components/ProfileNav";
 import { IFriend } from "../models/IFriend";
+import { socket } from "../hooks/socket";
 
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
-
-const socket = io(baseUrl);
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -54,10 +53,8 @@ const Profile = () => {
       if (friends.length <= 0) {
         getFriends(userId).then((res: any) => {
           setDataFriends(res.data);
-          console.log(res.data);
         });
       } else {
-        console.log(friends);
         setDataFriends(
           friends.map((friend: any) => {
             return {
@@ -105,7 +102,6 @@ const Profile = () => {
   };
 
   const MemoizedPeopleCard = React.memo(PeopleCard, (prevProps, nextProps) => {
-    console.log(prevProps.dataFriend);
     return prevProps.dataFriend === nextProps.dataFriend;
   });
 

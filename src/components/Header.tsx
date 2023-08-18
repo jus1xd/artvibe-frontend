@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
@@ -12,14 +12,22 @@ import peoplesDark from "../assets/img/header/peoplesDark.svg";
 import Button from "./Button";
 import Container from "./Container";
 import { useActions } from "../hooks/actions";
+import { socket } from "../hooks/socket";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { addMessage, setFriends } from "../store/slices/friendsSlice";
+import { userApi } from "../store/services/userService";
 
 type TProps = {
   theme?: "light" | "dark";
 };
 
 const Header: React.FC<TProps> = ({ theme }) => {
+  const dispatch = useAppDispatch();
   const [menuActive, setMenuActive] = useState<boolean>(false);
   const token = localStorage.getItem("token");
+
+  const [getFriends] = userApi.useGetFriendsMutation();
+  const friends = useAppSelector((state) => state.friends.friends);
 
   // @ts-ignore
   const userRole = token ? jwt_decode(token).roles : "guest";
@@ -59,6 +67,61 @@ const Header: React.FC<TProps> = ({ theme }) => {
       link: "/contacts",
     },
   ];
+
+  // функция на получение друзей
+  const getFriendsAndSave = () => {
+    getFriends(userId).then((res: any) => {
+      dispatch(setFriends(res.data));
+    });
+  };
+
+  // получение сообщения WebSocket
+  useEffect(() => {
+    socket.on("sendMessage", (message: any) => {
+      if (
+        message.friendId === userId ||
+        message.senderId === userId
+        // &&
+        // (message.friendId === friendId || message.senderId === friendId)
+      ) {
+        dispatch(addMessage(message));
+      }
+    });
+
+    return () => {
+      socket.off("sendMessage");
+    };
+  }, []);
+
+  // если нас добавили в друзья WebSocket
+  useEffect(() => {
+    // Обработка события "friendAdded" от сервера
+    socket.on("friendAdded", (updatedUsers) => {
+      if (updatedUsers.friendUser._id === userId) {
+        getFriendsAndSave();
+      }
+    });
+
+    // Очистка обработчика события при размонтировании компонента
+    return () => {
+      socket.off("friendAdded");
+    };
+  }, []);
+
+  // если нас удалили из друзей WebSocket
+  useEffect(() => {
+    // Обработка события "friendAdded" от сервера
+    socket.on("friendRemoved", (updatedUsers) => {
+      if (updatedUsers.friendUser._id === userId) {
+        getFriendsAndSave();
+      }
+    });
+
+    // Очистка обработчика события при размонтировании компонента
+    return () => {
+      socket.off("friendRemoved");
+    };
+  }, []);
 
   return (
     <header className="mt-5 relative z-10">

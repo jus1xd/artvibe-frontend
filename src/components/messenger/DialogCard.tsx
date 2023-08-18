@@ -3,11 +3,10 @@ import { useParams, useNavigate, NavLink } from "react-router-dom";
 import { io } from "socket.io-client";
 import { TLastMessage } from "../../pages/messenger";
 import jwt_decode from "jwt-decode";
+import { socket } from "../../hooks/socket";
 
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
-
-const socket = io(baseUrl);
 
 type TProps = {
   dataDialogs: TLastMessage;
@@ -33,29 +32,30 @@ const DialogCard: React.FC<TProps> = ({ dataDialogs, setLastMessage }) => {
   const [lastMessageHours, setLastMessageHours] = useState<string>("");
   const [lastMessageMinutes, setLastMessageMinutes] = useState<string>("");
 
-  useEffect(() => {
-    socket.on("sendMessage", (message) => {
-      if (
-        (message.friendId === userId || message.senderId === userId) &&
-        (message.friendId === friendId || message.senderId === friendId)
-      ) {
-        let lastMessage = {
-          friendId: message.friendId,
-          name: message.friendName,
-          avatar: message.friendAvatar,
-          date: message.date,
-          text: message.text,
-        };
-        setLastMessage(message.senderId, lastMessage);
-        setLastMessageText(message.text);
-        setLastMessageDate(message.date);
-      }
-    });
+  // useEffect(() => {
+  //   socket.on("sendMessage", (message) => {
+  //     console.log(friendId);
+  //     if (
+  //       (message.friendId === userId || message.senderId === userId) &&
+  //       (message.friendId === friendId || message.senderId === friendId)
+  //     ) {
+  //       let lastMessage = {
+  //         friendId: message.friendId,
+  //         name: message.friendName,
+  //         avatar: message.friendAvatar,
+  //         date: message.date,
+  //         text: message.text,
+  //       };
+  //       setLastMessage(message.senderId, lastMessage);
+  //       setLastMessageText(message.text);
+  //       setLastMessageDate(message.date);
+  //     }
+  //   });
 
-    return () => {
-      socket.off("sendMessage");
-    };
-  }, [friendId]);
+  //   return () => {
+  //     socket.off("sendMessage");
+  //   };
+  // }, [dataDialogs, friendId]);
 
   useEffect(() => {
     // вынимаем время из сообщения

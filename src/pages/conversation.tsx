@@ -9,17 +9,17 @@ import { IMessage } from "../models/IMessage";
 import { useAppDispatch } from "../hooks/redux";
 import { io } from "socket.io-client";
 import { addMessage } from "../store/slices/friendsSlice";
+import { socket } from "../hooks/socket";
 
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
-
-const socket = io(baseUrl);
 
 type TProps = {
   friendId: string;
   friendName: string;
   friendAvatar: string;
   messages: IMessage[];
+  setMessages: React.Dispatch<React.SetStateAction<IMessage[]>>;
 };
 
 const Conversation: React.FC<TProps> = ({
@@ -27,11 +27,12 @@ const Conversation: React.FC<TProps> = ({
   friendName,
   friendAvatar,
   messages,
+  setMessages,
 }) => {
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
   const infiniteScrollRef = useRef<HTMLDivElement | null>(null);
-  const [sortedMessages, setSortedMessages] = useState<IMessage[]>(messages);
+  const [liveMessages, setLiveMessages] = useState<IMessage[]>([]);
   const [messageInputValue, setMessageInputValue] = useState<string>("");
 
   // получить токен из localStorage
@@ -58,29 +59,7 @@ const Conversation: React.FC<TProps> = ({
     if (inputRef.current) {
       inputRef.current.focus();
     }
-
-    setSortedMessages(messages);
   }, [friendId]);
-
-  useEffect(() => {
-    socket.on("sendMessage", (message: any) => {
-      if (
-        (message.friendId === userId || message.senderId === userId) &&
-        (message.friendId === friendId || message.senderId === friendId)
-      ) {
-        dispatch(addMessage(message));
-        setSortedMessages((prevMessages) => [...prevMessages, message]);
-      }
-    });
-
-    return () => {
-      socket.off("sendMessage");
-    };
-  }, [friendId]);
-
-  useEffect(() => {
-    console.log("что в сортед мессагес", sortedMessages);
-  }, [sortedMessages]);
 
   // новое сообщение
   const newMessageData = {
@@ -93,8 +72,9 @@ const Conversation: React.FC<TProps> = ({
   const sendMessageFunction = () => {
     if (messageInputValue) {
       sendMessage(newMessageData).then((res: any) => {
-        setMessageInputValue("");
+        // setMessages((prevMessages) => [...prevMessages, res.data]);
       });
+      setMessageInputValue("");
     }
   };
 
@@ -151,8 +131,8 @@ const Conversation: React.FC<TProps> = ({
         <div className="flex justify-end items-end overflow-hidden h-[calc(100%-110px)] mx-3 sm:mx-6">
           <div className="flex flex-col-reverse pt-3 w-full h-full overflow-y-scroll ">
             <div ref={infiniteScrollRef} className="w-full h-max">
-              {sortedMessages.length > 0 ? (
-                sortedMessages.map((item: any, index) => (
+              {messages.length > 0 ? (
+                messages.map((item: any, index) => (
                   <DialogMessage
                     key={item._id}
                     senderId={item.senderId}
@@ -161,8 +141,8 @@ const Conversation: React.FC<TProps> = ({
                     messageText={item.text}
                     date={item.date}
                     isStacked={
-                      sortedMessages.length > 0 && index > 0
-                        ? sortedMessages[index - 1].senderId === item.senderId
+                      messages.length > 0 && index > 0
+                        ? messages[index - 1].senderId === item.senderId
                         : false
                     }
                   />
