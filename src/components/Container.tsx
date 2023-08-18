@@ -23,7 +23,7 @@ const Container: React.FC<TProps> = ({
     </div>
   ) : (
     <div
-      className={`max-w-[1200px] w-full ${noBorder ? "" : "px-[15px]"} mx-auto`}
+      className={`max-w-[1200px] sm:px-[15px] w-full ${noBorder ? "" : "px-[15px]"} mx-auto`}
     >
       {children}
     </div>

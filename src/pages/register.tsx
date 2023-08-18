@@ -53,11 +53,34 @@ const Register = () => {
     <>
       <div className="">
         <div className="">
+          <div className="flex items-center justify-center absolute z-20 w-screen h-screen top-[-40px] left-0 overflow-auto">
+            <svg
+              className="rotate-180 scale-[6] translate-y-[-260%]  sm:scale-125 sm:translate-y-[-60%] sm:w-full"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1440 457"
+              fill="none"
+            >
+              <path
+                d="M0 152.68L1440 -19V67.0904L0 457V152.68Z"
+                fill="url(#paint0_linear_18_178)"
+              />
+              <defs>
+                <linearGradient
+                  id="paint0_linear_18_178"
+                  x1="720.25"
+                  y1="-19"
+                  x2="720.25"
+                  y2="501.046"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop stop-color="#635BFF" />
+                  <stop offset="1" stop-color="#FF5B5B" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
           <Container border>
-            <div className="flex justify-center w-1/3 border-dashed border-x border-[#22222220] mx-auto">
-              <div className="absolute z-40 w-screen h-screen top-[-40px] left-0">
-                <img className="w-full" src={registerBg} alt="" />
-              </div>
+            <div className="flex justify-center w-full sm:w-1/3 border-dashed border-x border-[#22222220] mx-auto">
               <div className="flex justify-center items-center w-full h-screen">
                 <div className="relative w-full z-50 flex items-center flex-col justify-center h-max">
                   <div className="mb-8 pl-[15px] w-full">

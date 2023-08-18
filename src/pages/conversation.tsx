@@ -110,7 +110,7 @@ const Conversation: React.FC<TProps> = ({
   };
 
   return (
-    <div className="w-full sm:w-2/3 flex justify-between">
+    <div className="w-full sm:w-3/4 flex justify-between">
       {/* chat-section */}
       <div className="w-full sm:rounded-xl bg-[#20232B] sm:min-w-[450px] h-[calc(100vh-180px)] sm:h-[600px] overflow-hidden">
         {/* black bar  */}

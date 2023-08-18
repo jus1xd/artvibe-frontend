@@ -167,7 +167,7 @@ const Messenger = () => {
       );
     } else {
       return (
-        <div className="hidden sm:block rounded-xl bg-[#20232B] w-3/4 h-[600px] overflow-hidden">
+        <div className="hidden sm:block rounded-xl bg-[#20232B] min-w-[300px] w-3/4 h-[600px] overflow-hidden">
           <div className="w-full h-full flex items-center justify-center">
             <div className="text-[#ffffff80] text-md mt-7">Выберите диалог</div>
           </div>
@@ -184,12 +184,12 @@ const Messenger = () => {
           <div className="sm:mr-5 fixed bottom-0 left-0 sm:static">
             <ProfileNav />
           </div>
-          <div className="messenger-content sm:w-[calc(100%-250px)]  text-white flex justify-between">
+          <div className="messenger-content sm:w-[calc(100%-220px)]  text-white flex justify-between">
             {/* dialogs */}
             <div
               className={`${
                 friendId ? "hidden" : "block"
-              } sm:block sm:rounded-xl sm:bg-[#20232B] w-full sm:w-1/3 sm:mr-5 min-w-[200px] min-h-[20rem]`}
+              } sm:block sm:rounded-xl sm:bg-[#20232B] w-full sm:w-[260px] sm:mr-5 min-w-[260px] min-h-[20rem]`}
             >
               {/* search */}
               <div className="flex items-center justify-between px-4 pt-3">

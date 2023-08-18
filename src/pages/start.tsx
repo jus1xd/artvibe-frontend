@@ -13,10 +13,10 @@ const Start = () => {
   return (
     <>
       <Header theme="light" />
-      <div className="absolute w-screen h-screen top-[-40px] left-0 z-[-1]">
+      <div className="absolute w-screen h-screen top-[-40px] left-0 z-[-1] overflow-hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full"
+          className="w-[200%] sm:w-full"
           viewBox="0 0 1440 393"
           fill="none"
         >
@@ -38,10 +38,10 @@ const Start = () => {
           </defs>
         </svg>
       </div>
-      <div className="absolute w-screen h-screen top-[-40px] left-0 z-[1]">
+      <div className="absolute w-screen h-screen top-[-40px] left-0 z-[1] overflow-hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full"
+          className="w-[200%] sm:w-full"
           viewBox="0 0 1440 393"
           fill="none"
         >
@@ -71,11 +71,11 @@ const Start = () => {
         <Container>
           <div className="flex">
             {/* text  */}
-            <div className="w-[60%]">
-              <h1 className="text-title w-full text-6xl font-bold">
+            <div className="w-full sm:w-[60%]">
+              <h1 className="text-title w-full text-4xl sm:text-6xl font-bold">
                 Artvibe - выставки для любителей искусства всех времен
               </h1>
-              <p className="mt-10 text-link text-lg w-2/3">
+              <p className="mt-10 text-link text-lg w-full sm:w-2/3">
                 Каждая из выставок представляет широкий спектр художественных
                 произведений, включая живопись, скульптуру, фотографию, графику
                 и многое другое
@@ -87,7 +87,7 @@ const Start = () => {
               </div>
             </div>
             {/* pictures  */}
-            <div className="flex flex-wrap w-[40%] mr-[-100px]">
+            <div className="hidden sm:flex flex-wrap w-[40%] mr-[-100px]">
               <div className="flex items-end mb-4">
                 <div className="w-[55%] h-max mr-3">
                   <img className="" src={pic1} alt="pic1" />
