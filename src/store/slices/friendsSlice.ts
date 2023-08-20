@@ -45,8 +45,6 @@ const friendsSlice = createSlice({
     addMessage: (state, action) => {
       const { friendId, senderId } = action.payload;
 
-      console.log(action.payload);
-
       if (userId === friendId) {
         const dialog = state.friends.find((dialog) => dialog._id === senderId);
         if (dialog) {

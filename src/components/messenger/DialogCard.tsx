@@ -34,7 +34,6 @@ const DialogCard: React.FC<TProps> = ({ dataDialogs, setLastMessage }) => {
 
   // useEffect(() => {
   //   socket.on("sendMessage", (message) => {
-  //     console.log(friendId);
   //     if (
   //       (message.friendId === userId || message.senderId === userId) &&
   //       (message.friendId === friendId || message.senderId === friendId)
