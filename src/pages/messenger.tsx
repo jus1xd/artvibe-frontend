@@ -65,8 +65,21 @@ const Messenger = () => {
 
   // функция на получение друзей
   useEffect(() => {
-    getFriends(userId).then((res: any) => {
-      let dataDialogs = res.data.map((item: any) => ({
+    if (friends.length <= 0) {
+      getFriends(userId).then((res: any) => {
+        let dataDialogs = res.data.map((item: any) => ({
+          friendId: item._id,
+          avatar: item.avatar,
+          name: item.name,
+          date: item.messages[item.messages.length - 1]?.date || "",
+          text: item.messages[item.messages.length - 1]?.text,
+        }));
+        setDataDialogs(sortDialogsByTime(dataDialogs));
+        dispatch(setFriends(res.data));
+        setDataDialogsLoading(false);
+      });
+    } else {
+      let dataDialogs = friends.map((item: any) => ({
         friendId: item._id,
         avatar: item.avatar,
         name: item.name,
@@ -74,9 +87,8 @@ const Messenger = () => {
         text: item.messages[item.messages.length - 1]?.text,
       }));
       setDataDialogs(sortDialogsByTime(dataDialogs));
-      dispatch(setFriends(res.data));
       setDataDialogsLoading(false);
-    });
+    }
   }, []);
 
   useEffect(() => {
@@ -150,12 +162,12 @@ const Messenger = () => {
           <div className="sm:mr-5 fixed bottom-0 left-0 sm:static">
             <ProfileNav />
           </div>
-          <div className="messenger-content sm:w-[calc(100%-220px)]  text-white flex justify-between">
+          <div className="messenger-content sm:w-[calc(100%-220px)] h-full max-h-[600px]  text-white flex justify-between">
             {/* dialogs */}
             <div
               className={`${
                 friendId ? "hidden" : "block"
-              } sm:block sm:rounded-xl sm:bg-[#20232B] w-full sm:w-[260px] sm:mr-5 min-w-[260px] min-h-[20rem]`}
+              } sm:block sm:rounded-xl sm:bg-[#20232B] w-full sm:w-[260px] sm:mr-5 min-w-[260px] max-h-[600px]`}
             >
               {/* search */}
               <div className="flex items-center justify-between px-4 pt-3">
@@ -164,24 +176,26 @@ const Messenger = () => {
                   className="placeholder:!text-[#ffffff80] w-full text-sm cursor-pointer bg-[#ffffff10] outline-none  rounded-md px-3 py-2"
                 />
               </div>
-              <div className="flex flex-col cursor-pointer justify-center items-center w-full p-2">
-                {dataDialogs.length > 0 ? (
-                  dataDialogs.map((item: TLastMessage) => (
-                    <MemoizedDialogCard
-                      key={item.friendId}
-                      dataDialogs={item}
-                      setLastMessage={setLastMessage}
-                    />
-                  ))
-                ) : dataDialogsLoading ? (
-                  <div className="flex justify-center items-center w-full py-5">
-                    <Spinner size={25} />
-                  </div>
-                ) : (
-                  <div className="text-[#ffffff80] text-sm mt-7">
-                    У вас пока нет друзей
-                  </div>
-                )}
+              <div className="flex flex-col cursor-pointer justify-center items-center w-full p-2 h-[calc(100%-40px)] overflow-hidden">
+                <div className="w-full h-full overflow-y-scroll">
+                  {dataDialogs.length > 0 ? (
+                    dataDialogs.map((item: TLastMessage) => (
+                      <MemoizedDialogCard
+                        key={item.friendId}
+                        dataDialogs={item}
+                        setLastMessage={setLastMessage}
+                      />
+                    ))
+                  ) : dataDialogsLoading ? (
+                    <div className="flex justify-center items-center w-full py-5">
+                      <Spinner size={25} />
+                    </div>
+                  ) : (
+                    <div className="text-[#ffffff80] text-sm mt-7">
+                      У вас пока нет друзей
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             {/* conversation */}
