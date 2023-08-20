@@ -9,7 +9,11 @@ import { io } from "socket.io-client";
 import Button from "../components/Button";
 import PageCover from "../components/profile/PageCover";
 import PeopleCard from "../components/PeopleCard";
-import { addFriend, deleteFriend } from "../store/slices/friendsSlice";
+import {
+  addFriend,
+  deleteFriend,
+  setFriends,
+} from "../store/slices/friendsSlice";
 import ProfileNav from "../components/ProfileNav";
 import { IFriend } from "../models/IFriend";
 import { socket } from "../hooks/socket";
@@ -49,37 +53,55 @@ const Profile = () => {
   // получение друзей при загрузке страницы
 
   useEffect(() => {
-    if (currentUser === userId) {
-      if (friends.length <= 0) {
-        getFriends(userId).then((res: any) => {
-          setDataFriends(res.data);
-        });
+    if (data) {
+      if (currentUser === userId) {
+        if (friends.length <= 0) {
+          dispatch(setFriends(data.friends));
+          setDataFriends(data.friends);
+        } else {
+          setDataFriends(
+            friends.map((friend: any) => {
+              return {
+                _id: friend._id,
+                name: friend.name,
+                avatar: friend.avatar,
+                messages: [],
+              };
+            })
+          );
+        }
       } else {
+        if (friends.length <= 0) {
+          getFriends(currentUser).then((res: any) => {
+            dispatch(setFriends(res.data));
+          });
+        } else {
+          setDataFriends(
+            friends.map((friend: any) => {
+              return {
+                _id: friend._id,
+                name: friend.name,
+                avatar: friend.avatar,
+                messages: [],
+              };
+            })
+          );
+        }
         setDataFriends(
-          friends.map((friend: any) => {
-            return {
-              _id: friend._id,
-              name: friend.name,
-              avatar: friend.avatar,
-              messages: [],
-            };
-          })
+          data.friends.filter((item: any) => item._id !== currentUser)
         );
       }
-    } else {
-      getFriends(userId).then((res: any) => {
-        setDataFriends(res.data);
-      });
     }
-  }, [friends, userId]);
+  }, [data, userId]);
 
   // добавление в друзья WebSocket
   const addToFriendsHandler = (
+    setIsFriendLoading: React.Dispatch<React.SetStateAction<boolean>>,
     dataForFriendsActions: FormData,
     peopleId: string
   ) => {
     addToFriends(dataForFriendsActions).then((res: any) => {
-      socket.emit("friendAdded", { userId, peopleId });
+      socket.emit("friendAdded", { currentUser, peopleId });
       let newFriend = {
         _id: peopleId,
         name: res.data.friendUser.name,
@@ -87,22 +109,25 @@ const Profile = () => {
         messages: [],
       };
       dispatch(addFriend(newFriend));
+      setIsFriendLoading(false);
     });
   };
 
   // удаление из друзей WebSocket
   const removeFromFriendsHandler = (
+    setIsFriendLoading: React.Dispatch<React.SetStateAction<boolean>>,
     dataForFriendsActions: FormData,
     peopleId: string
   ) => {
     removeFromFriends(dataForFriendsActions).then((res: any) => {
-      socket.emit("friendRemoved", { userId, peopleId });
+      socket.emit("friendRemoved", { currentUser, peopleId });
       dispatch(deleteFriend(res.data.friendUser));
+      setIsFriendLoading(false);
     });
   };
 
   const MemoizedPeopleCard = React.memo(PeopleCard, (prevProps, nextProps) => {
-    return prevProps.dataFriend === nextProps.dataFriend;
+    return prevProps.isFriend === nextProps.isFriend;
   });
 
   return (
@@ -243,13 +268,15 @@ const Profile = () => {
                   </div>
                   <div className="h-[320px] rounded-xl overflow-y-scroll">
                     {dataFriends && dataFriends.length > 0 ? (
-                      dataFriends.map((item: any) => (
-                        <MemoizedPeopleCard
+                      dataFriends.map((item: IFriend) => (
+                        <PeopleCard
                           noMargin
                           key={item._id}
                           dataFriend={item}
-                          clientId={userId}
-                          isFriend={true}
+                          clientId={currentUser}
+                          isFriend={friends.some(
+                            (friend: any) => friend._id === item._id
+                          )}
                           addToFriendsHandler={addToFriendsHandler}
                           removeFromFriendsHandler={removeFromFriendsHandler}
                         />

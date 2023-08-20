@@ -23,6 +23,7 @@ const Peoples = () => {
   // массив всех людей
   const [dataPeoples, setDataPeoples] = useState<IFriend[]>([]);
   const [dataFriends, setDataFriends] = useState<IFriend[]>([]);
+  const [isFriendLoading, setIsFriendLoading] = useState(false);
 
   // запрос на получение моих друзей
   const [getFriends] = userApi.useGetFriendsMutation();
@@ -139,6 +140,7 @@ const Peoples = () => {
 
   // добавление в друзья WebSocket
   const addToFriendsHandler = (
+    setIsFriendLoading: React.Dispatch<React.SetStateAction<boolean>>,
     dataForFriendsActions: FormData,
     peopleId: string
   ) => {
@@ -151,17 +153,20 @@ const Peoples = () => {
         messages: [],
       };
       dispatch(addFriend(newFriend));
+      setIsFriendLoading(false);
     });
   };
 
   // удаление из друзей WebSocket
   const removeFromFriendsHandler = (
+    setIsFriendLoading: React.Dispatch<React.SetStateAction<boolean>>,
     dataForFriendsActions: FormData,
     peopleId: string
   ) => {
     removeFromFriends(dataForFriendsActions).then((res: any) => {
       socket.emit("friendRemoved", { userId, peopleId });
       dispatch(deleteFriend(res.data.friendUser));
+      setIsFriendLoading(false);
     });
   };
 

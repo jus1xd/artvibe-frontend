@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -13,12 +13,13 @@ type TProps = {
   dataFriend: IFriend;
   clientId: string;
   isFriend: boolean;
-  isFriendLoading?: boolean;
   addToFriendsHandler: (
+    setIsFriendLoading: React.Dispatch<React.SetStateAction<boolean>>,
     dataForFriendsActions: FormData,
     peopleId: string
   ) => void;
   removeFromFriendsHandler: (
+    setIsFriendLoading: React.Dispatch<React.SetStateAction<boolean>>,
     dataForFriendsActions: FormData,
     peopleId: string
   ) => void;
@@ -29,23 +30,40 @@ const PeopleCard: React.FC<TProps> = ({
   dataFriend,
   clientId,
   isFriend,
-  isFriendLoading,
   addToFriendsHandler,
   removeFromFriendsHandler,
 }) => {
+  const [isFriendLoading, setIsFriendLoading] = useState<boolean>(false);
+
   const { _id: peopleId, name, avatar } = dataFriend;
+
   // form data для добавления/удаления из друзей
   const dataForFriendsActions = new FormData();
+
   dataForFriendsActions.append("userId", clientId);
   dataForFriendsActions.append("friendId", peopleId);
+
+  const addFriend = () => {
+    setIsFriendLoading(true);
+    addToFriendsHandler(setIsFriendLoading, dataForFriendsActions, peopleId);
+  };
+
+  const removeFriend = () => {
+    setIsFriendLoading(true);
+    removeFromFriendsHandler(
+      setIsFriendLoading,
+      dataForFriendsActions,
+      peopleId
+    );
+  };
 
   return (
     <div
       className={`${
         noMargin ? "" : "sm:mr-4 sm:w-[calc(25%-16px)]"
-      } p-2 mb-2 bg-darkBlueGray  w-full min-w-[220px]  rounded-xl flex items-center`}
+      } p-2 mb-2 bg-darkBlueGray  w-full min-w-[220px] h-[56px] rounded-xl flex items-center`}
     >
-      <NavLink to={`/${peopleId}`}>
+      <NavLink className="h-[40px] flex items-center" to={`/${peopleId}`}>
         {isFriendLoading ? (
           <Skeleton
             circle
@@ -53,7 +71,7 @@ const PeopleCard: React.FC<TProps> = ({
             height={40}
             baseColor="#3B3D42"
             highlightColor="#7B808C"
-            className="mb-[4px]"
+            style={{ marginTop: "-4px" }}
           />
         ) : avatar ? (
           <div className="flex items-center justify-center w-[40px] h-[40px] overflow-hidden rounded-full">
@@ -78,13 +96,14 @@ const PeopleCard: React.FC<TProps> = ({
       <div className="w-[calc(100%-40px)] flex justify-between items-center">
         <NavLink to={`/${peopleId}`}>
           <div className="">
-            <div className="ml-2">
+            <div className="ml-2 flex items-center">
               {isFriendLoading ? (
                 <Skeleton
-                  width={140}
+                  width={100}
                   height={15}
                   baseColor="#3B3D42"
                   highlightColor="#7B808C"
+                  className="mb-[-4]"
                 />
               ) : (
                 <div className="w-full max-w-[100px] whitespace-nowrap overflow-hidden text-ellipsis">
@@ -106,19 +125,19 @@ const PeopleCard: React.FC<TProps> = ({
         </NavLink>
         <div>
           {isFriendLoading ? (
-            <Skeleton
-              width={40}
-              height={40}
-              baseColor="#3B3D42"
-              highlightColor="#7B808C"
-              className="mb-[4px]"
-            />
+            <button className="flex items-center bg-gray-500 h-[40px] mt-[-4px] ml-4 text-white">
+              <Skeleton
+                width={40}
+                height={40}
+                baseColor="#3B3D42"
+                highlightColor="#7B808C"
+                className="!rounded-md overflow-hidden"
+              />
+            </button>
           ) : isFriend ? (
             <button
-              onClick={() =>
-                removeFromFriendsHandler(dataForFriendsActions, peopleId)
-              }
-              className="bg-redOpacity opacity-70 ml-4 hover:opacity-100 transition-all rounded-md p-2 text-white"
+              onClick={() => removeFriend()}
+              className="bg-redOpacity opacity-70 ml-4 hover:opacity-100 transition-opacity rounded-md p-2 text-white"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -136,10 +155,8 @@ const PeopleCard: React.FC<TProps> = ({
             </button>
           ) : (
             <button
-              onClick={() =>
-                addToFriendsHandler(dataForFriendsActions, peopleId)
-              }
-              className="bg-accentOpacity opacity-70 ml-4 hover:opacity-100 transition-all rounded-md p-2 text-white"
+              onClick={() => addFriend()}
+              className="bg-accentOpacity opacity-70 ml-4 hover:opacity-100 transition-opacity rounded-md p-2 text-white"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
