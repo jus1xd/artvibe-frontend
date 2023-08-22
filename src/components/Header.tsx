@@ -14,7 +14,7 @@ import Container from "./Container";
 import { useActions } from "../hooks/actions";
 import { socket } from "../hooks/socket";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { addMessage, setFriends } from "../store/slices/friendsSlice";
+import { addFriend, addMessage, deleteFriend, setFriends } from "../store/slices/friendsSlice";
 import { userApi } from "../store/services/userService";
 
 type TProps = {
@@ -99,6 +99,7 @@ const Header: React.FC<TProps> = ({ theme }) => {
     socket.on("friendAdded", (updatedUsers) => {
       if (updatedUsers.friendUser._id === userId) {
         getFriendsAndSave();
+        dispatch(addFriend(updatedUsers.currentUser))
       }
     });
 
@@ -114,6 +115,7 @@ const Header: React.FC<TProps> = ({ theme }) => {
     socket.on("friendRemoved", (updatedUsers) => {
       if (updatedUsers.friendUser._id === userId) {
         getFriendsAndSave();
+        dispatch(deleteFriend(updatedUsers.currentUser))
       }
     });
 
