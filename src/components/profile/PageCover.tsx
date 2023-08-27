@@ -107,11 +107,12 @@ const PageCover: React.FC<TProps> = ({
     <div className="w-full h-[200px] rounded-xl overflow-hidden relative group">
       {isMyProfile && (
         <div className="z-20 group-hover:opacity-100 opacity-0 absolute rounded-md cursor-pointer transition-opacity top-4 left-4 bg-darkBlueGray">
-          <label htmlFor="fileLoader" className="cursor-pointer">
+          <label htmlFor="pageCoverLoader" className="cursor-pointer">
             <input
               type="file"
+              accept="image/png, image/jpeg"
               required
-              id="fileLoader"
+              id="pageCoverLoader"
               onChange={(e) => setNewPageCover(e.target.files![0])}
               className="appearance-none hidden"
             />

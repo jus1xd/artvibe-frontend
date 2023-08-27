@@ -18,9 +18,6 @@ const authorsSlice = createSlice({
   name: "authors",
   initialState,
   reducers: {},
-  extraReducers: {
-    // [useGetAuthorsQuery.fulfilled]: (state, action) => {},
-  },
 });
 
 // export const {} = authorsSlice.actions;

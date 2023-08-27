@@ -33,7 +33,6 @@ const peoplesSlice = createSlice({
       }
     },
   },
-  extraReducers: {},
 });
 
 export const { setPeoples, addPeople, deletePeople } = peoplesSlice.actions;

@@ -65,7 +65,6 @@ const friendsSlice = createSlice({
       }
     },
   },
-  extraReducers: {},
 });
 
 export const { setFriends, setMessages, addFriend, addMessage, deleteFriend } =

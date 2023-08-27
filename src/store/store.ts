@@ -6,6 +6,7 @@ import { countriesApi } from "./services/countriesService";
 import { picturesApi } from "./services/pictureService";
 import { userApi } from "./services/userService";
 import { messagesApi } from "./services/messageService";
+import { postApi } from "./services/postService";
 
 export const setupStore = () => {
   return configureStore({
@@ -17,7 +18,8 @@ export const setupStore = () => {
         countriesApi.middleware,
         userApi.middleware,
         authApi.middleware,
-        messagesApi.middleware
+        messagesApi.middleware,
+        postApi.middleware
       ),
     devTools: false,
   });

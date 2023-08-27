@@ -35,7 +35,7 @@ const PeopleCard: React.FC<TProps> = ({
 }) => {
   const [isFriendLoading, setIsFriendLoading] = useState<boolean>(false);
 
-  const { _id: peopleId, name, avatar } = dataFriend;
+  const { _id: peopleId, name, avatar, isOnline } = dataFriend;
 
   // form data для добавления/удаления из друзей
   const dataForFriendsActions = new FormData();
@@ -74,12 +74,19 @@ const PeopleCard: React.FC<TProps> = ({
             style={{ marginTop: "-4px" }}
           />
         ) : avatar ? (
-          <div className="flex items-center justify-center w-[40px] h-[40px] overflow-hidden rounded-full">
-            <img
-              src={`${baseUrl}/${avatar}`}
-              className="scale-[1.5]"
-              alt="avatar"
-            />
+          <div className="relative">
+            <div className="flex items-center justify-center w-[40px] h-[40px] overflow-hidden rounded-full">
+              <img
+                src={`${baseUrl}/${avatar}`}
+                className="scale-[1.5]"
+                alt="avatar"
+              />
+            </div>
+            <div className="online-status">
+              {isOnline && (
+                <div className="w-3 h-3 rounded-full bg-accent border-2 border-darkBlueGray absolute bottom-0 right-0 z-50"></div>
+              )}
+            </div>
           </div>
         ) : (
           <div

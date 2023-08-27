@@ -30,9 +30,6 @@ const authSlice = createSlice({
       localStorage.removeItem("token");
     },
   },
-  extraReducers: {
-    // [useGetAuthorsQuery.fulfilled]: (state, action) => {},
-  },
 });
 
 export const authActions = authSlice.actions;

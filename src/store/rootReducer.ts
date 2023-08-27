@@ -9,6 +9,7 @@ import { userApi } from "./services/userService";
 import { messagesApi } from "./services/messageService";
 // import messagesSlice from "./slices/messagesSlice";
 import friendsSlice from "./slices/friendsSlice";
+import { postApi } from "./services/postService";
 
 export const rootReducer = combineReducers({
   authors: authorsSlice.reducer,
@@ -20,5 +21,6 @@ export const rootReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
   [messagesApi.reducerPath]: messagesApi.reducer,
+  [postApi.reducerPath]: postApi.reducer,
   auth: authReducer,
 });

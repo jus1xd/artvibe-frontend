@@ -18,9 +18,6 @@ const countriesSlice = createSlice({
   name: "countries",
   initialState,
   reducers: {},
-  extraReducers: {
-    // [useGetAuthorsQuery.fulfilled]: (state, action) => {},
-  },
 });
 
 export const {} = countriesSlice.actions;

@@ -46,7 +46,6 @@
     //   }
     // },
 //   },
-//   extraReducers: {},
 // });
 
 // export const { setMessages, addMessage } = messagesSlice.actions;

@@ -5,4 +5,5 @@ export interface IFriend {
   name: string;
   avatar: string;
   messages: IMessage[];
+  isOnline: boolean;
 }

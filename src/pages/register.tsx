@@ -150,13 +150,14 @@ const Register = () => {
 
                     <div className="mt-3 w-full">
                       <label
-                        htmlFor="fileLoader"
+                        htmlFor="avatarLoader"
                         className="px-3 w-full cursor-pointer py-1 mb-2 outline-accent rounded-md border border-accent opacity-80 transition hover:opacity-100"
                       >
                         <input
                           type="file"
+                          accept="image/png, image/jpeg"
                           required
-                          id="fileLoader"
+                          id="avatarLoader"
                           onChange={(e) => setAvatar(e.target.files![0])}
                           placeholder="Изображение"
                           className="appearance-none hidden"

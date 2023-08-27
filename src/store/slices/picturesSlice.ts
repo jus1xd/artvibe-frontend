@@ -17,7 +17,6 @@ const picturesSlice = createSlice({
   name: "pictures",
   initialState,
   reducers: {},
-  extraReducers: {},
 });
 
 export const {} = picturesSlice.actions;
