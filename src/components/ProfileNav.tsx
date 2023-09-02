@@ -77,8 +77,8 @@ const ProfileNav = () => {
   };
 
   return (
-    <div className="sm:mr-8 fixed bottom-0 left-0 sm:static">
-      <div className="z-50 pt-2 pb-6 sm:py-0 bg-darkBackground w-[100vw] justify-center sm:static sm:min-w-[200px] sm:w-[200px] text-white sm:mb-3 h-max flex sm:flex-col">
+    <div className="sm:mr-8 fixed sm:z-[0] z-[999] bottom-0 left-0 sm:static">
+      <div className="pt-2 pb-6 sm:py-0 bg-darkBackground w-[100vw] justify-center sm:static sm:min-w-[200px] sm:w-[200px] text-white sm:mb-3 h-max flex sm:flex-col">
         <div className="sm:mb-3 h-max flex sm:flex-col border border-inputBorder transition-all">
           {Links()}
           <div

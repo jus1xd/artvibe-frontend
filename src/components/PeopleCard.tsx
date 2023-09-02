@@ -61,9 +61,9 @@ const PeopleCard: React.FC<TProps> = ({
     <div
       className={`${
         noMargin ? "" : "sm:mr-2 sm:w-[calc(25%-8px)]"
-      } p-2 mb-2 bg-darkBlueGray  w-full min-w-[220px] h-[56px] rounded-xl flex items-center`}
+      } p-2 mb-2 bg-darkBlueGray w-full min-w-[220px] h-[56px] rounded-xl flex items-center`}
     >
-      <NavLink className="h-[40px] flex items-center" to={`/${peopleId}`}>
+      <NavLink className="relative z-[0] h-[40px] flex items-center" to={`/${peopleId}`}>
         {isFriendLoading ? (
           <Skeleton
             circle
@@ -74,8 +74,8 @@ const PeopleCard: React.FC<TProps> = ({
             style={{ marginTop: "-4px" }}
           />
         ) : avatar ? (
-          <div className="relative">
-            <div className="flex items-center justify-center w-[40px] h-[40px] overflow-hidden rounded-full">
+          <div className="relative z-[0]">
+            <div className="relative z-[0] flex items-center justify-center w-[40px] h-[40px] overflow-hidden rounded-full">
               <img
                 src={`${baseUrl}/${avatar}`}
                 className="scale-[1.5]"
@@ -84,7 +84,7 @@ const PeopleCard: React.FC<TProps> = ({
             </div>
             <div className="online-status">
               {isOnline && (
-                <div className="w-3 h-3 rounded-full bg-accent border-2 border-darkBlueGray absolute bottom-0 right-0 z-50"></div>
+                <div className="w-3 h-3 rounded-full bg-accent border-2 border-darkBlueGray absolute bottom-0 right-0 z-10"></div>
               )}
             </div>
           </div>

@@ -135,7 +135,7 @@ const News = () => {
         <div className="sm:flex mt-10 mb-20 sm:mb-0 sm:mt-10">
           <ProfileNav />
           <ProfileWrapper>
-            <div className="flex justify-between">
+            <div className="flex justify-between flex-wrap">
               <div className="">
                 {news.map((item) => {
                   return (
@@ -149,7 +149,7 @@ const News = () => {
                 })}
               </div>
               {/* friends  */}
-              <div className="relative rounded-xl bg-[#20232B] mb-4 sm:mb-0 p-2 pt-6 pb-[2px] h-max sm:w-[240px] min-w-[254px] ">
+              <div className="relative rounded-xl bg-[#20232B] mb-4 sm:mb-0 p-2 pt-6 pb-[2px] h-max sm:w-[240px] w-full min-w-[254px] ">
                 <div className="z-20 absolute text-[12px] font-bold top-[-8px] left-[-10px] border-[3px] bg-darkBackground rounded-xl border-darkBackground text-accent py-0 px-2">
                   Друзья
                 </div>

@@ -21,6 +21,10 @@ const Modal: React.FC<TProps> = ({
   setIsOpened,
   children,
 }) => {
+  // получить ширину экрана устройства
+  const widthScreen = window.innerWidth;
+  // получить высоту экрана устройства
+
   return (
     <div
       className={`${
@@ -32,7 +36,12 @@ const Modal: React.FC<TProps> = ({
         onClick={() => setIsOpened(false)}
       ></div>
       <div
-        style={{ width: width, height: height, maxWidth, maxHeight }}
+        style={{
+          width: widthScreen < 500 ? "90%" : width,
+          height: height,
+          maxWidth: widthScreen < 500 ? "90%" : maxWidth,
+          maxHeight,
+        }}
         className={`${
           isOpened ? "scale-100" : "scale-75"
         } transition-transform modal-container bg-darkBlueGray p-[${padding}] rounded-lg overflow-hidden shadow-lg z-10`}

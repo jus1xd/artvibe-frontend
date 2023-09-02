@@ -23,7 +23,7 @@ const NewsCard: React.FC<TProps> = ({ photo, title, text }) => {
   const commentsCount = 0;
 
   return (
-    <div className="mb-5 bg-darkBlueGray rounded-lg overflow-hidden w-[650px]">
+    <div className="mb-5 bg-darkBlueGray rounded-lg overflow-hidden max-w-[650px] w-full">
       <div className="flex justify-center items-center w-full h-60 overflow-hidden">
         <img src={photo} alt="" />
       </div>
@@ -93,7 +93,7 @@ const NewsCard: React.FC<TProps> = ({ photo, title, text }) => {
             </div>
           </div>
           <div className="flex justify-between">
-            <div className="text-sm">
+            <div className="text-sm max-h-[440px] overflow-y-scroll">
               {text.map((item) => (
                 <div className="mb-3 leading-6">{item}</div>
               ))}
