@@ -1,4 +1,8 @@
-const colors = require('tailwindcss/colors')
+const colors = require("tailwindcss/colors");
+const MomentLocalesPlugin = require("moment-locales-webpack-plugin");
+
+var moment = require("moment");
+moment().format();
 
 // /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -23,5 +27,9 @@ module.exports = {
       blue: colors.blue,
     },
   },
-  plugins: [],
+  plugins: [
+    new MomentLocalesPlugin({
+      localesToKeep: ["es-us", "ru"],
+    }),
+  ],
 };

@@ -80,7 +80,7 @@ const Register = () => {
             </svg>
           </div>
           <Container border>
-            <div className="flex justify-center w-full sm:w-1/3 border-dashed border-x border-[#22222220] mx-auto">
+            <div className="flex justify-center w-full sm:w-2/3 md:w-1/3 border-dashed border-x border-[#22222220] mx-auto">
               <div className="flex justify-center items-center w-full h-screen">
                 <div className="relative w-full z-50 flex items-center flex-col justify-center h-max">
                   <div className="mb-8 pl-[15px] w-full">

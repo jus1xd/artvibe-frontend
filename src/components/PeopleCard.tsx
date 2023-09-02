@@ -60,7 +60,7 @@ const PeopleCard: React.FC<TProps> = ({
   return (
     <div
       className={`${
-        noMargin ? "" : "sm:mr-4 sm:w-[calc(25%-16px)]"
+        noMargin ? "" : "sm:mr-2 sm:w-[calc(25%-8px)]"
       } p-2 mb-2 bg-darkBlueGray  w-full min-w-[220px] h-[56px] rounded-xl flex items-center`}
     >
       <NavLink className="h-[40px] flex items-center" to={`/${peopleId}`}>

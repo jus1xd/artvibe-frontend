@@ -82,7 +82,13 @@ const DialogCard: React.FC<TProps> = ({ dataDialogs, setLastMessage }) => {
 
   return (
     <div onClick={handleRedirect} className="w-full">
-      <div className="w-full h-full rounded-lg overflow-hidden mb-1 px-3 py-2 hover:bg-darkBackground transition-colors">
+      <div
+        className={`${
+          currentFriendId === friendId
+            ? "bg-darkBlueGray"
+            : "hover:bg-darkBackground"
+        } w-full h-full rounded-lg overflow-hidden mb-1 px-3 py-2  transition-colors`}
+      >
         <div className="flex items-center w-full">
           {avatar ? (
             <div className="flex items-center justify-center overflow-hidden w-[35px] h-[35px] rounded-full">

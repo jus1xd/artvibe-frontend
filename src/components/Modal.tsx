@@ -1,12 +1,26 @@
 import React from "react";
 
 type TProps = {
+  width: string;
+  height: string;
+  maxWidth?: string;
+  maxHeight?: string;
+  padding?: string;
   isOpened: boolean;
   setIsOpened: (isOpened: boolean) => void;
   children: React.ReactNode;
 };
 
-const Modal: React.FC<TProps> = ({ isOpened, setIsOpened, children }) => {
+const Modal: React.FC<TProps> = ({
+  width,
+  height,
+  maxWidth,
+  maxHeight,
+  padding,
+  isOpened,
+  setIsOpened,
+  children,
+}) => {
   return (
     <div
       className={`${
@@ -18,9 +32,10 @@ const Modal: React.FC<TProps> = ({ isOpened, setIsOpened, children }) => {
         onClick={() => setIsOpened(false)}
       ></div>
       <div
+        style={{ width: width, height: height, maxWidth, maxHeight }}
         className={`${
           isOpened ? "scale-100" : "scale-75"
-        } transition-transform modal-container bg-darkBlueGray max-w-[60%] max-h-[65%] w-[60%] h-[65%] p-5 rounded-lg shadow-lg z-10`}
+        } transition-transform modal-container bg-darkBlueGray p-[${padding}] rounded-lg overflow-hidden shadow-lg z-10`}
       >
         {children}
       </div>

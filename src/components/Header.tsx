@@ -126,7 +126,7 @@ const Header: React.FC<TProps> = ({ theme }) => {
   }, []);
 
   return (
-    <header className="mt-5 relative z-10">
+    <header className="mt-2 relative z-10">
       <Container>
         {theme === "light" ? (
           <div className="flex justify-between items-center h-[60px]">

@@ -22,6 +22,9 @@ import AdminModels from "../pages/admin/adminModels";
 import Messenger from "../pages/messenger";
 import Peoples from "../pages/peoples";
 import Profile from "../pages/profile";
+import ErrorPage from "../pages/error";
+import News from "../pages/news";
+import ProfileEdit from "../pages/profile/profileEdit";
 
 export const router = createBrowserRouter([
   {
@@ -41,10 +44,26 @@ export const router = createBrowserRouter([
     ),
   },
   {
+    path: "/news",
+    element: (
+      <ProtectedRoute notAuthSecure>
+        <News />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: "/im/:id",
     element: (
       <ProtectedRoute notAuthSecure>
         <Messenger />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/edit/:id",
+    element: (
+      <ProtectedRoute notAuthSecure>
+        <ProfileEdit />
       </ProtectedRoute>
     ),
   },
@@ -159,6 +178,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <Start />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "*",

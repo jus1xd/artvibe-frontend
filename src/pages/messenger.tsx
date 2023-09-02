@@ -14,6 +14,7 @@ import { addMessage, setFriends } from "../store/slices/friendsSlice";
 import ProfileNav from "../components/ProfileNav";
 import { socket } from "../hooks/socket";
 import { IMessage } from "../models/IMessage";
+import ProfileWrapper from "../components/ProfileWrapper";
 
 export type TLastMessage = {
   friendId: string;
@@ -55,9 +56,7 @@ const Messenger = () => {
   const [getFriends] = userApi.useGetFriendsMutation();
   const friends = useAppSelector((state) => state.friends.friends);
 
-  const MemoizedDialogCard = React.memo(DialogCard, (prevProps, nextProps) => {
-    return prevProps.dataDialogs.date === nextProps.dataDialogs.date;
-  });
+  const MemoizedDialogCard = React.memo(DialogCard);
 
   // получить id друга из url
   const params = useParams();
@@ -158,49 +157,49 @@ const Messenger = () => {
     <div className="messenger relative sm:static">
       <Header theme="light" />
       <Container noBorder>
-        <div className="w-full sm:flex mt-5 sm:mt-16">
-          <div className="sm:mr-5 fixed bottom-0 left-0 sm:static">
-            <ProfileNav />
-          </div>
-          <div className="messenger-content sm:w-[calc(100%-220px)] h-full max-h-[600px]  text-white flex justify-between">
+        <div className="w-full sm:flex mt-5 sm:mt-10">
+          <ProfileNav />
+          <ProfileWrapper>
             {/* dialogs */}
-            <div
-              className={`${
-                friendId ? "hidden" : "block"
-              } sm:block sm:rounded-xl sm:bg-[#20232B] w-full sm:w-[260px] sm:mr-5 min-w-[260px] max-h-[600px]`}
-            >
-              {/* search */}
-              <div className="flex items-center justify-between px-4 pt-3">
-                <input
-                  placeholder="Найти.."
-                  className="placeholder:!text-[#ffffff80] w-full text-sm cursor-pointer bg-[#ffffff10] outline-none  rounded-md px-3 py-2"
-                />
-              </div>
-              <div className="flex flex-col cursor-pointer justify-center items-center w-full p-2 h-[calc(100%-40px)] overflow-hidden">
-                <div className="w-full h-full overflow-y-scroll">
-                  {dataDialogs.length > 0 ? (
-                    dataDialogs.map((item: TLastMessage) => (
-                      <MemoizedDialogCard
-                        key={item.friendId}
-                        dataDialogs={item}
-                        setLastMessage={setLastMessage}
-                      />
-                    ))
-                  ) : dataDialogsLoading ? (
-                    <div className="flex justify-center items-center w-full py-5">
-                      <Spinner size={25} />
-                    </div>
-                  ) : (
-                    <div className="text-[#ffffff80] text-sm mt-7">
-                      У вас пока нет друзей
-                    </div>
-                  )}
+            <div className="flex">
+              <div
+                className={`${
+                  friendId ? "hidden" : "block"
+                } sm:block sm:rounded-xl sm:bg-[#20232B] w-full sm:w-[260px] sm:mr-5 min-w-[260px] max-h-[600px]`}
+              >
+                {/* search */}
+                <div className="flex items-center justify-between px-4 pt-3">
+                  <input
+                    placeholder="Найти.."
+                    className="placeholder:!text-[#ffffff80] w-full text-sm cursor-pointer bg-[#ffffff10] outline-none  rounded-md px-3 py-2"
+                  />
+                </div>
+                <div className="flex flex-col cursor-pointer justify-center items-center w-full p-2 h-[calc(100%-40px)] overflow-hidden">
+                  <div className="w-full h-full overflow-y-scroll">
+                    {dataDialogs.length > 0 ? (
+                      dataDialogs.map((item: TLastMessage) => (
+                        <DialogCard
+                          key={item.friendId}
+                          dataDialogs={item}
+                          setLastMessage={setLastMessage}
+                        />
+                      ))
+                    ) : dataDialogsLoading ? (
+                      <div className="flex justify-center items-center w-full py-5">
+                        <Spinner size={25} />
+                      </div>
+                    ) : (
+                      <div className="text-[#ffffff80] text-sm mt-7">
+                        У вас пока нет друзей
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
+              {/* conversation */}
+              {handleConversation()}
             </div>
-            {/* conversation */}
-            {handleConversation()}
-          </div>
+          </ProfileWrapper>
         </div>
       </Container>
     </div>

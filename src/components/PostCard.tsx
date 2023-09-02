@@ -185,14 +185,21 @@ const PostCard: React.FC<TProps> = ({
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto"
               />
             </div>
-            <Modal isOpened={modalOpened} setIsOpened={setModalOpened}>
-              <div className="flex justify-center items-center h-full">
-                <img
-                  src={`${baseUrl}/${pictures}`}
-                  alt="post"
-                  className="max-h-full h-max"
-                />
-              </div>
+            <Modal
+              width="100%"
+              height="100%"
+              maxWidth="45%"
+              maxHeight="70%"
+              isOpened={modalOpened}
+              setIsOpened={setModalOpened}
+            >
+              {/* <div className="max-w-[50%] max-h-[65%] w-[50%] h-max"> */}
+              <img
+                src={`${baseUrl}/${pictures}`}
+                alt="post"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-full max-h-full w-auto h-auto"
+              />
+              {/* </div> */}
             </Modal>
           </div>
         )}
