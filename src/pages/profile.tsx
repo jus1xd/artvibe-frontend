@@ -30,8 +30,9 @@ const Profile = () => {
   const dispatch = useAppDispatch();
   const [dataFriends, setDataFriends] = useState<IFriend[]>([]);
   const [dataPosts, setDataPosts] = useState<IPost[]>([]);
+  // new post data
   const [newPostValue, setNewPostValue] = useState<string>("");
-  const [pictures, setPictures] = useState<File | null>(null);
+  const [newPostPictures, setNewPostPictures] = useState<File | null>(null);
 
   // получить токен из localStorage
   const token = localStorage.getItem("token");
@@ -147,19 +148,21 @@ const Profile = () => {
 
   // создание поста
   const handleSend = () => {
-    const postData = new FormData();
-    postData.append("id", userId);
-    postData.append("authorId", currentUser);
-    postData.append("text", newPostValue);
-    postData.append("pictures", pictures!);
-    console.log("postData", postData);
+    if (newPostValue || newPostPictures) {
+      const postData = new FormData();
+      postData.append("id", userId);
+      postData.append("authorId", currentUser);
+      postData.append("text", newPostValue);
+      postData.append("pictures", newPostPictures!);
+      console.log("postData", postData);
 
-    createPost(postData).then((res: any) => {
-      setDataPosts([...dataPosts, res.data]);
-    });
+      createPost(postData).then((res: any) => {
+        setDataPosts([...dataPosts, res.data]);
+      });
 
-    setNewPostValue("");
-    setPictures(null);
+      setNewPostValue("");
+      setNewPostPictures(null);
+    }
   };
 
   // удаление поста
@@ -177,7 +180,7 @@ const Profile = () => {
           <ProfileNav />
           <ProfileWrapper>
             {data && (
-              <div className="profile-content w-full text-white ">
+              <div className="baton w-full text-white ">
                 {/* profile */}
                 <div className="rounded-xl bg-[#20232B] sm:w-[100%] sm:min-w-[775px] sm:mr-7 mb-4">
                   <PageCover
@@ -323,7 +326,7 @@ const Profile = () => {
                       <ResizableTextarea
                         onChange={handleNewpostInput}
                         value={newPostValue}
-                        setPictures={setPictures}
+                        setPictures={setNewPostPictures}
                         handleSend={handleSend}
                         placeholder="Что у вас нового?"
                       />

@@ -10,6 +10,7 @@ import { useAppDispatch } from "../hooks/redux";
 import { io } from "socket.io-client";
 import { addMessage } from "../store/slices/friendsSlice";
 import { socket } from "../hooks/socket";
+import { NavLink } from "react-router-dom";
 
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
@@ -101,7 +102,7 @@ const Conversation: React.FC<TProps> = ({
           >
             Назад
           </div>
-          <div className="flex items-center text-sm">
+          <NavLink to={`/${friendId}`} className="flex items-center text-sm cursor-pointer">
             Беседа с
             {friendAvatar ? (
               <div className="ml-2 flex items-center justify-center overflow-hidden w-[30px] h-[30px] rounded-full">
@@ -122,7 +123,7 @@ const Conversation: React.FC<TProps> = ({
               </div>
             )}
             <span className="font-bold ml-2">{friendName}</span>{" "}
-          </div>
+          </NavLink>
           <div className="hidden sm:block text-sm cursor-pointer hover:bg-[#ffffff10] transition-colors rounded-md  px-3 py-1 w-max">
             Добавить в друзья
           </div>

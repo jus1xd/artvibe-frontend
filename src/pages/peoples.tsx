@@ -178,47 +178,49 @@ const Peoples = () => {
         <div className="sm:flex mt-10 mb-20 sm:mb-0 sm:mt-10">
           <ProfileNav />
           <ProfileWrapper>
-            <h1 className="text-2xl font-semibold mb-7">Друзья</h1>
-            <div className="flex flex-wrap w-full min-h-[100px] items-center">
-              {dataFriends && dataFriends.length > 0 ? (
-                dataFriends.map((item: IFriend) => (
-                  <PeopleCard
-                    key={item._id}
-                    dataFriend={item}
-                    clientId={userId}
-                    isFriend={true}
-                    addToFriendsHandler={addToFriendsHandler}
-                    removeFromFriendsHandler={removeFromFriendsHandler}
-                  />
-                ))
-              ) : (
-                <div className="w-full h-10 flex items-center justify-center">
-                  <div className="text-[#ffffff80] text-lg py-5">
-                    У вас пока нет друзей
+            <div className="baton">
+              <h1 className="text-2xl font-semibold mb-7">Друзья</h1>
+              <div className="flex flex-wrap w-full min-h-[100px] items-center">
+                {dataFriends && dataFriends.length > 0 ? (
+                  dataFriends.map((item: IFriend) => (
+                    <PeopleCard
+                      key={item._id}
+                      dataFriend={item}
+                      clientId={userId}
+                      isFriend={true}
+                      addToFriendsHandler={addToFriendsHandler}
+                      removeFromFriendsHandler={removeFromFriendsHandler}
+                    />
+                  ))
+                ) : (
+                  <div className="w-full h-10 flex items-center justify-center">
+                    <div className="text-[#ffffff80] text-lg py-5">
+                      У вас пока нет друзей
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-            <h1 className="text-2xl font-semibold mt-10 mb-7">Люди</h1>
-            <div className="flex flex-wrap min-h-[64px] h-auto items-center">
-              {dataPeoples && dataPeoples.length > 0 ? (
-                dataPeoples.map((item: IFriend) => (
-                  <PeopleCard
-                    key={item._id}
-                    dataFriend={item}
-                    clientId={userId}
-                    isFriend={false}
-                    addToFriendsHandler={addToFriendsHandler}
-                    removeFromFriendsHandler={removeFromFriendsHandler}
-                  />
-                ))
-              ) : (
-                <div className="w-full flex items-center justify-center">
-                  <div className="text-[#ffffff80] text-lg">
-                    Все люди у вас в друзьях
+                )}
+              </div>
+              <h1 className="text-2xl font-semibold mt-10 mb-7">Люди</h1>
+              <div className="flex flex-wrap min-h-[64px] h-auto items-center">
+                {dataPeoples && dataPeoples.length > 0 ? (
+                  dataPeoples.map((item: IFriend) => (
+                    <PeopleCard
+                      key={item._id}
+                      dataFriend={item}
+                      clientId={userId}
+                      isFriend={false}
+                      addToFriendsHandler={addToFriendsHandler}
+                      removeFromFriendsHandler={removeFromFriendsHandler}
+                    />
+                  ))
+                ) : (
+                  <div className="w-full flex items-center justify-center">
+                    <div className="text-[#ffffff80] text-lg">
+                      Все люди у вас в друзьях
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </ProfileWrapper>
         </div>

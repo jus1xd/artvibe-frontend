@@ -4,6 +4,7 @@ import { io } from "socket.io-client";
 import { TLastMessage } from "../../pages/messenger";
 import jwt_decode from "jwt-decode";
 import { socket } from "../../hooks/socket";
+import moment from "moment";
 
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
@@ -29,49 +30,6 @@ const DialogCard: React.FC<TProps> = ({ dataDialogs, setLastMessage }) => {
 
   const [lastMessageText, setLastMessageText] = useState<string>(text);
   const [lastMessageDate, setLastMessageDate] = useState<string>(date);
-  const [lastMessageHours, setLastMessageHours] = useState<string>("");
-  const [lastMessageMinutes, setLastMessageMinutes] = useState<string>("");
-
-  // useEffect(() => {
-  //   socket.on("sendMessage", (message) => {
-  //     if (
-  //       (message.friendId === userId || message.senderId === userId) &&
-  //       (message.friendId === friendId || message.senderId === friendId)
-  //     ) {
-  //       let lastMessage = {
-  //         friendId: message.friendId,
-  //         name: message.friendName,
-  //         avatar: message.friendAvatar,
-  //         date: message.date,
-  //         text: message.text,
-  //       };
-  //       setLastMessage(message.senderId, lastMessage);
-  //       setLastMessageText(message.text);
-  //       setLastMessageDate(message.date);
-  //     }
-  //   });
-
-  //   return () => {
-  //     socket.off("sendMessage");
-  //   };
-  // }, [dataDialogs, friendId]);
-
-  useEffect(() => {
-    // вынимаем время из сообщения
-    const time = new Date(lastMessageDate);
-    time.setUTCHours(time.getUTCHours() + 3);
-
-    if (lastMessageDate) {
-      // Получение минут
-      setLastMessageMinutes(
-        time.getUTCMinutes() < 10
-          ? "0" + time.getUTCMinutes()
-          : time.getUTCMinutes().toString()
-      );
-      // Получение часов
-      setLastMessageHours(time.getUTCHours().toString());
-    }
-  }, [lastMessageText, lastMessageDate]);
 
   // Редирект на страницу диалога
   const handleRedirect = () => {
@@ -79,6 +37,12 @@ const DialogCard: React.FC<TProps> = ({ dataDialogs, setLastMessage }) => {
       navigate(`/im/${friendId}`);
     }
   };
+
+  // обновить текст и дату последнего сообщения
+  useEffect(() => {
+    setLastMessageText(text);
+    setLastMessageDate(date);
+  }, [text, date]);
 
   return (
     <div onClick={handleRedirect} className="w-full">
@@ -118,9 +82,8 @@ const DialogCard: React.FC<TProps> = ({ dataDialogs, setLastMessage }) => {
                 {lastMessageText}
               </div>
             </div>
-            <div className="text-sm opacity-50">
-              {lastMessageDate && lastMessageHours + ":"}
-              {lastMessageDate && lastMessageMinutes}
+            <div className="text-[12px] opacity-50">
+              {lastMessageDate && moment(lastMessageDate).format("HH:mm")}
             </div>
           </div>
         </div>

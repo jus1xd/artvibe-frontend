@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Container from "../components/Container";
 import Header from "../components/Header";
 
@@ -35,6 +35,7 @@ const Messenger = () => {
   const [friendMessages, setFriendMessages] = useState<IMessage[]>([]);
   const [dataDialogs, setDataDialogs] = useState<TLastMessage[]>([]);
   const [dataDialogsLoading, setDataDialogsLoading] = useState<boolean>(true);
+  const [dialogsSearch, setDialogsSearch] = useState<string>("");
 
   // сортировка диалогов по времени последнего сообщения
   const sortDialogsByTime = (arr: any) => {
@@ -73,7 +74,7 @@ const Messenger = () => {
           date: item.messages[item.messages.length - 1]?.date || "",
           text: item.messages[item.messages.length - 1]?.text,
         }));
-        setDataDialogs(sortDialogsByTime(dataDialogs));
+        setDataDialogs(dataDialogs);
         dispatch(setFriends(res.data));
         setDataDialogsLoading(false);
       });
@@ -85,7 +86,7 @@ const Messenger = () => {
         date: item.messages[item.messages.length - 1]?.date || "",
         text: item.messages[item.messages.length - 1]?.text,
       }));
-      setDataDialogs(sortDialogsByTime(dataDialogs));
+      setDataDialogs(dataDialogs);
       setDataDialogsLoading(false);
     }
   }, []);
@@ -109,7 +110,7 @@ const Messenger = () => {
       date: item.messages[item.messages.length - 1]?.date || "",
       text: item.messages[item.messages.length - 1]?.text,
     }));
-    setDataDialogs(sortDialogsByTime(dataDialogs));
+    setDataDialogs(dataDialogs);
     setDataDialogsLoading(false);
     // }
   }, [friends]);
@@ -124,7 +125,7 @@ const Messenger = () => {
         (el) => el.friendId === lastMessage.friendId
       );
       dataDialogsCopy[indexOfMessage] = lastMessage;
-      setDataDialogs(sortDialogsByTime(dataDialogsCopy));
+      setDataDialogs(dataDialogsCopy);
     }
   };
 
@@ -170,6 +171,8 @@ const Messenger = () => {
                 {/* search */}
                 <div className="flex items-center justify-between px-4 pt-3">
                   <input
+                    value={dialogsSearch}
+                    onChange={(e) => setDialogsSearch(e.target.value)}
                     placeholder="Найти.."
                     className="placeholder:!text-[#ffffff80] w-full text-sm cursor-pointer bg-[#ffffff10] outline-none  rounded-md px-3 py-2"
                   />
@@ -177,7 +180,15 @@ const Messenger = () => {
                 <div className="flex flex-col cursor-pointer justify-center items-center w-full p-2 h-[calc(100%-40px)] overflow-hidden">
                   <div className="w-full h-full overflow-y-scroll">
                     {dataDialogs.length > 0 ? (
-                      dataDialogs.map((item: TLastMessage) => (
+                      sortDialogsByTime(
+                        dataDialogs
+                          .slice()
+                          .filter((el) =>
+                            el.name
+                              .toLowerCase()
+                              .includes(dialogsSearch.toLowerCase())
+                          )
+                      ).map((item: TLastMessage) => (
                         <DialogCard
                           key={item.friendId}
                           dataDialogs={item}

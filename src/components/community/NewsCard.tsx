@@ -12,9 +12,10 @@ type TProps = {
   photo: string;
   title: string;
   text: Array<string>;
+  timestamp: string;
 };
 
-const NewsCard: React.FC<TProps> = ({ photo, title, text }) => {
+const NewsCard: React.FC<TProps> = ({ photo, title, text, timestamp }) => {
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isCommented, setIsCommented] = useState<boolean>(false);
@@ -29,9 +30,9 @@ const NewsCard: React.FC<TProps> = ({ photo, title, text }) => {
       </div>
       <div className="relative px-5 py-4 w-full bg-darkBlueGray mt-[-5px] z-10 rounded-lg">
         <div className="flex items-center justify-between mb-3">
-          <div className="text-lg font-semibold">Встречайте новости</div>
+          <div className="text-lg font-semibold">{title}</div>
           <div className="opacity-70 text-sm">
-            {moment(Date.now()).calendar()}
+            {moment(timestamp).calendar()}
           </div>
         </div>
         <div className="flex justify-between mb-4">
@@ -76,7 +77,7 @@ const NewsCard: React.FC<TProps> = ({ photo, title, text }) => {
       <Modal
         width="100%"
         height="max-content"
-        maxWidth="40%"
+        maxWidth="calc(35% + 250px)"
         maxHeight="85%"
         padding="0"
         isOpened={modalOpened}
@@ -87,13 +88,13 @@ const NewsCard: React.FC<TProps> = ({ photo, title, text }) => {
         </div>
         <div className="relative px-5 py-4 w-full bg-darkBlueGray mt-[-5px] z-10 rounded-lg">
           <div className="flex items-center justify-between mb-5">
-            <div className="text-xl font-semibold">Встречайте новости</div>
+            <div className="text-2xl font-semibold">Встречайте новости</div>
             <div className="opacity-70 text-sm">
-              {moment(Date.now()).calendar()}
+              {moment(timestamp).calendar()}
             </div>
           </div>
           <div className="flex justify-between">
-            <div className="text-sm max-h-[440px] overflow-y-scroll">
+            <div className="max-h-[450px] overflow-y-scroll">
               {text.map((item) => (
                 <div className="mb-3 leading-6">{item}</div>
               ))}
