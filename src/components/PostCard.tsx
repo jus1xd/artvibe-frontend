@@ -79,7 +79,7 @@ const PostCard: React.FC<TProps> = ({
   return (
     <div
       className="sm:mr-4 sm:w-full
-      p-3 mb-2 relative bg-darkBlueGray w-full min-w-[220px] rounded-xl flex flex-col group"
+      p-3 mb-2 relative  bg-darkBlueGray w-full min-w-[220px] rounded-xl flex flex-col group"
     >
       {/* dots menu */}
       {isMyPost && (
@@ -150,7 +150,7 @@ const PostCard: React.FC<TProps> = ({
       </div>
 
       {/* post text  */}
-      <div className="ml-12">
+      <div className="ml-12 ">
         {text.length > 0 && (
           <div className="mt-1 text-sm flex mb-2">
             {isPostLoading ? (
@@ -162,7 +162,7 @@ const PostCard: React.FC<TProps> = ({
                 className="mb-[-4]"
               />
             ) : (
-              <div className="w-full break-word">{text}</div>
+              <div className="relative w-max break-word">{text}</div>
             )}
           </div>
         )}

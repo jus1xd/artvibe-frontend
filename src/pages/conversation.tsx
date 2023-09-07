@@ -93,12 +93,12 @@ const Conversation: React.FC<TProps> = ({
   return (
     <div className="w-full sm:w-3/4 flex justify-between">
       {/* chat-section */}
-      <div className="w-full sm:rounded-xl bg-[#20232B] sm:min-w-[450px] h-[calc(100vh-190px)] sm:h-[600px] overflow-hidden">
+      <div className="w-full sm:rounded-xl bg-[#20232B] sm:min-w-[450px] h-full overflow-hidden">
         {/* black bar  */}
         <div className="bg-black w-full flex justify-between px-3 sm:px-6 py-2">
           <div
             onClick={stepBackward}
-            className="sm:hidden block text-sm cursor-pointer hover:bg-[#ffffff10] transition-colors rounded-md  px-3 py-1 w-max"
+            className="sm:hidden block text-sm cursor-pointer hover:bg-[#ffffff10] transition-colors rounded-md px-3 py-1 w-max"
           >
             Назад
           </div>
@@ -129,7 +129,7 @@ const Conversation: React.FC<TProps> = ({
           </div>
         </div>
         {/* messages */}
-        <div className="flex justify-end items-end overflow-hidden h-[calc(100%-110px)] mx-3 sm:mx-6">
+        <div className="flex justify-end items-end overflow-hidden h-[calc(100%-110px)] mx-3 sm:mx-0">
           <div className="flex flex-col-reverse pt-3 w-full h-full overflow-y-scroll ">
             <div ref={infiniteScrollRef} className="w-full h-max">
               {messages.length > 0 ? (

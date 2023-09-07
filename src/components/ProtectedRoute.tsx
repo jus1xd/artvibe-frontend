@@ -24,8 +24,12 @@ const ProtectedRoute: React.FC<TProps> = ({
   // @ts-ignore xd
   const roleDlyaUmnika = token ? jwt_decode(token).roles : null;
 
+  let data: any;
+
   // получить user'а из db
-  const { data } = userApi.useGetUserByIdQuery(userId);
+  if (userId) {
+    data = userApi.useGetUserByIdQuery(userId).data;
+  }
 
   useEffect(() => {
     if (data) {

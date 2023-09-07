@@ -104,7 +104,7 @@ const PageCover: React.FC<TProps> = ({
   }, [newPageCover]);
 
   return (
-    <div className="w-full h-[200px] rounded-xl overflow-hidden relative group">
+    <div className="w-full h-32 sm:h-60 rounded-xl overflow-hidden relative group">
       {isMyProfile && (
         <div className="z-20 group-hover:opacity-100 opacity-0 absolute rounded-md cursor-pointer transition-opacity top-4 left-4 bg-darkBlueGray">
           <label htmlFor="pageCoverLoader" className="cursor-pointer">
@@ -137,11 +137,13 @@ const PageCover: React.FC<TProps> = ({
       )}
 
       {currentPageCover ? (
-        <img
-          src={`${baseUrl}/${currentPageCover}`}
-          alt="Wallpaper"
-          className="translate-y-[-12%]"
-        />
+        <div className="w-full h-full relative overflow-hidden">
+          <img
+            src={`${baseUrl}/${currentPageCover}`}
+            alt="Wallpaper"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto"
+          />
+        </div>
       ) : (
         <div className={`w-full h-full`} id="gradientCover"></div>
       )}

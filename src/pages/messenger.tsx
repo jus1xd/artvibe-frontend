@@ -145,7 +145,7 @@ const Messenger = () => {
       );
     } else {
       return (
-        <div className="hidden sm:block rounded-xl bg-[#20232B] min-w-[300px] w-3/4 h-[600px] overflow-hidden">
+        <div className="hidden sm:block rounded-xl bg-[#20232B] min-w-[300px] w-3/4 h-full overflow-hidden">
           <div className="w-full h-full flex items-center justify-center">
             <div className="text-[#ffffff80] text-md mt-7">Выберите диалог</div>
           </div>
@@ -162,11 +162,11 @@ const Messenger = () => {
           <ProfileNav />
           <ProfileWrapper>
             {/* dialogs */}
-            <div className="flex">
+            <div className="flex h-full">
               <div
                 className={`${
                   friendId ? "hidden" : "block"
-                } sm:block sm:rounded-xl sm:bg-[#20232B] w-full sm:w-[260px] sm:mr-5 min-w-[260px] max-h-[600px]`}
+                } sm:block sm:rounded-xl sm:bg-[#20232B] w-full sm:w-[290px] sm:mr-3 min-w-[290px] h-full max-h-[600px] sm:max-h-full`}
               >
                 {/* search */}
                 <div className="flex items-center justify-between px-4 pt-3">
@@ -200,7 +200,7 @@ const Messenger = () => {
                         <Spinner size={25} />
                       </div>
                     ) : (
-                      <div className="text-[#ffffff80] text-sm mt-7">
+                      <div className="text-[#ffffff80] text-sm mt-7 text-center w-full">
                         У вас пока нет друзей
                       </div>
                     )}

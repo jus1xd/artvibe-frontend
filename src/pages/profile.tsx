@@ -22,6 +22,7 @@ import PostCard from "../components/PostCard";
 import { IPost } from "../models/IPost";
 import { postApi } from "../store/services/postService";
 import ProfileWrapper from "../components/ProfileWrapper";
+import Avatar from "../components/Avatar";
 
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
@@ -191,31 +192,25 @@ const Profile = () => {
                   />
                   <div className="sm:flex mt-[-80px] sm:mt-[-35px] items-end pb-2 sm:pb-7">
                     {/* avatar  */}
-                    <div className="relative">
+                    <div className="relative w-max mx-auto">
                       <div className="z-10 w-[130px] h-[130px] mx-auto sm:ml-8 bg-[#20232B]  flex items-center justify-center rounded-full overflow-hidden cursor-pointer">
                         <div
                           className={`rounded-full overflow-hidden  ${
                             data.role === "admin"
                               ? "w-[123px] h-[123px] border-4 z-10 border-accent"
-                              : "w-[130px] h-[130px]"
+                              : "w-[120px] h-[120px]"
                           } `}
                         >
                           <div className="flex items-center justify-center h-full w-full">
                             {data.avatar ? (
-                              <div
-                                className={`flex items-center justify-center overflow-hidden ${
-                                  data.role === "admin"
-                                    ? "w-[123px] h-[123px]"
-                                    : "w-[130px] h-[130px]"
-                                } rounded-full`}
-                              >
-                                <img
-                                  src={`${baseUrl}/${data.avatar}`}
-                                  className="scale-[2]"
-                                  alt="Avatar"
-                                />
-                              </div>
+                              // если аватарка есть
+                              <Avatar
+                                avatar={data.avatar}
+                                width="115px"
+                                height="115px"
+                              />
                             ) : (
+                              // если аватарки нет
                               <div
                                 className={`flex items-center justify-center overflow-hidden ${
                                   data.role === "admin"
@@ -306,7 +301,7 @@ const Profile = () => {
                       <div
                         className={`${
                           data.status ? "" : "hidden"
-                        } mb-2 sm:mb-0 flex min-h-[20px] max-w-[370px] cursor-pointer overflow-x-hidden group`}
+                        } mb-2 sm:mb-0 flex min-h-[20px] max-w-[370px] sm:max-w-[550px] cursor-pointer overflow-x-hidden group`}
                       >
                         <div className="w-full group-hover:opacity-80 transition-opacity text-sm whitespace-nowrap overflow-hidden text-ellipsis">
                           {data.status}
@@ -326,6 +321,7 @@ const Profile = () => {
                       <ResizableTextarea
                         onChange={handleNewpostInput}
                         value={newPostValue}
+                        pictures={newPostPictures}
                         setPictures={setNewPostPictures}
                         handleSend={handleSend}
                         placeholder="Что у вас нового?"

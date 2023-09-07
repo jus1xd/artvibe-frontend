@@ -25,11 +25,17 @@ const NewsCard: React.FC<TProps> = ({ photo, title, text, timestamp }) => {
 
   return (
     <div className="mb-5 bg-darkBlueGray rounded-lg overflow-hidden max-w-[650px] w-full">
-      <div className="flex justify-center items-center w-full h-60 overflow-hidden">
-        <img src={photo} alt="" />
+      <div className=" flex justify-center items-center w-full h-40 sm:h-60 overflow-hidden">
+        <div className="relative w-full h-full">
+          <img
+            src={photo}
+            alt=""
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto"
+          />
+        </div>
       </div>
       <div className="relative px-5 py-4 w-full bg-darkBlueGray mt-[-5px] z-10 rounded-lg">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3">
           <div className="text-lg font-semibold">{title}</div>
           <div className="opacity-70 text-sm">
             {moment(timestamp).calendar()}
@@ -83,18 +89,22 @@ const NewsCard: React.FC<TProps> = ({ photo, title, text, timestamp }) => {
         isOpened={modalOpened}
         setIsOpened={setModalOpened}
       >
-        <div className="flex justify-center items-center w-full h-60 overflow-hidden">
-          <img src={photo} alt="" />
+        <div className="relative flex justify-center items-center w-full h-40 sm:h-60 overflow-hidden">
+          <img
+            src={photo}
+            alt=""
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto"
+          />
         </div>
         <div className="relative px-5 py-4 w-full bg-darkBlueGray mt-[-5px] z-10 rounded-lg">
-          <div className="flex items-center justify-between mb-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3">
             <div className="text-2xl font-semibold">Встречайте новости</div>
             <div className="opacity-70 text-sm">
               {moment(timestamp).calendar()}
             </div>
           </div>
           <div className="flex justify-between">
-            <div className="max-h-[450px] overflow-y-scroll">
+            <div className="text-sm sm:text-base max-h-[450px] overflow-y-scroll">
               {text.map((item) => (
                 <div className="mb-3 leading-6">{item}</div>
               ))}

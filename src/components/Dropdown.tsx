@@ -54,7 +54,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           ref={menuRef}
           onMouseEnter={handleMenuMouseEnter}
           onMouseLeave={handleMenuMouseLeave}
-          className="dropdown-menu absolute top-4 right-0 mt-2 py-1 bg-[#ffffff10] rounded-lg shadow"
+          className="dropdown-menu absolute z-50 top-3 right-0 mt-2 py-1 bg-[#232225] rounded-lg shadow"
         >
           {options.map((option, index) => (
             <div

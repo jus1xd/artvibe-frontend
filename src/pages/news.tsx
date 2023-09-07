@@ -143,6 +143,16 @@ const News = () => {
       ],
       timestamp: "2023-09-04T00:30:00.000Z",
     },
+    {
+      id: 3,
+      photo: newsBugsCover,
+      title: "Исправления и улучшения",
+      text: [
+        "Исправлено несколько незначительных ошибок, которые могли возникнуть при использовании социальной сети. Теперь вы можете наслаждаться более стабильным и надежным опытом.",
+        "Я всегда стремлюсь улучшать мой продукт, и ваши отзывы играют в этом ключевую роль. Пожалуйста, продолжайте делиться своими идеями и предложениями с мной, чтобы мы могли сделать нашу социальную сеть еще лучше. Спасибо, что выбрали нашу социальную сеть. Мы надеемся, что вам понравятся новые функции и улучшения.",
+      ],
+      timestamp: "2023-09-07T15:00:00.000Z",
+    },
   ];
 
   return (
@@ -167,7 +177,7 @@ const News = () => {
                 })}
               </div>
               {/* friends  */}
-              <div className="relative rounded-xl bg-[#20232B] mb-4 sm:mb-0 p-2 pt-6 pb-[2px] h-max sm:w-[240px] w-full min-w-[254px] ">
+              <div className="relative rounded-xl bg-[#20232B] mb-4 sm:mb-0 p-2 pt-6 pb-[2px] h-max hidden sm:block sm:w-[240px] w-full min-w-[254px] ">
                 <div className="z-20 absolute text-[12px] font-bold top-[-8px] left-[-10px] border-[3px] bg-darkBackground rounded-xl border-darkBackground text-accent py-0 px-2">
                   Друзья
                 </div>

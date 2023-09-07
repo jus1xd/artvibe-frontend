@@ -5,6 +5,7 @@ import { TLastMessage } from "../../pages/messenger";
 import jwt_decode from "jwt-decode";
 import { socket } from "../../hooks/socket";
 import moment from "moment";
+import Avatar from "../Avatar";
 
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
@@ -55,13 +56,7 @@ const DialogCard: React.FC<TProps> = ({ dataDialogs, setLastMessage }) => {
       >
         <div className="flex items-center w-full">
           {avatar ? (
-            <div className="flex items-center justify-center overflow-hidden w-[35px] h-[35px] rounded-full">
-              <img
-                src={`${baseUrl}/${avatar}`}
-                className="scale-[1.5]"
-                alt=""
-              />
-            </div>
+            <Avatar width="35px" height="35px" avatar={avatar} />
           ) : (
             <div
               className={`flex items-center justify-center overflow-hidden min-w-[35px] min-h-[35px] rounded-full`}
