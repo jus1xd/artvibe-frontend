@@ -98,7 +98,7 @@ const NewsCard: React.FC<TProps> = ({ photo, title, text, timestamp }) => {
         </div>
         <div className="relative px-5 py-4 w-full bg-darkBlueGray mt-[-5px] z-10 rounded-lg">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3">
-            <div className="text-2xl font-semibold">Встречайте новости</div>
+            <div className="text-2xl font-semibold">{title}</div>
             <div className="opacity-70 text-sm">
               {moment(timestamp).calendar()}
             </div>

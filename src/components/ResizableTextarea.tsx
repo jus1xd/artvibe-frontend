@@ -8,8 +8,9 @@ type TProps = {
   pictures: File | null;
   setPictures: (file: File | null) => void;
   onChange: (newValue: string) => void;
-  handleSend?: () => void;
+  handleSend: () => void;
   placeholder: string;
+  color?: string;
 };
 
 const ResizableTextarea: React.FC<TProps> = ({
@@ -19,9 +20,10 @@ const ResizableTextarea: React.FC<TProps> = ({
   onChange,
   handleSend,
   placeholder,
+  color,
 }) => {
+  const areaId = Math.random().toString(36);
   const postData = new FormData();
-
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -35,14 +37,26 @@ const ResizableTextarea: React.FC<TProps> = ({
     onChange(event.target.value);
   };
 
+  const localSendHandler = () => {
+    if (value || pictures) {
+      handleSend();
+    }
+  };
+
   return (
-    <div className="relative pb-8 mb-2 bg-darkBlueGray rounded-xl overflow-hidden">
+    <div
+      className={`relative pb-8 mb-2 ${
+        color ? color : "bg-darkBlueGray"
+      } rounded-xl overflow-hidden`}
+    >
       <textarea
         ref={textareaRef}
         value={value}
         maxLength={1000}
         onChange={(event) => handleChange(event)}
-        className="w-full resize-none p-3 pb-0 pr-9 text-sm outline-none bg-darkBlueGray  text-white placeholder:!text-[#ffffff90]"
+        className={`w-full resize-none p-3 pb-0 pr-9 text-sm outline-none ${
+          color ? color : "bg-darkBlueGray"
+        }   text-white placeholder:!text-[#ffffff90]`}
         placeholder={placeholder}
       />
       {/* preload img */}
@@ -79,8 +93,10 @@ const ResizableTextarea: React.FC<TProps> = ({
       )}
 
       <div
-        onClick={handleSend}
-        className="cursor-pointer group absolute bg-darkBlueGray top-[6px] right-[6px] rounded-md p-2"
+        onClick={localSendHandler}
+        className={`cursor-pointer group absolute ${
+          color ? color : "bg-darkBlueGray"
+        } top-[6px] right-[6px] rounded-md p-2`}
       >
         <img
           className="group-hover:opacity-100 opacity-80 transition-opacity"
@@ -88,15 +104,19 @@ const ResizableTextarea: React.FC<TProps> = ({
           alt=""
         />
       </div>
-      <span className="absolute  overflow-hidden flex items-center justify-center rounded-md bg-darkBlueGray bottom-3 left-3">
+      <span
+        className={`absolute overflow-hidden flex items-center justify-center rounded-md ${
+          color ? color : "bg-darkBlueGray"
+        } bottom-3 left-3`}
+      >
         <label
-          htmlFor="postPictures"
+          htmlFor={areaId + "postPicture"}
           className="relative cursor-pointer p-1 rounded-md opacity-80 transition hover:opacity-100"
         >
           <input
             type="file"
             accept="image/png, image/jpeg"
-            id="postPictures"
+            id={areaId + "postPicture"}
             onChange={(e) => setPictures(e.target.files![0])}
             placeholder="Изображение"
             className="appearance-none hidden"

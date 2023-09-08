@@ -6,14 +6,18 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { NavLink, useParams } from "react-router-dom";
 import activeLike from "../assets/img/activeLike.svg";
 import like from "../assets/img/like.svg";
-import activeComment from "../assets/img/activeComment.svg";
 import comment from "../assets/img/comment.svg";
+import activeComment from "../assets/img/activeComment.svg";
 
 import Modal from "./Modal";
 import Tooltip from "./Tooltip";
 import Dropdown from "./Dropdown";
 import { postApi } from "../store/services/postService";
 import jwt_decode from "jwt-decode";
+import { IComment, ILike } from "../models/IPost";
+import ResizableTextarea from "./ResizableTextarea";
+import Avatar from "./Avatar";
+import Comment from "./Comment";
 
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
@@ -21,14 +25,14 @@ const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
 type TProps = {
   postId: string;
   createdAt: string;
-  isMyPost: boolean;
+  originId: string;
   authorId: string;
   authorAvatar?: string;
   authorName: string;
   text: string;
   pictures?: string;
-  likesCount: number;
-  commentsCount: number;
+  likes: ILike[];
+  comments: IComment[];
   deletePostHandler: (postId: string) => void;
   isPostLoading: boolean;
 };
@@ -36,25 +40,48 @@ type TProps = {
 const PostCard: React.FC<TProps> = ({
   postId,
   createdAt,
-  isMyPost,
+  originId,
   authorId,
   authorAvatar,
   authorName,
   text,
   pictures,
-  likesCount,
-  commentsCount,
+  likes,
+  comments,
   deletePostHandler,
   isPostLoading,
 }) => {
+  // получить токен из localStorage
+  const token = localStorage.getItem("token");
+  // @ts-ignore
+  const currentUser = token ? jwt_decode(token).id : null;
+
   const [modalOpened, setModalOpened] = useState<boolean>(false);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-  const [isCommented, setIsCommented] = useState<boolean>(false);
-  const imgRef = useRef(null);
+  const [isLiked, setIsLiked] = useState<boolean>(
+    likes
+      ? likes.findIndex((like) => like.userId === currentUser) !== -1
+      : false
+  );
+  const [commentInputOpened, setCommentInputOpened] = useState<boolean>(false);
+  const [postLikes, setPostLikes] = useState<any[]>(likes);
+  const [postComments, setPostComments] = useState<any[]>(comments);
+  const [postRateLoading, setPostRateLoading] = useState<boolean>(false);
+  const [newCommentValue, setNewCommentValue] = useState<string>("");
+  const [newCommentPictures, setNewCommentPictures] = useState<File | null>(
+    null
+  );
+
+  // работа с изображениями
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
 
   const dropdownOptions = ["Удалить", "Редактировать"];
+
+  const isMyPost = currentUser === authorId;
+
+  // запросы для постов
+  const [likePost] = postApi.useLikePostMutation();
+  const [addComment] = postApi.useAddCommentMutation();
 
   useEffect(() => {
     if (pictures!.length > 0) {
@@ -76,10 +103,45 @@ const PostCard: React.FC<TProps> = ({
     deletePostHandler(postId);
   };
 
+  const likeHandler = async () => {
+    if (!postRateLoading) {
+      if (isLiked) {
+        setPostLikes(postLikes.filter((like) => like.userId !== currentUser));
+        setIsLiked(false);
+        setPostRateLoading(true);
+        await likePost({ originId, postId, userId: currentUser }).then(() =>
+          setPostRateLoading(false)
+        );
+      } else {
+        setPostLikes([...postLikes, { userId: currentUser, postId: postId }]);
+        setIsLiked(true);
+        setPostRateLoading(true);
+        await likePost({ originId, postId, userId: currentUser }).then(() =>
+          setPostRateLoading(false)
+        );
+      }
+    }
+  };
+
+  const addCommentHandler = () => {
+    // formData для отправки картинки
+    const addCommentData = new FormData();
+    addCommentData.append("originId", originId);
+    addCommentData.append("postId", postId);
+    addCommentData.append("userId", currentUser);
+    addCommentData.append("text", newCommentValue);
+    addCommentData.append("pictures", newCommentPictures!);
+    addComment(addCommentData).then((res: any) => {
+      setNewCommentValue("");
+      setNewCommentPictures(null);
+      setPostComments([...postComments, res.data]);
+    });
+  };
+
   return (
     <div
       className="sm:mr-4 sm:w-full
-      p-3 mb-2 relative  bg-darkBlueGray w-full min-w-[220px] rounded-xl flex flex-col group"
+      py-3 px-5 mb-2 relative  bg-darkBlueGray w-full min-w-[220px] rounded-xl flex flex-col group"
     >
       {/* dots menu */}
       {isMyPost && (
@@ -135,7 +197,7 @@ const PostCard: React.FC<TProps> = ({
               />
             ) : (
               <div className="flex flex-col">
-                <div className="w-full text-sm max-w-[100px] whitespace-nowrap overflow-hidden text-ellipsis">
+                <div className="text-accent w-full text-sm max-w-[100px] whitespace-nowrap overflow-hidden text-ellipsis">
                   {authorName}
                 </div>
                 <Tooltip text={moment(createdAt).format("LLL")}>
@@ -150,7 +212,7 @@ const PostCard: React.FC<TProps> = ({
       </div>
 
       {/* post text  */}
-      <div className="ml-12 ">
+      <div className="">
         {text.length > 0 && (
           <div className="mt-1 text-sm flex mb-2">
             {isPostLoading ? (
@@ -204,34 +266,56 @@ const PostCard: React.FC<TProps> = ({
           </div>
         )}
         {/* likes and comms  */}
-        <div className="flex items-center justify-between mt-2">
+        <div className="select-none flex items-center justify-between my-3">
           <div className="flex items-center">
             <div className="flex items-center">
               <div
-                onClick={() => setIsLiked(!isLiked)}
-                className="flex items-center cursor-pointer"
+                onClick={() => likeHandler()}
+                className={`flex items-center cursor-pointer px-1 rounded-lg ${
+                  isLiked ? "bg-redOpacity text-red" : ""
+                } `}
               >
                 {isLiked ? (
                   <img src={activeLike} alt="" />
                 ) : (
                   <img src={like} alt="" />
                 )}
-                <div className="ml-1 mt-[3px]">{likesCount}</div>
+                <div className="mx-1 mt-[3px]">{postLikes.length}</div>
               </div>
               <div
-                onClick={() => setIsCommented(!isCommented)}
+                onClick={() => setCommentInputOpened(!commentInputOpened)}
                 className="flex items-center cursor-pointer ml-3"
               >
-                {isCommented ? (
+                {commentInputOpened ? (
                   <img src={activeComment} alt="" />
                 ) : (
                   <img src={comment} alt="" />
                 )}
-                <div className="ml-1 mt-[3px]">{commentsCount}</div>
+                <div className="ml-1 mt-[3px]">{postComments.length}</div>
               </div>
             </div>
           </div>
         </div>
+        {/* comments  */}
+        <div className="">
+          {postComments.map((comment: IComment) => (
+            <Comment comment={comment} />
+          ))}
+        </div>
+        {/* add comment  */}
+        {commentInputOpened && (
+          <div className="w-full rounded-lg overflow-hidden">
+            <ResizableTextarea
+              handleSend={() => addCommentHandler()}
+              value={newCommentValue}
+              onChange={setNewCommentValue}
+              pictures={newCommentPictures}
+              setPictures={setNewCommentPictures}
+              placeholder="Написать комментарий..."
+              color="bg-darkBackground"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

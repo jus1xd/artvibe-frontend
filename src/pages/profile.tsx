@@ -150,14 +150,15 @@ const Profile = () => {
   // создание поста
   const handleSend = () => {
     if (newPostValue || newPostPictures) {
-      const postData = new FormData();
-      postData.append("id", userId);
-      postData.append("authorId", currentUser);
-      postData.append("text", newPostValue);
-      postData.append("pictures", newPostPictures!);
-      console.log("postData", postData);
+      const addPostData = new FormData();
+      addPostData.append("id", userId);
+      addPostData.append("authorId", currentUser);
+      addPostData.append("text", newPostValue);
+      addPostData.append("pictures", newPostPictures!);
+      console.log("addPostData", addPostData);
 
-      createPost(postData).then((res: any) => {
+      createPost(addPostData).then((res: any) => {
+        console.log(res.data)
         setDataPosts([...dataPosts, res.data]);
       });
 
@@ -339,13 +340,13 @@ const Profile = () => {
                               postId={item._id}
                               createdAt={item.createdAt}
                               authorId={item.authorId}
-                              isMyPost={item.authorId === currentUser}
+                              originId={userId}
                               authorName={item.authorName}
                               authorAvatar={item.authorAvatar}
                               text={item.text}
                               pictures={item.pictures}
-                              likesCount={item.likes}
-                              commentsCount={item.comments.length}
+                              likes={item.likes}
+                              comments={item.comments}
                               deletePostHandler={deletePostHandler}
                               isPostLoading={false}
                             />
