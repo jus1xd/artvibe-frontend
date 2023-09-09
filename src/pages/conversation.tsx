@@ -11,6 +11,7 @@ import { io } from "socket.io-client";
 import { addMessage } from "../store/slices/friendsSlice";
 import { socket } from "../hooks/socket";
 import { NavLink } from "react-router-dom";
+import ResizableTextarea from "../components/ResizableTextarea";
 
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
@@ -34,6 +35,7 @@ const Conversation: React.FC<TProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const infiniteScrollRef = useRef<HTMLDivElement | null>(null);
   const [liveMessages, setLiveMessages] = useState<IMessage[]>([]);
+  const [messagePictures, setMessagePictures] = useState<File | null>(null);
   const [messageInputValue, setMessageInputValue] = useState<string>("");
 
   // получить токен из localStorage
@@ -62,20 +64,19 @@ const Conversation: React.FC<TProps> = ({
     }
   }, [friendId]);
 
-  // новое сообщение
-  const newMessageData = {
-    clientId: userId,
-    friendId: friendId,
-    messageText: messageInputValue,
-  };
-
   // sendMessage
   const sendMessageFunction = () => {
-    if (messageInputValue) {
-      sendMessage(newMessageData).then((res: any) => {
+    const messageData = new FormData();
+    messageData.append("clientId", userId);
+    messageData.append("friendId", friendId);
+    messageData.append("messageText", messageInputValue);
+    messageData.append("pictures", messagePictures || "");
+    if (messageInputValue || messagePictures) {
+      sendMessage(messageData).then((res: any) => {
         // setMessages((prevMessages) => [...prevMessages, res.data]);
       });
       setMessageInputValue("");
+      setMessagePictures(null);
     }
   };
 
@@ -102,7 +103,10 @@ const Conversation: React.FC<TProps> = ({
           >
             Назад
           </div>
-          <NavLink to={`/${friendId}`} className="flex items-center text-sm cursor-pointer">
+          <NavLink
+            to={`/${friendId}`}
+            className="flex items-center text-sm cursor-pointer"
+          >
             Беседа с
             {friendAvatar ? (
               <div className="ml-2 flex items-center justify-center overflow-hidden w-[30px] h-[30px] rounded-full">
@@ -129,7 +133,7 @@ const Conversation: React.FC<TProps> = ({
           </div>
         </div>
         {/* messages */}
-        <div className="flex justify-end items-end overflow-hidden h-[calc(100%-110px)] mx-3 sm:mx-0">
+        <div className="flex justify-end items-end overflow-hidden h-[calc(100%-155px)] mx-3 sm:mx-0">
           <div className="flex flex-col-reverse pt-3 w-full h-full overflow-y-scroll ">
             <div ref={infiniteScrollRef} className="w-full h-max">
               {messages.length > 0 ? (
@@ -140,6 +144,7 @@ const Conversation: React.FC<TProps> = ({
                     senderName={item.senderName}
                     avatar={item.senderAvatar || ""}
                     messageText={item.text}
+                    pictures={item.pictures}
                     date={item.date}
                     isStacked={
                       messages.length > 0 && index > 0
@@ -159,7 +164,18 @@ const Conversation: React.FC<TProps> = ({
           </div>
         </div>
         {/* input */}
-        <div className="flex justify-between items-center px-6 py-2 relative">
+        <div className="w-[calc(100%-40px)] mx-auto mt-2">
+          <ResizableTextarea
+            value={messageInputValue}
+            onChange={setMessageInputValue}
+            pictures={messagePictures}
+            setPictures={setMessagePictures}
+            handleSend={sendMessageFunction}
+            placeholder="Напишите сообщение.."
+          />
+        </div>
+
+        {/* <div className="flex justify-between items-center px-6 py-2 relative">
           <input
             placeholder="Напишите сообщение.."
             value={messageInputValue}
@@ -174,7 +190,7 @@ const Conversation: React.FC<TProps> = ({
           >
             <img src={sendBtn} alt="" />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

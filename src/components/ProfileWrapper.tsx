@@ -6,7 +6,7 @@ type TProps = {
 
 const ProfileWrapper: React.FC<TProps> = ({ children }) => {
   return (
-    <div className="messenger-content sm:w-[calc(100%-232px)] h-[calc(100vh-190px)] sm:h-[100vh-100px]  text-white justify-between">
+    <div className="messenger-content h-[calc(100vh-180px)] sm:w-[calc(100%-232px)] sm:h-[calc(100vh-232px)]  text-white justify-between">
       {children}
     </div>
   );

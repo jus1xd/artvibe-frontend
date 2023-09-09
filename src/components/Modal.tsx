@@ -5,6 +5,7 @@ type TProps = {
   height: string;
   maxWidth?: string;
   maxHeight?: string;
+  noBackground?: boolean;
   padding?: string;
   isOpened: boolean;
   setIsOpened: (isOpened: boolean) => void;
@@ -16,6 +17,7 @@ const Modal: React.FC<TProps> = ({
   height,
   maxWidth,
   maxHeight,
+  noBackground,
   padding,
   isOpened,
   setIsOpened,
@@ -32,19 +34,21 @@ const Modal: React.FC<TProps> = ({
       } transition-all fixed inset-0 flex items-center justify-center z-50`}
     >
       <div
-        className={`modal-overlay fixed inset-0 bg-black opacity-50`}
+        className={`modal-overlay fixed inset-0 bg-black sm:opacity-50`}
         onClick={() => setIsOpened(false)}
       ></div>
       <div
         style={{
-          width: widthScreen < 500 ? "90%" : width,
+          width: widthScreen < 500 ? "100%" : width,
           height: height,
-          maxWidth: widthScreen < 500 ? "90%" : maxWidth,
+          maxWidth: widthScreen < 500 ? "100%" : maxWidth,
           maxHeight,
         }}
         className={`${
           isOpened ? "scale-100" : "scale-75"
-        } transition-transform modal-container bg-darkBlueGray p-[${padding}] rounded-lg overflow-hidden shadow-lg z-10`}
+        } mt-[-70px] sm:mt-0 transition-transform modal-container ${
+          !noBackground && "bg-darkBlueGray shadow-lg"
+        }  p-[${padding}] rounded-lg overflow-hidden  z-10`}
       >
         {children}
       </div>

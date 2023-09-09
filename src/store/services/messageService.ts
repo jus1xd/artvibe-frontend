@@ -30,15 +30,12 @@ export const messagesApi = createApi({
       }),
       invalidatesTags: ["Message"],
     }),
-    sendMessage: builder.mutation<IMessage[], TData>({
+    sendMessage: builder.mutation<IMessage[], FormData>({
       query: (data) => ({
-        url: `api/send-message/${data.clientId}`,
+        url: `api/send-message`,
         method: "POST",
         mode: "cors",
-        body: {
-          friendId: data.friendId,
-          messageText: data.messageText,
-        },
+        body: data,
       }),
       invalidatesTags: ["Message"],
     }),

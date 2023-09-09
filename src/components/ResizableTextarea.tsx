@@ -43,6 +43,13 @@ const ResizableTextarea: React.FC<TProps> = ({
     }
   };
 
+  // send message handler by key
+  const sendMessageHandler = (e: any) => {
+    if (e.key === "Enter") {
+      localSendHandler();
+    }
+  };
+
   return (
     <div
       className={`relative pb-8 mb-2 ${
@@ -54,6 +61,7 @@ const ResizableTextarea: React.FC<TProps> = ({
         value={value}
         maxLength={1000}
         onChange={(event) => handleChange(event)}
+        onKeyDown={(e) => sendMessageHandler(e)}
         className={`w-full resize-none p-3 pb-0 pr-9 text-sm outline-none ${
           color ? color : "bg-darkBlueGray"
         }   text-white placeholder:!text-[#ffffff90]`}

@@ -171,7 +171,7 @@ const News = () => {
   return (
     <div className="messenger relative sm:static">
       <Header theme="light" />
-      <Container>
+      <Container noBorder>
         <div className="sm:flex mt-10 mb-20 sm:mb-0 sm:mt-10">
           <ProfileNav />
           <ProfileWrapper>

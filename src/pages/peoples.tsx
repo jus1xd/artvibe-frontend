@@ -39,8 +39,24 @@ const Peoples = () => {
   // @ts-ignore
   const userId: string = token ? jwt_decode(token).id : "";
 
-  // получение друзей при загрузке страницы
+  // сортировка диалогов по времени последнего сообщения
+  const sortPeoplesByTime = (arr: any) => {
+    if (arr.length > 0) {
+      return arr.sort((a: any, b: any) => {
+        if (a?.lastOnline > b?.lastOnline) {
+          return -1;
+        }
+        if (a?.lastOnline < b?.lastOnline) {
+          return 1;
+        }
+        return 0;
+      });
+    } else {
+      return [];
+    }
+  };
 
+  // получение друзей при загрузке страницы
   useEffect(() => {
     if (getPeoples.data && getPeoples.data.length > 0) {
       if (friends.length <= 0) {
@@ -179,8 +195,8 @@ const Peoples = () => {
           <ProfileNav />
           <ProfileWrapper>
             <div className="baton">
-              <h1 className="text-2xl font-semibold mb-7">Друзья</h1>
-              <div className="flex flex-wrap w-full min-h-[100px] items-center">
+              <h1 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-5">Друзья</h1>
+              <div className="flex flex-wrap w-full min-h-[56px] items-center">
                 {dataFriends && dataFriends.length > 0 ? (
                   dataFriends.map((item: IFriend) => (
                     <PeopleCard
@@ -200,19 +216,21 @@ const Peoples = () => {
                   </div>
                 )}
               </div>
-              <h1 className="text-2xl font-semibold mt-10 mb-7">Люди</h1>
-              <div className="flex flex-wrap min-h-[64px] h-auto items-center">
+              <h1 className="text-xl sm:text-2xl font-semibold mt-3 mb-3 sm:mb-5">Люди</h1>
+              <div className="flex flex-wrap min-h-[56px] h-auto items-center">
                 {dataPeoples && dataPeoples.length > 0 ? (
-                  dataPeoples.map((item: IFriend) => (
-                    <PeopleCard
-                      key={item._id}
-                      dataFriend={item}
-                      clientId={userId}
-                      isFriend={false}
-                      addToFriendsHandler={addToFriendsHandler}
-                      removeFromFriendsHandler={removeFromFriendsHandler}
-                    />
-                  ))
+                  sortPeoplesByTime(dataPeoples.slice()).map(
+                    (item: IFriend) => (
+                      <PeopleCard
+                        key={item._id}
+                        dataFriend={item}
+                        clientId={userId}
+                        isFriend={false}
+                        addToFriendsHandler={addToFriendsHandler}
+                        removeFromFriendsHandler={removeFromFriendsHandler}
+                      />
+                    )
+                  )
                 ) : (
                   <div className="w-full flex items-center justify-center">
                     <div className="text-[#ffffff80] text-lg">

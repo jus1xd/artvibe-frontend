@@ -4,6 +4,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { NavLink } from "react-router-dom";
 import { IFriend } from "../models/IFriend";
+import Avatar from "./Avatar";
 
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
@@ -75,13 +76,7 @@ const PeopleCard: React.FC<TProps> = ({
           />
         ) : avatar ? (
           <div className="relative z-[0]">
-            <div className="relative z-[0] flex items-center justify-center w-[40px] h-[40px] overflow-hidden rounded-full">
-              <img
-                src={`${baseUrl}/${avatar}`}
-                className="scale-[1.5]"
-                alt="avatar"
-              />
-            </div>
+            <Avatar avatar={avatar} width="40px" height="40px" />
             <div className="online-status">
               {isOnline && (
                 <div className="w-3 h-3 rounded-full bg-accent border-2 border-darkBlueGray absolute bottom-0 right-0 z-10"></div>

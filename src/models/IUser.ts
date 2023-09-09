@@ -10,6 +10,7 @@ export interface IUser {
   city: string;
   status: string;
   isOnline: boolean;
+  lastOnline: string;
   password: string;
   friends: IFriend[];
   posts: IPost[];

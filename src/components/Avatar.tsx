@@ -8,13 +8,37 @@ type TProps = {
   avatar: string;
 };
 
+type ImageStyle = {
+  objectFit: "cover" | "contain" | "fill" | "none" | "scale-down";
+  width: string;
+  height: string;
+};
+
 const Avatar: React.FC<TProps> = ({ avatar, width, height }) => {
+  const avatarStyle = {
+    width: width || "50px",
+    height: height || "50px",
+    borderRadius: "50%", // Задаем скругленные углы, чтобы сделать изображение круглым
+    overflow: "hidden", // Обрезаем изображение, чтобы оно вписывалось в круг
+  };
+
+  const imageStyle: ImageStyle = {
+    objectFit: "cover", // Сохраняем соотношение сторон и заполняем весь круг
+    width: "100%",
+    height: "100%",
+  };
+
   return (
     <div
-      style={{ width: width || "50px", height: height || "50px" }}
+      style={avatarStyle}
       className={`avatar flex items-center justify-center rounded-full overflow-hidden`}
     >
-      <img className="scale-125" src={`${baseUrl}/${avatar}`} alt="Avatar" />
+      <img
+        style={imageStyle}
+        className="scale-[1.5]"
+        src={`${baseUrl}/${avatar}`}
+        alt="Avatar"
+      />
     </div>
   );
 };

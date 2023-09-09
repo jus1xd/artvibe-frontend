@@ -23,6 +23,8 @@ import { IPost } from "../models/IPost";
 import { postApi } from "../store/services/postService";
 import ProfileWrapper from "../components/ProfileWrapper";
 import Avatar from "../components/Avatar";
+import moment from "moment";
+import { addPost, setPosts } from "../store/slices/postsSlice";
 
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
@@ -54,7 +56,11 @@ const Profile = () => {
   const friends = useAppSelector((state) => state.friends.friends);
 
   // получить данные профиля запросом
-  const { data } = userApi.useGetUserByIdQuery(userId);
+
+  let data = userApi.useGetUserByIdQuery(userId).data;
+
+  // получить посты профиля запросом
+  const posts = useAppSelector((state) => state.posts);
 
   // запрос на получение моих друзей
   const [createPost] = postApi.useCreatePostMutation();
@@ -69,7 +75,6 @@ const Profile = () => {
         if (friends.length <= 0) {
           dispatch(setFriends(data.friends));
           setDataFriends(data.friends);
-          setDataPosts(data.posts);
         } else {
           setDataFriends(
             friends.map((friend: any) => {
@@ -82,7 +87,6 @@ const Profile = () => {
               };
             })
           );
-          setDataPosts(data.posts);
         }
       } else {
         if (friends.length <= 0) {
@@ -105,9 +109,25 @@ const Profile = () => {
         setDataFriends(
           data.friends.filter((item: any) => item._id !== currentUser)
         );
-        setDataPosts(data.posts);
       }
     }
+  }, [data, userId]);
+
+  // получение постов профиля при загрузке страницы
+  useEffect(() => {
+    // if (
+    //   posts.peoples.find((item: any) => item.userId === userId) === undefined
+    // ) {
+    //   if (data) {
+    //     dispatch(setPosts({ userId, posts: data.posts }));
+    //     setDataPosts(data.posts);
+    //   }
+    // } else {
+    //   setDataPosts(
+    //     posts.peoples.find((item: any) => item.userId === userId)?.posts || []
+    //   );
+    // }
+    setDataPosts(data?.posts || []);
   }, [data, userId]);
 
   // textarea handler
@@ -155,10 +175,10 @@ const Profile = () => {
       addPostData.append("authorId", currentUser);
       addPostData.append("text", newPostValue);
       addPostData.append("pictures", newPostPictures!);
-      console.log("addPostData", addPostData);
 
       createPost(addPostData).then((res: any) => {
-        console.log(res.data)
+        console.log(res.data);
+        // dispatch(addPost({ userId, post: res.data }));
         setDataPosts([...dataPosts, res.data]);
       });
 
@@ -177,7 +197,7 @@ const Profile = () => {
   return (
     <div className="messenger relative sm:static">
       <Header theme="light" />
-      <Container>
+      <Container noBorder>
         <div className="w-full sm:flex mb-20 mt-5 sm:mt-10">
           <ProfileNav />
           <ProfileWrapper>
@@ -229,8 +249,13 @@ const Profile = () => {
                         </div>
                       </div>
                       <div className="online-status">
-                        {(data.isOnline || isMyProfile) && (
+                        {data.isOnline || isMyProfile ? (
                           <div className="w-5 h-5 rounded-full bg-accent border-4 border-[#20232B] absolute bottom-3 right-3 z-50"></div>
+                        ) : (
+                          <div className="w-max text-[10px] px-[4px] rounded-full bg-darkBlueGray absolute bottom-3 right-1 z-50">
+                            {data.lastOnline &&
+                              moment(data.lastOnline).fromNow()}
+                          </div>
                         )}
                       </div>
                     </div>
@@ -274,10 +299,16 @@ const Profile = () => {
                           </div>
                           <div className="flex">
                             <h1 className="text-xl font-bold">{data.name}</h1>
-                            {data.role === "admin" && (
+                            {data.role === "admin" ? (
                               <div className="text-[12px] select-none font-bold text-accent ml-1">
                                 dev
                               </div>
+                            ) : data.role !== "user" ? (
+                              <div className="text-[12px] select-none font-bold text-red ml-1">
+                                {data.role}
+                              </div>
+                            ) : (
+                              ""
                             )}
                             {data.isVerified ? "" : ""}
                           </div>
@@ -314,7 +345,7 @@ const Profile = () => {
                 <div className="flex flex-col-reverse sm:flex-row">
                   {/* posts  */}
                   <div className="sm:mr-5 relative rounded-xl bg-[#20232B] p-4 pt-7 pb-[2px] sm:w-[calc(676px)] ">
-                    <div className="z-20 absolute text-[12px] font-bold top-[-8px] left-[-10px] border-[3px] bg-darkBackground rounded-xl border-darkBackground text-accent py-0 px-2">
+                    <div className="z-20 absolute text-[12px] font-bold top-[-8px] left-0 sm:left-[-10px] border-[3px] bg-darkBackground rounded-l-none sm:rounded-l-xl rounded-xl border-darkBackground text-accent py-0 px-2">
                       Стена дурова
                     </div>
                     {/* <div className="mb-3"> */}
@@ -362,7 +393,7 @@ const Profile = () => {
                   </div>
                   {/* friends  */}
                   <div className="relative rounded-xl bg-[#20232B] mb-4 sm:mb-0 p-2 pt-6 pb-[2px] h-max sm:w-[240px] min-w-[254px] ">
-                    <div className="z-20 absolute text-[12px] font-bold top-[-8px] left-[-10px] border-[3px] bg-darkBackground rounded-xl border-darkBackground text-accent py-0 px-2">
+                    <div className="z-20 absolute text-[12px] font-bold top-[-8px] left-0 sm:left-[-10px] border-[3px] bg-darkBackground rounded-l-none sm:rounded-l-xl rounded-xl border-darkBackground text-accent py-0 px-2">
                       Друзья
                     </div>
                     <div className="h-[320px] rounded-xl overflow-y-scroll">

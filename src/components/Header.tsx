@@ -23,6 +23,7 @@ import {
 import { userApi } from "../store/services/userService";
 import Toast from "./Toast";
 import { IMessage } from "../models/IMessage";
+import { editPeople } from "../store/slices/peoplesSlice";
 
 type TProps = {
   theme?: "light" | "dark";
@@ -82,6 +83,17 @@ const Header: React.FC<TProps> = ({ theme }) => {
       dispatch(setFriends(res.data));
     });
   };
+
+  // онлайн статусы пользователей WebSocket
+  useEffect(() => {
+    socket.on("userOnline", (user: any) => {
+      dispatch(editPeople(user));
+    });
+
+    return () => {
+      socket.off("sendMessage");
+    };
+  }, []);
 
   // получение сообщения WebSocket
   useEffect(() => {

@@ -165,13 +165,7 @@ const PostCard: React.FC<TProps> = ({
               style={{ marginTop: "-4px" }}
             />
           ) : authorAvatar ? (
-            <div className="flex items-center justify-center w-[40px] h-[40px] overflow-hidden rounded-full">
-              <img
-                src={`${baseUrl}/${authorAvatar}`}
-                className="scale-[1.5]"
-                alt="avatar"
-              />
-            </div>
+            <Avatar avatar={authorAvatar} width="40px" height="40px"/>
           ) : (
             <div
               className={`flex items-center justify-center overflow-hidden w-[40px] h-[40px] rounded-full`}
@@ -252,6 +246,7 @@ const PostCard: React.FC<TProps> = ({
               height="100%"
               maxWidth="45%"
               maxHeight="70%"
+              noBackground
               isOpened={modalOpened}
               setIsOpened={setModalOpened}
             >
@@ -266,7 +261,7 @@ const PostCard: React.FC<TProps> = ({
           </div>
         )}
         {/* likes and comms  */}
-        <div className="select-none flex items-center justify-between my-3">
+        <div className="select-none flex items-center justify-between mt-3">
           <div className="flex items-center">
             <div className="flex items-center">
               <div
@@ -299,12 +294,12 @@ const PostCard: React.FC<TProps> = ({
         {/* comments  */}
         <div className="">
           {postComments.map((comment: IComment) => (
-            <Comment comment={comment} />
+            <Comment key={comment._id} comment={comment} />
           ))}
         </div>
         {/* add comment  */}
         {commentInputOpened && (
-          <div className="w-full rounded-lg overflow-hidden">
+          <div className="w-full rounded-lg overflow-hidden mt-2">
             <ResizableTextarea
               handleSend={() => addCommentHandler()}
               value={newCommentValue}

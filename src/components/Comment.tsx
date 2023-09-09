@@ -39,10 +39,21 @@ const Comment: React.FC<TProps> = ({ comment }) => {
   }, [pictures]);
 
   return (
-    <div key={_id} className="bg-darkBackground p-1 rounded-lg flex mb-2">
-      <div className="p-[2px]">
+    <div key={_id} className="bg-darkBackground p-1 rounded-lg flex mt-2">
+      <div className="p-[2px] h-max">
         <NavLink to={`/${userId}`}>
-          <Avatar width="35px" height="35px" avatar={userAvatar} />
+          {userAvatar ? (
+            <Avatar width="35px" height="35px" avatar={userAvatar} />
+          ) : (
+            <div
+              className={`flex items-center justify-center overflow-hidden w-[35px] h-[35px] rounded-full`}
+              style={{ backgroundColor: "#ffffff30" }}
+            >
+              <div className="text-sm text-white font-bold">
+                {userName.slice(0, 1).toUpperCase()}
+              </div>
+            </div>
+          )}
         </NavLink>
       </div>
       <div className="ml-1 text-sm">
@@ -61,8 +72,8 @@ const Comment: React.FC<TProps> = ({ comment }) => {
               style={{
                 width: width,
                 height: height,
-                maxWidth: "350px",
-                maxHeight: "230px",
+                maxWidth: "280px",
+                maxHeight: "180px",
               }}
               className={`cursor-pointer select-none relative overflow-hidden rounded-xl`}
             >
@@ -78,6 +89,7 @@ const Comment: React.FC<TProps> = ({ comment }) => {
               height="100%"
               maxWidth="45%"
               maxHeight="70%"
+              noBackground
               isOpened={modalOpened}
               setIsOpened={setModalOpened}
             >

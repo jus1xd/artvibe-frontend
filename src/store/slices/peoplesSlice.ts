@@ -21,6 +21,14 @@ const peoplesSlice = createSlice({
     setPeoples: (state, action) => {
       state.peoples = action.payload;
     },
+    editPeople: (state, action) => {
+      state.peoples = state.peoples.map((people) => {
+        if (people._id === action.payload._id) {
+          people.isOnline = action.payload.isOnline;
+        }
+        return people;
+      });
+    },
     addPeople: (state, action) => {
       state.peoples.push(action.payload.friendUser);
     },
@@ -35,5 +43,6 @@ const peoplesSlice = createSlice({
   },
 });
 
-export const { setPeoples, addPeople, deletePeople } = peoplesSlice.actions;
+export const { setPeoples, editPeople, addPeople, deletePeople } =
+  peoplesSlice.actions;
 export default peoplesSlice;
