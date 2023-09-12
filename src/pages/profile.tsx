@@ -29,8 +29,13 @@ import { addPost, setPosts } from "../store/slices/postsSlice";
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
 
-const Profile = () => {
+type TProps = {
+  setTheme: (theme: string) => void;
+};
+
+const Profile: React.FC<TProps> = ({ setTheme }) => {
   const dispatch = useAppDispatch();
+  setTheme("light");
   const [dataFriends, setDataFriends] = useState<IFriend[]>([]);
   const [dataPosts, setDataPosts] = useState<IPost[]>([]);
   // new post data
@@ -73,8 +78,12 @@ const Profile = () => {
     if (data) {
       if (currentUser === userId) {
         if (friends.length <= 0) {
-          dispatch(setFriends(data.friends));
-          setDataFriends(data.friends);
+          getFriends(currentUser).then((res: any) => {
+            dispatch(setFriends(res.data));
+            setDataFriends(
+              res.data.filter((item: any) => item._id !== currentUser)
+            );
+          });
         } else {
           setDataFriends(
             friends.map((friend: any) => {
@@ -196,7 +205,6 @@ const Profile = () => {
 
   return (
     <div className="messenger relative sm:static">
-      <Header theme="light" />
       <Container noBorder>
         <div className="w-full sm:flex mb-20 mt-5 sm:mt-10">
           <ProfileNav />

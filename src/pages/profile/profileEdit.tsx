@@ -7,7 +7,6 @@ import ProfileWrapper from "../../components/ProfileWrapper";
 const ProfileEdit = () => {
   return (
     <div className="messenger relative sm:static">
-      <Header theme="light" />
       <Container>
         <div className="sm:flex mt-10 mb-20 sm:mb-0 sm:mt-10">
           <ProfileNav />

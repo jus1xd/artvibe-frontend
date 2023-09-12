@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../components/Container";
 import Header from "../components/Header";
 
@@ -14,17 +14,23 @@ import { addFriend, deleteFriend } from "../store/slices/friendsSlice";
 import ProfileNav from "../components/ProfileNav";
 import { socket } from "../hooks/socket";
 import ProfileWrapper from "../components/ProfileWrapper";
+import Spinner from "../components/SpinnerLoader";
 
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
 
-const Peoples = () => {
+type TProps = {
+  setTheme: (theme: string) => void;
+};
+
+const Peoples: React.FC<TProps> = ({ setTheme }) => {
   const dispatch = useAppDispatch();
+  setTheme("light");
   const friends = useAppSelector((state) => state.friends.friends);
   // массив всех людей
   const [dataPeoples, setDataPeoples] = useState<IFriend[]>([]);
   const [dataFriends, setDataFriends] = useState<IFriend[]>([]);
-  const [isFriendLoading, setIsFriendLoading] = useState(false);
+  const [isFriendLoading, setIsFriendLoading] = useState(true);
 
   // запрос на получение моих друзей
   const [getFriends] = userApi.useGetFriendsMutation();
@@ -61,6 +67,7 @@ const Peoples = () => {
     if (getPeoples.data && getPeoples.data.length > 0) {
       if (friends.length <= 0) {
         getFriends(userId).then((res: any) => {
+          setIsFriendLoading(false);
           setDataFriends(
             getPeoples
               .data!.filter((item: any) => item._id !== userId)
@@ -78,6 +85,7 @@ const Peoples = () => {
           );
         });
       } else {
+        setIsFriendLoading(false);
         setDataFriends(
           getPeoples
             .data!.filter((item: any) => item._id !== userId)
@@ -189,57 +197,66 @@ const Peoples = () => {
 
   return (
     <div className="messenger relative sm:static">
-      <Header theme="light" />
       <Container>
         <div className="sm:flex mt-10 mb-20 sm:mb-0 sm:mt-10">
           <ProfileNav />
           <ProfileWrapper>
-            <div className="baton">
-              <h1 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-5">Друзья</h1>
-              <div className="flex flex-wrap w-full min-h-[56px] items-center">
-                {dataFriends && dataFriends.length > 0 ? (
-                  dataFriends.map((item: IFriend) => (
-                    <PeopleCard
-                      key={item._id}
-                      dataFriend={item}
-                      clientId={userId}
-                      isFriend={true}
-                      addToFriendsHandler={addToFriendsHandler}
-                      removeFromFriendsHandler={removeFromFriendsHandler}
-                    />
-                  ))
-                ) : (
-                  <div className="w-full h-10 flex items-center justify-center">
-                    <div className="text-[#ffffff80] text-lg py-5">
-                      У вас пока нет друзей
-                    </div>
-                  </div>
-                )}
+            {getPeoples.isLoading || isFriendLoading ? (
+              <div className="w-full h-1/3 flex items-center justify-center">
+                <Spinner size={45} />
               </div>
-              <h1 className="text-xl sm:text-2xl font-semibold mt-3 mb-3 sm:mb-5">Люди</h1>
-              <div className="flex flex-wrap min-h-[56px] h-auto items-center">
-                {dataPeoples && dataPeoples.length > 0 ? (
-                  sortPeoplesByTime(dataPeoples.slice()).map(
-                    (item: IFriend) => (
+            ) : (
+              <div className="baton">
+                <h1 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-5">
+                  Друзья
+                </h1>
+                <div className="flex flex-wrap w-full min-h-[56px] items-center">
+                  {dataFriends && dataFriends.length > 0 ? (
+                    dataFriends.map((item: IFriend) => (
                       <PeopleCard
                         key={item._id}
                         dataFriend={item}
                         clientId={userId}
-                        isFriend={false}
+                        isFriend={true}
                         addToFriendsHandler={addToFriendsHandler}
                         removeFromFriendsHandler={removeFromFriendsHandler}
                       />
-                    )
-                  )
-                ) : (
-                  <div className="w-full flex items-center justify-center">
-                    <div className="text-[#ffffff80] text-lg">
-                      Все люди у вас в друзьях
+                    ))
+                  ) : (
+                    <div className="w-full h-10 flex items-center justify-center">
+                      <div className="text-[#ffffff80] text-lg py-5">
+                        У вас пока нет друзей
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
+                <h1 className="text-xl sm:text-2xl font-semibold mt-3 mb-3 sm:mb-5">
+                  Люди
+                </h1>
+                <div className="flex flex-wrap min-h-[56px] h-auto items-center">
+                  {dataPeoples && dataPeoples.length > 0 ? (
+                    sortPeoplesByTime(dataPeoples.slice()).map(
+                      (item: IFriend) => (
+                        <PeopleCard
+                          key={item._id}
+                          dataFriend={item}
+                          clientId={userId}
+                          isFriend={false}
+                          addToFriendsHandler={addToFriendsHandler}
+                          removeFromFriendsHandler={removeFromFriendsHandler}
+                        />
+                      )
+                    )
+                  ) : (
+                    <div className="w-full flex items-center justify-center">
+                      <div className="text-[#ffffff80] text-lg">
+                        Все люди у вас в друзьях
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
           </ProfileWrapper>
         </div>
       </Container>

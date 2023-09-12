@@ -23,8 +23,13 @@ import PeopleCard from "../components/PeopleCard";
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
 
-const News = () => {
+type TProps = {
+  setTheme: (theme: string) => void;
+};
+
+const News: React.FC<TProps> = ({ setTheme }) => {
   const dispatch = useAppDispatch();
+  setTheme("light");
   const [dataFriends, setDataFriends] = useState<IFriend[]>([]);
 
   // получить токен из localStorage
@@ -166,11 +171,23 @@ const News = () => {
       ],
       timestamp: "2023-09-08T22:05:00.000Z",
     },
+    {
+      id: 5,
+      photo: newsBugsCover,
+      title: "Массивный багфикс",
+      text: [
+        "Рад представить вам крупное обновление которое приносит множество новых функций и значительное улучшение производительности. Вот некоторые из основных изменений:",
+        "1. Переработана система роутинга веб-сервиса. Теперь страницы загружаются намного быстрее и плавнее.",
+        "2. Исправлено несколько незначительных ошибок, которые могли возникнуть при использовании социальной сети. Теперь вы можете наслаждаться более стабильным и надежным опытом.",
+        "3. Добавлен счетчик пользователей онлайн.",
+        "Я всегда стремлюсь улучшать мой продукт, и ваши отзывы играют в этом ключевую роль. Пожалуйста, продолжайте делиться своими идеями и предложениями с мной, чтобы мы могли сделать нашу социальную сеть еще лучше. Спасибо, что выбрали нашу социальную сеть. Мы надеемся, что вам понравятся новые функции и улучшения.",
+      ],
+      timestamp: "2023-09-12T21:42:00.000Z",
+    },
   ];
 
   return (
     <div className="messenger relative sm:static">
-      <Header theme="light" />
       <Container noBorder>
         <div className="sm:flex mt-10 mb-20 sm:mb-0 sm:mt-10">
           <ProfileNav />
@@ -180,7 +197,7 @@ const News = () => {
                 {news.reverse().map((item) => {
                   return (
                     <NewsCard
-                      key={item.id}
+                      key={(Math.random() * 10).toString()}
                       photo={item.photo}
                       title={item.title}
                       text={item.text}

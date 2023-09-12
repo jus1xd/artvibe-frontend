@@ -23,13 +23,14 @@ import {
 import { userApi } from "../store/services/userService";
 import Toast from "./Toast";
 import { IMessage } from "../models/IMessage";
-import { editPeople } from "../store/slices/peoplesSlice";
+import { editPeople, setPeoples } from "../store/slices/peoplesSlice";
 
 type TProps = {
-  theme?: "light" | "dark";
+  onlineUsers?: number;
+  theme?: string;
 };
 
-const Header: React.FC<TProps> = ({ theme }) => {
+const Header: React.FC<TProps> = ({ onlineUsers, theme }) => {
   const dispatch = useAppDispatch();
   const [menuActive, setMenuActive] = useState<boolean>(false);
   const [newMessages, setNewMessages] = useState<IMessage[]>([]);
@@ -52,6 +53,8 @@ const Header: React.FC<TProps> = ({ theme }) => {
   const logoutHandler = () => {
     logout();
     navigate("/");
+    dispatch(setPeoples([]));
+    dispatch(setFriends([]));
   };
 
   const navLinksList = [
@@ -83,17 +86,6 @@ const Header: React.FC<TProps> = ({ theme }) => {
       dispatch(setFriends(res.data));
     });
   };
-
-  // онлайн статусы пользователей WebSocket
-  useEffect(() => {
-    socket.on("userOnline", (user: any) => {
-      dispatch(editPeople(user));
-    });
-
-    return () => {
-      socket.off("sendMessage");
-    };
-  }, []);
 
   // получение сообщения WebSocket
   useEffect(() => {
@@ -154,9 +146,16 @@ const Header: React.FC<TProps> = ({ theme }) => {
         <Container>
           {theme === "light" ? (
             <div className="relative z-50 flex justify-between items-center h-[60px]">
-              <NavLink to="/">
-                <img src={logoLight} alt="" />
-              </NavLink>
+              <div className="flex">
+                <NavLink to="/">
+                  <img src={logoLight} alt="" />
+                </NavLink>
+                <div className="ml-5 flex items-center justify-center bg-accentOpacity rounded-full">
+                  <div className="px-2 text-[12px] text-accent">
+                    Онлайн: {onlineUsers}
+                  </div>
+                </div>
+              </div>
               <nav className="text-white hidden sm:flex">
                 {navLinksList.map((item, index) => (
                   <NavLink

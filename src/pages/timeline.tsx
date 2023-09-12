@@ -20,7 +20,6 @@ const Timeline = () => {
 
   return (
     <>
-      <Header />
       {/* colors palette */}
       <div className="mt-20">
         <Container border>

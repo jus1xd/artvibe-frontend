@@ -106,7 +106,12 @@ const NewsCard: React.FC<TProps> = ({ photo, title, text, timestamp }) => {
           <div className="flex justify-between">
             <div className="text-sm sm:text-base max-h-[450px] overflow-y-scroll">
               {text.map((item) => (
-                <div className="mb-3 leading-6">{item}</div>
+                <div
+                  key={(Math.random() * 10).toString()}
+                  className="mb-3 leading-6"
+                >
+                  {item}
+                </div>
               ))}
             </div>
           </div>

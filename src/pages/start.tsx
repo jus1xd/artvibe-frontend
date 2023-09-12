@@ -12,7 +12,6 @@ import pic4 from "../assets/img/index/pic4.png";
 const Start = () => {
   return (
     <>
-      <Header theme="light" />
       <div className="absolute w-screen h-screen top-[-40px] left-0 z-[-1] overflow-hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"

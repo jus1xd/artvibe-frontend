@@ -24,9 +24,13 @@ export type TLastMessage = {
   text: string;
 };
 
-const Messenger = () => {
-  const dispatch = useAppDispatch();
+type TProps = {
+  setTheme: (theme: string) => void;
+};
 
+const Messenger: React.FC<TProps> = ({ setTheme }) => {
+  const dispatch = useAppDispatch();
+  setTheme("light");
   // получить токен из localStorage
   const token = localStorage.getItem("token");
   // @ts-ignore
@@ -79,6 +83,7 @@ const Messenger = () => {
         setDataDialogsLoading(false);
       });
     } else {
+      console.log("friends", friends);
       let dataDialogs = friends.map((item: any) => ({
         friendId: item._id,
         avatar: item.avatar,
@@ -156,7 +161,6 @@ const Messenger = () => {
 
   return (
     <div className="messenger relative sm:static">
-      <Header theme="light" />
       <Container noBorder>
         <div className="w-full sm:flex mt-5 sm:mt-10">
           <ProfileNav />

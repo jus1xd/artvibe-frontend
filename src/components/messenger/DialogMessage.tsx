@@ -42,7 +42,7 @@ const DialogMessage: React.FC<TProps> = ({
   const [height, setHeight] = useState<number>(0);
 
   useEffect(() => {
-    if (pictures!.length > 0) {
+    if (pictures) {
       const imgSrc = `${baseUrl}/${pictures}`;
 
       const img = new Image();
@@ -112,7 +112,9 @@ const DialogMessage: React.FC<TProps> = ({
             }  rounded-xl `}
           >
             <div className={`flex items-center w-full `}>
-              <div className="text-sm w-full break-words">{messageText}</div>
+              <div className="text-sm w-full break-words">
+                {messageText}
+              </div>
             </div>
             {pictures && (
               <div className={`picture ${messageText && "mt-1"}`}>

@@ -74,7 +74,11 @@ const DialogCard: React.FC<TProps> = ({ dataDialogs, setLastMessage }) => {
                 {name}
               </div>
               <div className="text-sm whitespace-nowrap overflow-hidden text-ellipsis">
-                {lastMessageText}
+                {lastMessageText
+                  ? lastMessageText
+                  : lastMessageDate
+                  ? "Фотография"
+                  : ""}
               </div>
             </div>
             <div className="text-[12px] opacity-50">

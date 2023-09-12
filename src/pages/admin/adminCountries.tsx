@@ -20,7 +20,6 @@ const AdminCountries = () => {
   return (
     <>
       <div className="">
-        <Header />
         <div className="mt-20">
           <Container>
             <h1 className="mb-7 text-title text-2xl fond-medium">

@@ -71,7 +71,7 @@ const Conversation: React.FC<TProps> = ({
     messageData.append("friendId", friendId);
     messageData.append("messageText", messageInputValue);
     messageData.append("pictures", messagePictures || "");
-    if (messageInputValue || messagePictures) {
+    if (messageInputValue.trim().length > 0 || messagePictures) {
       sendMessage(messageData).then((res: any) => {
         // setMessages((prevMessages) => [...prevMessages, res.data]);
       });

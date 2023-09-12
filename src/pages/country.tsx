@@ -64,7 +64,6 @@ const Country = () => {
 
   return (
     <div>
-      <Header />
       {/* cards  */}
       <div className="mt-20">
         <Container border>

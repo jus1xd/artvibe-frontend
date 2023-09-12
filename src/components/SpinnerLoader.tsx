@@ -8,7 +8,7 @@ const Spinner: React.FC<TProps> = ({ size }) => {
   return (
     <div
       className="spinner"
-      style={{ borderColor: "#FFF", borderTopColor: "#635BFF", borderWidth: size / 12 }}
+      style={{ borderColor: "#FFF", borderTopColor: "#635BFF", borderWidth: size / 9 }}
     >
       <div
         className="inner-spinner"

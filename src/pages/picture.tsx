@@ -19,7 +19,6 @@ const Picture = () => {
   const fromThisAuthor = data?.filter((el) => el.author === picture?.author);
   return (
     <>
-      <Header />
       <div className="">
         <div className="">
           <Container>

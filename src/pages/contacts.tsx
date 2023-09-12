@@ -24,7 +24,6 @@ const Contacts = () => {
 
   return (
     <>
-      <Header />
       <div
         className={`${
           active ? "scale-100 opacity-1" : "scale-110 opacity-0"
