@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../components/Header";
 import { useRouteError } from "react-router-dom";
 
-const ErrorPage = () => {
+type TProps = {
+  setTheme: (theme: string) => void;
+};
+
+const ErrorPage: React.FC<TProps> = ({ setTheme }) => {
   const error = useRouteError();
   console.error(error);
+  
+  useEffect(() => {
+    setTheme("dark");
+  }, []);
 
   const reloadPage = () => {
     window.location.reload();

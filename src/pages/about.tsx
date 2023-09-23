@@ -15,12 +15,16 @@ import { picturesApi } from "../store/services/pictureService";
 import Footer from "../components/Footer";
 import { Link } from "react-scroll";
 
-const About = () => {
-  const [active, setActive] = useState(false);
+type TProps = {
+  setTheme: (theme: string) => void;
+};
 
+const About: React.FC<TProps> = ({ setTheme }) => {
+  const [active, setActive] = useState(false);
   const { data } = picturesApi.useGetAllPicturesQuery("");
 
   useEffect(() => {
+    setTheme("dark");
     setTimeout(() => {
       setActive(true);
     }, 300);

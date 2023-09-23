@@ -29,8 +29,8 @@ type TProps = {
 
 const News: React.FC<TProps> = ({ setTheme }) => {
   const dispatch = useAppDispatch();
-  setTheme("light");
   const [dataFriends, setDataFriends] = useState<IFriend[]>([]);
+  setTheme("light");
 
   // получить токен из localStorage
   const token: string = localStorage.getItem("token") || "";
@@ -81,44 +81,45 @@ const News: React.FC<TProps> = ({ setTheme }) => {
   };
 
   // получение друзей при загрузке страницы
-  useEffect(() => {
-    if (data) {
-      if (friends.length <= 0) {
-        dispatch(setFriends(data.friends));
-        setDataFriends(data.friends);
-      } else {
-        setDataFriends(
-          friends.map((friend: any) => {
-            return {
-              _id: friend._id,
-              name: friend.name,
-              avatar: friend.avatar,
-              messages: [],
-              isOnline: friend.isOnline,
-            };
-          })
-        );
-      }
-      if (friends.length <= 0) {
-        getFriends(userId).then((res: any) => {
-          dispatch(setFriends(res.data));
-        });
-      } else {
-        setDataFriends(
-          friends.map((friend: any) => {
-            return {
-              _id: friend._id,
-              name: friend.name,
-              avatar: friend.avatar,
-              messages: [],
-              isOnline: friend.isOnline,
-            };
-          })
-        );
-      }
-      setDataFriends(data.friends.filter((item: any) => item._id !== userId));
-    }
-  }, [data, userId]);
+  // useEffect(() => {
+  //   setTheme("light");
+  //   if (data) {
+  //     if (friends.length <= 0) {
+  //       dispatch(setFriends(data.friends));
+  //       // setDataFriends(data.friends);
+  //     } else {
+  //       setDataFriends(
+  //         friends.map((friend: any) => {
+  //           return {
+  //             _id: friend._id,
+  //             name: friend.name,
+  //             avatar: friend.avatar,
+  //             messages: [],
+  //             isOnline: friend.isOnline,
+  //           };
+  //         })
+  //       );
+  //     }
+  //     if (friends.length <= 0) {
+  //       getFriends(userId).then((res: any) => {
+  //         dispatch(setFriends(res.data));
+  //       });
+  //     } else {
+  //       setDataFriends(
+  //         friends.map((friend: any) => {
+  //           return {
+  //             _id: friend._id,
+  //             name: friend.name,
+  //             avatar: friend.avatar,
+  //             messages: [],
+  //             isOnline: friend.isOnline,
+  //           };
+  //         })
+  //       );
+  //     }
+  //     // setDataFriends(data.friends.filter((item: any) => item._id !== userId));
+  //   }
+  // }, [data, userId]);
 
   const news = [
     {

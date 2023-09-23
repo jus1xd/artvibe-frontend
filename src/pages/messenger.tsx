@@ -30,7 +30,6 @@ type TProps = {
 
 const Messenger: React.FC<TProps> = ({ setTheme }) => {
   const dispatch = useAppDispatch();
-  setTheme("light");
   // получить токен из localStorage
   const token = localStorage.getItem("token");
   // @ts-ignore
@@ -69,6 +68,8 @@ const Messenger: React.FC<TProps> = ({ setTheme }) => {
 
   // функция на получение друзей
   useEffect(() => {
+    setTheme("light");
+    // получение друзей
     if (friends.length <= 0) {
       getFriends(userId).then((res: any) => {
         let dataDialogs = res.data.map((item: any) => ({
@@ -136,7 +137,8 @@ const Messenger: React.FC<TProps> = ({ setTheme }) => {
 
   const handleConversation = () => {
     if (friendId && friends.find((el) => el._id === friendId)) {
-      let friendName = friends.find((el) => el._id === friendId)!.name || "";
+      let friendName =
+        friends.find((el) => el._id === friendId)!.fullname || "";
       let friendAvatar =
         friends.find((el) => el._id === friendId)!.avatar || "";
       return (

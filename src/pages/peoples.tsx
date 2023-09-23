@@ -25,7 +25,6 @@ type TProps = {
 
 const Peoples: React.FC<TProps> = ({ setTheme }) => {
   const dispatch = useAppDispatch();
-  setTheme("light");
   const friends = useAppSelector((state) => state.friends.friends);
   // массив всех людей
   const [dataPeoples, setDataPeoples] = useState<IFriend[]>([]);
@@ -62,6 +61,8 @@ const Peoples: React.FC<TProps> = ({ setTheme }) => {
     }
   };
 
+  setTheme("light");
+  
   // получение друзей при загрузке страницы
   useEffect(() => {
     if (getPeoples.data && getPeoples.data.length > 0) {
@@ -72,7 +73,7 @@ const Peoples: React.FC<TProps> = ({ setTheme }) => {
             getPeoples
               .data!.filter((item: any) => item._id !== userId)
               .filter((item: any) =>
-                res.data.some((friend: any) => friend._id === item._id)
+                res.data.some((friend: any) => friend.friendId === item._id)
               )
           );
           setDataPeoples(
@@ -80,7 +81,7 @@ const Peoples: React.FC<TProps> = ({ setTheme }) => {
               .data!.filter((item: any) => item._id !== userId)
               .filter(
                 (item: any) =>
-                  !res.data.some((friend: any) => friend._id === item._id)
+                  !res.data.some((friend: any) => friend.friendId === item._id)
               )
           );
         });

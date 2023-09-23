@@ -99,6 +99,17 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+.start-tag {
+  background: linear-gradient(
+    98deg,
+    #d95656 12.48%,
+    #ac55ba 49.24%,
+    #0778e0 80.82%
+  );
+}
+
+.start-tag,
+.start-title,
 .benefit_title {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

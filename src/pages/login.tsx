@@ -9,9 +9,12 @@ import Input from "../components/Input";
 import { useActions } from "../hooks/actions";
 import { authApi } from "../store/services/authService";
 
-const Login = () => {
-  const [remember, setRemember] = useState<boolean>(false);
+type TProps = {
+  setTheme: (theme: string) => void;
+};
 
+const Login: React.FC<TProps> = ({ setTheme }) => {
+  const [remember, setRemember] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -30,8 +33,8 @@ const Login = () => {
   };
 
   useEffect(() => {
+    setTheme("hidden");
     if (data) {
-      // @ts-ignore
       login(data);
       navigate("/show");
     }
@@ -68,8 +71,8 @@ const Login = () => {
                   y2="501.046"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stop-color="#635BFF" />
-                  <stop offset="1" stop-color="#FF5B5B" />
+                  <stop stopColor="#635BFF" />
+                  <stop offset="1" stopColor="#FF5B5B" />
                 </linearGradient>
               </defs>
             </svg>

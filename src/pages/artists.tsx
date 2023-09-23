@@ -11,13 +11,17 @@ import { picturesApi } from "../store/services/pictureService";
 import Footer from "../components/Footer";
 import { Link } from "react-scroll";
 
-const Artists = () => {
-  const [active, setActive] = useState(false);
+type TProps = {
+  setTheme: (theme: string) => void;
+};
 
+const Artists: React.FC<TProps> = ({ setTheme }) => {
+  const [active, setActive] = useState(false);
   const { data } = authorsApi.useGetAllAuthorsQuery("");
   const dataPictures = picturesApi.useGetAllPicturesQuery("");
 
   useEffect(() => {
+    setTheme("dark");
     setTimeout(async () => {
       setActive(true);
     }, 300);
@@ -69,7 +73,9 @@ const Artists = () => {
         {/* cards  */}
         <div className="mb-20">
           <Container border>
-            <h2 className="mb-4 font-medium text-title text-2xl" id="artists">Художники</h2>
+            <h2 className="mb-4 font-medium text-title text-2xl" id="artists">
+              Художники
+            </h2>
             <div className="flex justify-between flex-wrap">
               {data?.map((item) => {
                 return (

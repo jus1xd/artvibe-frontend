@@ -13,10 +13,18 @@ import { picturesApi } from "../store/services/pictureService";
 import Footer from "../components/Footer";
 import { Link } from "react-scroll";
 
-const Show = () => {
+type TProps = {
+  setTheme: (theme: string) => void;
+};
+
+const Show: React.FC<TProps> = ({ setTheme }) => {
   const [active, setActive] = useState(false);
 
   const { data } = picturesApi.useGetAllPicturesQuery("");
+
+  useEffect(() => {
+    setTheme("dark");
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {

@@ -59,7 +59,7 @@ export const userApi = createApi({
     removeFromFriends: builder.mutation<IUser, Object>({
       query: (data) => ({
         url: `api/remove-friend`,
-        method: "DELETE",
+        method: "POST",
         mode: "cors",
         body: data,
       }),

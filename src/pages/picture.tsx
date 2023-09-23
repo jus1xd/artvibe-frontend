@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import { picturesApi } from "../store/services/pictureService";
@@ -9,9 +9,17 @@ import Footer from "../components/Footer";
 // Define a service using a base URL and expected endpoints
 const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5003";
 
-const Picture = () => {
+type TProps = {
+  setTheme: (theme: string) => void;
+};
+
+const Picture: React.FC<TProps> = ({ setTheme }) => {
   const params = useParams();
   const prodId = params.id;
+  
+  useEffect(() => {
+    setTheme("dark");
+  }, []);
 
   const { data } = picturesApi.useGetAllPicturesQuery("");
 

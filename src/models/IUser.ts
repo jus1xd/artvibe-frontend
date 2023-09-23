@@ -4,7 +4,7 @@ import { IPost } from "./IPost";
 export interface IUser {
   _id: string;
   avatar: string;
-  name: string;
+  fullname: string;
   username: string;
   email: string;
   city: string;
@@ -12,8 +12,16 @@ export interface IUser {
   isOnline: boolean;
   lastOnline: string;
   password: string;
-  friends: IFriend[];
-  posts: IPost[];
+  friends: [
+    {
+      friendId: string;
+    }
+  ];
+  posts: [
+    {
+      postId: string;
+    }
+  ];
   pageCover: string;
   role: string;
   isVerified: boolean;

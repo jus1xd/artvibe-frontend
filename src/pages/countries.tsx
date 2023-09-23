@@ -10,12 +10,16 @@ import Planet from "../components/planet";
 import Footer from "../components/Footer";
 import { Link } from "react-scroll";
 
-const Countries = () => {
-  const [active, setActive] = useState(false);
+type TProps = {
+  setTheme: (theme: string) => void;
+};
 
+const Countries: React.FC<TProps> = ({ setTheme }) => {
+  const [active, setActive] = useState(false);
   const countries = countriesApi.useGetAllCountriesQuery("");
 
   useEffect(() => {
+    setTheme("dark");
     setTimeout(() => {
       setActive(true);
     }, 300);

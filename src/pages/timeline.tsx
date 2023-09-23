@@ -1,14 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
 import Container from "../components/Container";
 import Header from "../components/Header";
 import { picturesApi } from "../store/services/pictureService";
 import Footer from "../components/Footer";
 
-const Timeline = () => {
+type TProps = {
+  setTheme: (theme: string) => void;
+};
+
+const Timeline: React.FC<TProps> = ({ setTheme }) => {
   const [currentFilter, setCurrentFilter] = useState<boolean>(false);
 
   const { data } = picturesApi.useGetAllPicturesQuery("");
+
+  useEffect(() => {
+    setTheme("dark");
+  }, []);
 
   function reverseEz(arr: any) {
     let newData = [];

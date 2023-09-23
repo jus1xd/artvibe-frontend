@@ -9,16 +9,21 @@ import { countriesApi } from "../store/services/countriesService";
 import Footer from "../components/Footer";
 import Spinner from "../components/SpinnerLoader";
 
-const Country = () => {
+type TProps = {
+  setTheme: (theme: string) => void;
+};
+
+const Country: React.FC<TProps> = ({ setTheme }) => {
   const params = useParams();
   const prodId = params.id;
-
   const authors = authorsApi.useGetAllAuthorsQuery("");
   const pictures = picturesApi.useGetAllPicturesQuery("");
   const countries = countriesApi.useGetAllCountriesQuery("");
 
   // const [cardPictureLoaded, setCardPictureLoaded] = useState<boolean>(false)
-
+  useEffect(() => {
+    setTheme("dark");
+  }, []);
 
   let generalLoadingStatus: boolean =
     authors.isLoading || pictures.isLoading || countries.isLoading;

@@ -35,7 +35,6 @@ type TProps = {
 
 const Profile: React.FC<TProps> = ({ setTheme }) => {
   const dispatch = useAppDispatch();
-  setTheme("light");
   const [dataFriends, setDataFriends] = useState<IFriend[]>([]);
   const [dataPosts, setDataPosts] = useState<IPost[]>([]);
   // new post data
@@ -62,7 +61,7 @@ const Profile: React.FC<TProps> = ({ setTheme }) => {
 
   // получить данные профиля запросом
 
-  let data = userApi.useGetUserByIdQuery(userId).data;
+  const { data } = userApi.useGetUserByIdQuery(userId);
 
   // получить посты профиля запросом
   const posts = useAppSelector((state) => state.posts);
@@ -75,6 +74,7 @@ const Profile: React.FC<TProps> = ({ setTheme }) => {
 
   // получение друзей при загрузке страницы
   useEffect(() => {
+    setTheme("light");
     if (data) {
       if (currentUser === userId) {
         if (friends.length <= 0) {
@@ -85,17 +85,17 @@ const Profile: React.FC<TProps> = ({ setTheme }) => {
             );
           });
         } else {
-          setDataFriends(
-            friends.map((friend: any) => {
-              return {
-                _id: friend._id,
-                name: friend.name,
-                avatar: friend.avatar,
-                messages: [],
-                isOnline: friend.isOnline,
-              };
-            })
-          );
+          // setDataFriends(
+          //   friends.map((friend: any) => {
+          //     return {
+          //       _id: friend._id,
+          //       name: friend.name,
+          //       avatar: friend.avatar,
+          //       messages: [],
+          //       isOnline: friend.isOnline,
+          //     };
+          //   })
+          // );
         }
       } else {
         if (friends.length <= 0) {
@@ -103,41 +103,29 @@ const Profile: React.FC<TProps> = ({ setTheme }) => {
             dispatch(setFriends(res.data));
           });
         } else {
-          setDataFriends(
-            friends.map((friend: any) => {
-              return {
-                _id: friend._id,
-                name: friend.name,
-                avatar: friend.avatar,
-                messages: [],
-                isOnline: friend.isOnline,
-              };
-            })
-          );
+          // setDataFriends(
+          //   friends.map((friend: any) => {
+          //     return {
+          //       _id: friend._id,
+          //       name: friend.name,
+          //       avatar: friend.avatar,
+          //       messages: [],
+          //       isOnline: friend.isOnline,
+          //     };
+          //   })
+          // );
         }
-        setDataFriends(
-          data.friends.filter((item: any) => item._id !== currentUser)
-        );
+        // setDataFriends(
+        //   data.friends.filter((item: any) => item._id !== currentUser)
+        // );
       }
     }
   }, [data, userId]);
 
   // получение постов профиля при загрузке страницы
-  useEffect(() => {
-    // if (
-    //   posts.peoples.find((item: any) => item.userId === userId) === undefined
-    // ) {
-    //   if (data) {
-    //     dispatch(setPosts({ userId, posts: data.posts }));
-    //     setDataPosts(data.posts);
-    //   }
-    // } else {
-    //   setDataPosts(
-    //     posts.peoples.find((item: any) => item.userId === userId)?.posts || []
-    //   );
-    // }
-    setDataPosts(data?.posts || []);
-  }, [data, userId]);
+  // useEffect(() => {
+  //   setDataPosts(data?.posts || []);
+  // }, [data, userId]);
 
   // textarea handler
   const handleNewpostInput = (newPostValue: string) => {
@@ -249,7 +237,7 @@ const Profile: React.FC<TProps> = ({ setTheme }) => {
                                 style={{ backgroundColor: "#ffffff30" }}
                               >
                                 <div className="text-3xl text-white font-bold">
-                                  {data.name.slice(0, 1).toUpperCase()}
+                                  {data.fullname.slice(0, 1).toUpperCase()}
                                 </div>
                               </div>
                             )}
@@ -306,7 +294,7 @@ const Profile: React.FC<TProps> = ({ setTheme }) => {
                             </div>
                           </div>
                           <div className="flex">
-                            <h1 className="text-xl font-bold">{data.name}</h1>
+                            <h1 className="text-xl font-bold">{data.fullname}</h1>
                             {data.role === "admin" ? (
                               <div className="text-[12px] select-none font-bold text-accent ml-1">
                                 dev

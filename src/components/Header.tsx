@@ -223,11 +223,18 @@ const Header: React.FC<TProps> = ({ onlineUsers, theme }) => {
                 </NavLink>
               )}
             </div>
-          ) : (
+          ) : theme === "dark" ? (
             <div className="relative z-50 flex justify-between items-center h-[60px]">
-              <NavLink to="/">
-                <img src={logoDark} alt="" />
-              </NavLink>
+              <div className="flex">
+                <NavLink to="/">
+                  <img src={logoDark} alt="" />
+                </NavLink>
+                <div className="ml-5 flex items-center justify-center bg-accentOpacity rounded-full">
+                  <div className="px-2 text-[12px] text-accent">
+                    Онлайн: {onlineUsers}
+                  </div>
+                </div>
+              </div>
               <nav className="hidden sm:flex">
                 {navLinksList.map((item, index) => (
                   <NavLink
@@ -295,7 +302,7 @@ const Header: React.FC<TProps> = ({ onlineUsers, theme }) => {
                 </NavLink>
               )}
             </div>
-          )}
+          ) : null}
         </Container>
         <div className="hidden sm:block toaster absolute left-5 bottom-0 max-h-4/5 overflow-y-hidden">
           {newMessages.length > 0 &&

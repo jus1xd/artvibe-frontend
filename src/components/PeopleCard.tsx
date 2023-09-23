@@ -36,7 +36,7 @@ const PeopleCard: React.FC<TProps> = ({
 }) => {
   const [isFriendLoading, setIsFriendLoading] = useState<boolean>(false);
 
-  const { _id: peopleId, name, avatar, isOnline } = dataFriend;
+  const { _id: peopleId, fullname, avatar, isOnline } = dataFriend;
 
   // form data для добавления/удаления из друзей
   const dataForFriendsActions = new FormData();
@@ -89,7 +89,7 @@ const PeopleCard: React.FC<TProps> = ({
             style={{ backgroundColor: "#ffffff30" }}
           >
             <div className="text-sm text-white font-bold">
-              {name.slice(0, 1).toUpperCase()}
+              {fullname.slice(0, 1).toUpperCase()}
             </div>
           </div>
         )}
@@ -109,7 +109,7 @@ const PeopleCard: React.FC<TProps> = ({
                 />
               ) : (
                 <div className="w-full max-w-[100px] whitespace-nowrap overflow-hidden text-ellipsis">
-                  {name}
+                  {fullname}
                 </div>
               )}
               {/* {isFriendLoading ? (

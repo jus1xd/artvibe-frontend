@@ -31,7 +31,6 @@ import { socket } from "./hooks/socket";
 import Header from "./components/Header";
 
 const App: React.FC = () => {
-  const [notAuth, setNotAuth] = React.useState<boolean>(true);
   const [theme, setTheme] = React.useState<string>("dark");
   const [onlineUsers, setOnlineUsers] = React.useState<number>(0);
 
@@ -42,16 +41,21 @@ const App: React.FC = () => {
 
   return (
     <>
-      {notAuth && <Header theme={theme} onlineUsers={onlineUsers} />}
+      <Header theme={theme} onlineUsers={onlineUsers} />
       <Routes>
-        <Route path="/" element={<Start />} />
+        <Route path="/" element={<Start setTheme={setTheme} />} />
         {/* social media app */}
         <Route
           path="/news/*"
-          element={<ProtectedRoute children={<News setTheme={setTheme} />} />}
+          element={
+            <ProtectedRoute
+              notAuthSecure
+              children={<News setTheme={setTheme} />}
+            />
+          }
         />
         <Route
-          errorElement={<ErrorPage />}
+          errorElement={<ErrorPage setTheme={setTheme} />}
           path="/im/*"
           element={
             <ProtectedRoute
@@ -61,7 +65,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          errorElement={<ErrorPage />}
+          errorElement={<ErrorPage setTheme={setTheme} />}
           path="/im/:id/*"
           element={
             <ProtectedRoute
@@ -71,7 +75,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          errorElement={<ErrorPage />}
+          errorElement={<ErrorPage setTheme={setTheme} />}
           path="/peoples/*"
           element={
             <ProtectedRoute
@@ -81,7 +85,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          errorElement={<ErrorPage />}
+          errorElement={<ErrorPage setTheme={setTheme} />}
           path="/edit/:id/*"
           element={
             <ProtectedRoute notAuthSecure>
@@ -91,7 +95,7 @@ const App: React.FC = () => {
         />
 
         <Route
-          errorElement={<ErrorPage />}
+          errorElement={<ErrorPage setTheme={setTheme} />}
           path="/:id/*"
           element={
             <ProtectedRoute
@@ -101,7 +105,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          errorElement={<ErrorPage />}
+          errorElement={<ErrorPage setTheme={setTheme} />}
           path="/peoples/*"
           element={
             <ProtectedRoute
@@ -113,27 +117,51 @@ const App: React.FC = () => {
         {/* error routes  */}
         <Route
           path="/404/*"
-          element={<ProtectedRoute children={<NotFoundPage />} />}
+          element={
+            <ProtectedRoute children={<NotFoundPage setTheme={setTheme} />} />
+          }
         />
         {/* social media app */}
-        <Route path="/countries/*" element={<Countries />} />
-        <Route path="/show/*" element={<Show />} />
-        <Route path="/artists/*" element={<Artists />} />
-        <Route path="/about/*" element={<About />} />
-        <Route path="/contacts/*" element={<Contacts />} />
-        <Route path="/show/timeline/*" element={<Timeline />} />
-        <Route path="/show/colors/*" element={<Colors />} />
-        <Route path="/artist/:id/*" element={<Artist />} />
-        <Route path="/picture/:id/*" element={<Picture />} />
-        <Route path="/country/:id/*" element={<Country />} />
+        <Route
+          path="/countries/*"
+          element={<Countries setTheme={setTheme} />}
+        />
+        <Route path="/show/*" element={<Show setTheme={setTheme} />} />
+        <Route path="/artists/*" element={<Artists setTheme={setTheme} />} />
+        <Route path="/about/*" element={<About setTheme={setTheme} />} />
+        <Route path="/contacts/*" element={<Contacts setTheme={setTheme} />} />
+        <Route
+          path="/show/timeline/*"
+          element={<Timeline setTheme={setTheme} />}
+        />
+        <Route path="/show/colors/*" element={<Colors setTheme={setTheme} />} />
+        <Route path="/artist/:id/*" element={<Artist setTheme={setTheme} />} />
+        <Route
+          path="/picture/:id/*"
+          element={<Picture setTheme={setTheme} />}
+        />
+        <Route
+          path="/country/:id/*"
+          element={<Country setTheme={setTheme} />}
+        />
         {/* auth app  */}
         <Route
           path="/login/*"
-          element={<ProtectedRoute authSecure children={<Login />} />}
+          element={
+            <ProtectedRoute
+              authSecure
+              children={<Login setTheme={setTheme} />}
+            />
+          }
         />
         <Route
           path="/register/*"
-          element={<ProtectedRoute authSecure children={<Register />} />}
+          element={
+            <ProtectedRoute
+              authSecure
+              children={<Register setTheme={setTheme} />}
+            />
+          }
         />
         {/* admin app  */}
         <Route

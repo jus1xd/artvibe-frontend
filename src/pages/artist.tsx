@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { authorsApi } from "../store/services/authorService";
 import Container from "../components/Container";
@@ -7,10 +7,13 @@ import { picturesApi } from "../store/services/pictureService";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-const Artist = () => {
+type TProps = {
+  setTheme: (theme: string) => void;
+};
+
+const Artist: React.FC<TProps> = ({ setTheme }) => {
   const params = useParams();
   const prodId = params.id;
-
   const { data } = authorsApi.useGetAllAuthorsQuery("");
   const pictures = picturesApi.useGetAllPicturesQuery("");
 
@@ -21,6 +24,9 @@ const Artist = () => {
       el.author === data?.find((picture) => picture._id === prodId)?.fullname
   );
 
+  useEffect(() => {
+    setTheme("dark");
+  }, []);
   return (
     <div>
       {/* cards  */}
@@ -51,7 +57,9 @@ const Artist = () => {
                   );
                 })
               ) : (
-                <div className="text-3xl text-dark py-10 text-center w-full">Нет экспонатов</div>
+                <div className="text-3xl text-dark py-10 text-center w-full">
+                  Нет экспонатов
+                </div>
               )
             }
           </div>

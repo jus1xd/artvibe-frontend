@@ -11,12 +11,16 @@ import { NavLink } from "react-router-dom";
 import { picturesApi } from "../store/services/pictureService";
 import Footer from "../components/Footer";
 
-const Contacts = () => {
-  const [active, setActive] = useState(false);
+type TProps = {
+  setTheme: (theme: string) => void;
+};
 
+const Contacts: React.FC<TProps> = ({ setTheme }) => {
+  const [active, setActive] = useState(false);
   const { data } = picturesApi.useGetAllPicturesQuery("");
 
   useEffect(() => {
+    setTheme("dark");
     setTimeout(() => {
       setActive(true);
     }, 300);

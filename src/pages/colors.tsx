@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
 import Container from "../components/Container";
 import Header from "../components/Header";
 import { picturesApi } from "../store/services/pictureService";
 import Footer from "../components/Footer";
 
-const Colors = () => {
-  const [currentColor, setCurrentColor] = useState<string>("Красный");
+type TProps = {
+  setTheme: (theme: string) => void;
+};
 
+const Colors: React.FC<TProps> = ({ setTheme }) => {
+  const [currentColor, setCurrentColor] = useState<string>("Красный");
   const { data } = picturesApi.useGetAllPicturesQuery("");
-  
+
   const colors = [
     { Красный: "#C53229" },
     { Зеленый: "#29C54B" },
@@ -22,6 +25,10 @@ const Colors = () => {
     { Фиолетовый: "#635BFF" },
     { Розовый: "#E85BFF" },
   ];
+
+  useEffect(() => {
+    setTheme("dark");
+  }, []);
 
   return (
     <>

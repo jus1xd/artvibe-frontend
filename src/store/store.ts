@@ -21,7 +21,7 @@ export const setupStore = () => {
         messagesApi.middleware,
         postApi.middleware
       ),
-    devTools: false,
+    devTools: true,
   });
 };
 
