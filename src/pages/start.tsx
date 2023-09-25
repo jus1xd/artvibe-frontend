@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Button from "../components/Button";
 import Container from "../components/Container";
@@ -13,6 +13,8 @@ import tool2 from "../assets/img/start/Group-1.svg";
 import tool3 from "../assets/img/start/Group-2.svg";
 import tool4 from "../assets/img/start/Group-3.svg";
 import tool5 from "../assets/img/start/Group-4.svg";
+import moment from "moment";
+import TypingAnimation from "../components/TypingAnimation";
 
 type TProps = {
   setTheme: (theme: string) => void;
@@ -20,6 +22,7 @@ type TProps = {
 
 const Start: React.FC<TProps> = ({ setTheme }) => {
   useEffect(() => {
+    moment.locale("en");
     setTheme("light");
   }, []);
 
@@ -34,6 +37,23 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
     "Videos",
   ];
 
+  let message1 = {
+    text: "What’s up! Let me take a look what happened at party",
+    time: "6:30 PM",
+    name: "Mark",
+    avatar: avatar1,
+  };
+
+  let message2 = {
+    text: "Hi! A party was awesome. Sent a couple of pictures from it.",
+    time: "8:00 AM",
+    name: "Alex",
+    avatar: avatar2,
+  };
+
+  const [time1, setTime1] = useState(Date.now());
+  const [time2, setTime2] = useState(Date.now());
+
   return (
     <>
       <div className="mt-[8%] messenger text-white">
@@ -42,9 +62,11 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
             {/* text  */}
             <div className="w-full sm:w-[50%]">
               <div className="relative text-xl text-accent flex items-center mb-4">
-                <span className="font-bold">ARTVIBE</span>
+                <span className="font-bold text-center mx-auto sm:mx-0 sm:text-left ">
+                  ARTVIBE
+                </span>
                 <svg
-                  className="stroke-accent ml-2"
+                  className="hidden sm:block stroke-accent ml-2"
                   xmlns="http://www.w3.org/2000/svg"
                   width="9"
                   height="8"
@@ -58,14 +80,14 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
                 </svg>
                 <img
                   src={tripla}
-                  className="absolute rotate-90 -z-10 -bottom-24 -left-[23%]"
+                  className="hidden sm:block absolute rotate-90 -z-10 -bottom-24 -left-[23%]"
                   alt=""
                 />
                 <div className="absolute -top-5 -left-[30%] -z-10 w-[380px] h-[380px] bg-accent rounded-full blur-[75px] opacity-20"></div>
               </div>
               <div className="relative">
-                <h1 className="start-title w-[90%] pb-1 bg-gradient-to-l from-[#635BFF] to-[#CAC8FF] text-[64px] sm:text-[64px] leading-[1.02] font-bold">
-                  Here your next gen social media.
+                <h1 className="text-center sm:text-left start-title w-[90%] pb-1 bg-gradient-to-l from-[#635BFF] to-[#CAC8FF] text-[46px] sm:text-[64px] leading-[1.02] font-bold">
+                  Meet the next generation social network
                 </h1>
                 <div className="absolute -top-5 -right-5 -z-10 w-[220px] h-[220px] bg-accent rounded-full blur-[75px] opacity-20"></div>
               </div>
@@ -88,9 +110,9 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
                   </div>
                 ))}
               </div>
-              <div className="mt-16 flex">
+              <div className="mt-16 w-max mx-auto sm:mx-0 flex flex-col sm:flex-row">
                 <NavLink className="relative z-20" to={"/login"}>
-                  <div className="group mr-5 w-max px-5 py-1 flex items-center rounded-full bg-gradient-to-l from-[#635BFF] to-[#b9b6ff]">
+                  <div className="group mr-5 mb-3 sm:mb-0 w-max px-5 py-1 flex items-center rounded-full bg-gradient-to-l from-[#635BFF] to-[#b9b6ff]">
                     <span className="font-medium mr-1">Getting started</span>
                     <svg
                       className="group-hover:ml-1 group-hover:rotate-45 transition-all"
@@ -123,29 +145,45 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
             {/* pictures  */}
             <div className="relative hidden sm:flex flex-col w-[40%]">
               <div className="message-item relative w-full h-max flex justify-end">
-                <div className="w-2/3">
-                  <div className="flex items-center justify-end mb-2 text-sm">
-                    <span className="mr-2">Mark</span>
-                    <img className="select-none" src={avatar1} alt="" />
-                  </div>
-                  <div className="bg-accent relative p-3 rounded-2xl rounded-tr-none">
-                    <div className="font-medium">
-                      What’s up! Let me take a look what happened at party
-                    </div>
-                    <div className="text-[12px] flex justify-end">6:30 PM</div>
-                    <svg
-                      className="absolute -bottom-4 -right-3 -z-10 scale-125"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="84"
-                      height="109"
-                      viewBox="0 0 84 109"
-                      fill="none"
-                    >
-                      <path
-                        d="M67.8446 0.542781C91.8594 5.31329 62.323 50.878 77.4584 70.1234C93.3681 90.3534 73.54 80.1463 52.3873 94.8068C43.8654 100.713 37.13 109.175 29.8003 107.917C24.7603 107.052 20.9868 102.791 16.9492 99.6534C-13.9586 75.6317 5.06787 52.1456 23.3505 33.9183C36.0496 21.2576 51.6885 -2.66663 67.8446 0.542781Z"
-                        fill="#15171C"
+                <div className="w-2/3 message-wrapper">
+                  <div className="message-animation message-left">
+                    <div className="flex items-center justify-end mb-2 text-sm">
+                      <span className="mr-2 ml-auto !w-max">
+                        <TypingAnimation
+                          speed={550}
+                          originalText={message1.name}
+                        />
+                      </span>
+                      <img
+                        className="select-none"
+                        src={message1.avatar}
+                        alt=""
                       />
-                    </svg>
+                    </div>
+                    <div className="  bg-accent relative p-3 rounded-2xl rounded-tr-none">
+                      <div className="font-medium min-h-[48px]">
+                        <TypingAnimation originalText={message1.text} />
+                      </div>
+                      <div className="text-[12px] h-4 flex justify-end ml-auto">
+                        <TypingAnimation
+                          speed={550}
+                          originalText={time1 ? moment(time1).format("LT") : ""}
+                        />
+                      </div>
+                      <svg
+                        className="absolute -bottom-4 -right-3 -z-10 scale-125"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="84"
+                        height="109"
+                        viewBox="0 0 84 109"
+                        fill="none"
+                      >
+                        <path
+                          d="M67.8446 0.542781C91.8594 5.31329 62.323 50.878 77.4584 70.1234C93.3681 90.3534 73.54 80.1463 52.3873 94.8068C43.8654 100.713 37.13 109.175 29.8003 107.917C24.7603 107.052 20.9868 102.791 16.9492 99.6534C-13.9586 75.6317 5.06787 52.1456 23.3505 33.9183C36.0496 21.2576 51.6885 -2.66663 67.8446 0.542781Z"
+                          fill="#15171C"
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </div>
                 <img
@@ -156,30 +194,49 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
               </div>
               {/* second message  */}
               <div className="message-item mt-10 relative w-full h-max flex">
-                <div className="w-2/3">
-                  <div className="flex items-center mb-2 text-sm">
-                    <img className="select-none" src={avatar2} alt="" />
-                    <span className="ml-2">Alex</span>
-                  </div>
-                  <div className="bg-darkBlueGray relative p-3 rounded-2xl rounded-tl-none">
-                    <div className="font-medium">
-                      Hi! A party was awesome. Sent a couple of pictures from
-                      it.
-                    </div>
-                    <div className="text-[12px] flex justify-end">8:00 AM</div>
-                    <svg
-                      className="absolute -bottom-5 -left-4 -z-10 scale-125"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="115"
-                      height="84"
-                      viewBox="0 0 115 84"
-                      fill="none"
-                    >
-                      <path
-                        d="M114.015 48.1097C115.659 72.5384 63.977 55.8797 49.3344 75.5027C33.9428 96.1294 38.6371 74.328 18.9763 57.7202C11.0555 51.0294 1.13227 46.7286 0.439243 39.324C-0.037281 34.2326 3.09394 29.4802 5.07291 24.765C20.2219 -11.3298 47.8507 0.927899 70.2085 13.8362C85.7381 22.8022 112.908 31.675 114.015 48.1097Z"
-                        fill="#635BFF"
+                <div className="w-2/3 message-wrapper">
+                  <div className="message-animation">
+                    <div className="flex items-center mb-2 text-sm ">
+                      <img
+                        className="select-none"
+                        src={message2.avatar}
+                        alt=""
                       />
-                    </svg>
+                      <span className="ml-2">
+                        <TypingAnimation
+                          speed={550}
+                          originalText={message2.name}
+                        />
+                      </span>
+                    </div>
+                    <div className="message-animation">
+                      <div className=" bg-darkBlueGray relative p-3 rounded-2xl rounded-tl-none">
+                        <svg
+                          className="absolute -bottom-5 -left-4 -z-50 scale-125"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="115"
+                          height="84"
+                          viewBox="0 0 115 84"
+                          fill="none"
+                        >
+                          <path
+                            d="M114.015 48.1097C115.659 72.5384 63.977 55.8797 49.3344 75.5027C33.9428 96.1294 38.6371 74.328 18.9763 57.7202C11.0555 51.0294 1.13227 46.7286 0.439243 39.324C-0.037281 34.2326 3.09394 29.4802 5.07291 24.765C20.2219 -11.3298 47.8507 0.927899 70.2085 13.8362C85.7381 22.8022 112.908 31.675 114.015 48.1097Z"
+                            fill="#635BFF"
+                          />
+                        </svg>
+                        <div className="font-medium min-h-[48px]">
+                          <TypingAnimation originalText={message2.text} />
+                        </div>
+                        <div className="text-[12px] mt-2 flex h-4">
+                          <TypingAnimation
+                            speed={550}
+                            originalText={
+                              time2 ? moment(time2).format("LT") : ""
+                            }
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <img
@@ -216,7 +273,7 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
           </div>
         </Container>
         <svg
-          className="absolute top-1/2 left-0 -z-50"
+          className="hidden sm:block absolute top-1/2 left-0 -z-50"
           xmlns="http://www.w3.org/2000/svg"
           width="74"
           height="241"
@@ -229,7 +286,7 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
           />
         </svg>
         <svg
-          className="absolute top-1/4 right-0 -z-50"
+          className="hidden sm:block absolute top-1/4 right-0 -z-50"
           xmlns="http://www.w3.org/2000/svg"
           width="93"
           height="244"

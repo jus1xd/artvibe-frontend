@@ -248,3 +248,58 @@ body:has(.messenger) {
     transform: rotate(360deg);
   }
 }
+
+/* typing animation  */
+
+.message-left {
+  margin-left: auto;
+  transform: rotateX(-5deg) rotateY(-10deg) !important;
+}
+
+.message-wrapper {
+  perspective: 800px;
+  transform-style: preserve-3d;
+  perspective-origin: 300px;
+}
+
+.message-animation {
+  /* perspective-origin: 30px; */
+  /* -webkit-transform: rotate3d(1, 0.5, 1, -30deg); */
+  /* -ms-transform: rotate3d(1, 0.5, 1, -30deg); */
+  transform: rotateX(-5deg) rotateY(10deg);
+  /* overflow: hidden; */
+  visibility: hidden;
+  animation: blockOpen 2.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  /* animation-delay: 1.5s; */
+}
+
+@keyframes blockOpen {
+  from {
+    visibility: visible;
+    width: 15%;
+  }
+  to {
+    visibility: visible;
+    width: 100%;
+  }
+}
+
+.time-animation {
+  width: max-content;
+  height: 16px;
+  overflow: hidden;
+  visibility: hidden;
+  animation: timeOpen 5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  animation-delay: 5s;
+}
+
+@keyframes timeOpen {
+  from {
+    visibility: visible;
+    width: 0%;
+  }
+  to {
+    visibility: visible;
+    width: 100%;
+  }
+}
