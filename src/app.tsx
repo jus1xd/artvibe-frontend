@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Route, Routes, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import Start from "./pages/start";
 import Messenger from "./pages/messenger";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -31,8 +31,8 @@ import { socket } from "./hooks/socket";
 import Header from "./components/Header";
 
 const App: React.FC = () => {
-  const [theme, setTheme] = React.useState<string>("dark");
-  const [onlineUsers, setOnlineUsers] = React.useState<number>(0);
+  const [theme, setTheme] = useState<string>("dark");
+  const [onlineUsers, setOnlineUsers] = useState<number>(0);
 
   // онлайн статусы пользователей WebSocket
   socket.on("onlineUsers", (usersCount: number) => {

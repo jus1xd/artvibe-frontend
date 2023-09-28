@@ -150,7 +150,7 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
                     <div className="flex items-center justify-end mb-2 text-sm">
                       <span className="mr-2 ml-auto !w-max">
                         <TypingAnimation
-                          speed={550}
+                          speed={250}
                           originalText={message1.name}
                         />
                       </span>
@@ -166,7 +166,7 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
                       </div>
                       <div className="text-[12px] h-4 flex justify-end ml-auto">
                         <TypingAnimation
-                          speed={550}
+                          speed={250}
                           originalText={time1 ? moment(time1).format("LT") : ""}
                         />
                       </div>
@@ -204,7 +204,7 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
                       />
                       <span className="ml-2">
                         <TypingAnimation
-                          speed={550}
+                          speed={250}
                           originalText={message2.name}
                         />
                       </span>
@@ -229,7 +229,7 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
                         </div>
                         <div className="text-[12px] mt-2 flex h-4">
                           <TypingAnimation
-                            speed={550}
+                            speed={250}
                             originalText={
                               time2 ? moment(time2).format("LT") : ""
                             }
