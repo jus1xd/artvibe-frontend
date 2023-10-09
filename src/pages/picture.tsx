@@ -35,7 +35,6 @@ const Picture: React.FC<TProps> = ({ setTheme }) => {
                 <div className="flex flex-col items-center h-max pb-10">
                   <img
                     className="w-[80%] h-[80%] object-cover"
-                    // @ts-ignore
                     src={`${baseUrl}/${picture?.image}`}
                     alt="pic"
                   />
@@ -50,21 +49,18 @@ const Picture: React.FC<TProps> = ({ setTheme }) => {
               <div className="flex ">
                 <div className="flex flex-col h-max pb-10 ">
                   <h1 className="text-xl text-title font-bold">
-                    {/* @ts-ignore */}
                     {picture?.title}
                   </h1>
                   <div className="flex mt-2">
                     <div className="text-link w-max opacity-80">
-                      {/* @ts-ignore */}
                       {picture?.author}
                     </div>
                     <div className="ml-1 text-link w-max opacity-80">
-                      {/* @ts-ignore */}- {picture?.year} год
+                      {picture?.year} год
                     </div>
                   </div>
 
                   <h5 className="mt-2 text-link w-max opacity-80">
-                    {/* @ts-ignore */}
                     {picture?.description}
                   </h5>
                 </div>

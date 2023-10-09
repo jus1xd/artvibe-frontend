@@ -18,7 +18,6 @@ import Timeline from "./pages/timeline";
 import Colors from "./pages/colors";
 import Login from "./pages/login";
 import Register from "./pages/register";
-import Admin from "./pages/admin";
 import AdminAuthors from "./pages/admin/adminAuthors";
 import AdminPictures from "./pages/admin/adminPictures";
 import AdminCountries from "./pages/admin/adminCountries";

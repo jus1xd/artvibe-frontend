@@ -39,10 +39,8 @@ const Artist: React.FC<TProps> = ({ setTheme }) => {
             </span>
           </h2>
           <div className="flex flex-wrap">
-            {
-              // @ts-ignore
+            { picturesOfAuthor &&
               picturesOfAuthor?.length > 0 ? (
-                // @ts-ignore
                 picturesOfAuthor?.map((item, index) => {
                   return (
                     <Card

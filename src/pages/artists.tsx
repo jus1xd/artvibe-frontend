@@ -81,11 +81,9 @@ const Artists: React.FC<TProps> = ({ setTheme }) => {
                 return (
                   <Card
                     size="sm"
-                    // @ts-ignore
                     img={item.image}
                     title={item.fullname}
                     link={`/artist/${item._id}`}
-                    // @ts-ignore
                     subtitle={`${
                       dataPictures?.data?.filter(
                         (el) => el.author === item.fullname

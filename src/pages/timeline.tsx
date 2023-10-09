@@ -43,10 +43,9 @@ const Timeline: React.FC<TProps> = ({ setTheme }) => {
             </h2>
           </div>
           <div className="flex justify-between flex-wrap">
-            {
-              // @ts-ignore
+            { data &&
               data?.length > 0
-                ? currentFilter
+                && currentFilter
                   ? reverseEz(data)?.map((item, index) => {
                       return (
                         <Card
@@ -71,7 +70,6 @@ const Timeline: React.FC<TProps> = ({ setTheme }) => {
                         />
                       );
                     })
-                : null
             }
           </div>
         </Container>

@@ -7,8 +7,7 @@ export type TUsers = {
 };
 
 const initialState: TUsers = {
-  // @ts-ignore
-  token: localStorage.getItem("token") | "",
+  token: localStorage.getItem("token") || "",
   isLoading: false,
   error: "",
 };

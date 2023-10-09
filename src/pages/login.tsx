@@ -25,7 +25,6 @@ const Login: React.FC<TProps> = ({ setTheme }) => {
   const { login } = useActions();
 
   const loginHandler = () => {
-    // @ts-ignore
     loginUser({
       email,
       password,

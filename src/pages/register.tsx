@@ -36,7 +36,6 @@ const Register: React.FC<TProps> = ({ setTheme }) => {
     userData.append("role", "user");
     userData.append("password", password);
     createUser(userData).unwrap();
-    // navigate("/show");
   };
 
   useEffect(() => {

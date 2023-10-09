@@ -4,5 +4,5 @@ export interface IAuthor {
   birthdate: string;
   deathdate: string;
   country: string;
-  image: File | null;
+  image: string;
 }

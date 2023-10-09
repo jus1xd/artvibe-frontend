@@ -38,14 +38,16 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
   ];
 
   let message1 = {
-    text: "What’s up! Let me take a look what happened at party",
+    // text: "What’s up! Let me take a look what happened at party",
+    text: "Приветик! Расскажи что произошло вчера не вечеринке.",
     time: "6:30 PM",
     name: "Mark",
     avatar: avatar1,
   };
 
   let message2 = {
-    text: "Hi! A party was awesome. Sent a couple of pictures from it.",
+    // text: "Hi! A party was awesome. Sent a couple of pictures from it.",
+    text: "Привет! Вчерашняя вечеринка была классной. Пришли мне пару фоток.",
     time: "8:00 AM",
     name: "Alex",
     avatar: avatar2,
@@ -86,15 +88,17 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
                 <div className="absolute -top-5 -left-[30%] -z-10 w-[380px] h-[380px] bg-accent rounded-full blur-[75px] opacity-20"></div>
               </div>
               <div className="relative">
-                <h1 className="text-center sm:text-left start-title w-[90%] pb-1 bg-gradient-to-l from-[#635BFF] to-[#CAC8FF] text-[46px] sm:text-[64px] leading-[1.02] font-bold">
-                  Meet the next generation social network
+                <h1 className="text-center sm:text-left start-title w-[100%] pb-1 bg-gradient-to-l from-[#635BFF] to-[#CAC8FF] text-[46px] sm:text-[64px] leading-[1.02] font-bold">
+                  {/* Meet the next generation social network */}
+                  Встречайте социальную сеть нового поколения
                 </h1>
                 <div className="absolute -top-5 -right-5 -z-10 w-[220px] h-[220px] bg-accent rounded-full blur-[75px] opacity-20"></div>
               </div>
               <p className="my-6 opacity-80 text-lg">
-                Whether you're a painter, musician, writer, or any other kind of
+                {/* Whether you're a painter, musician, writer, or any other kind of
                 creative soul, you'll find a home here. Our platform is designed
-                to foster genuine connections and support your artistic journey.
+                to foster genuine connections and support your artistic journey. */}
+                Кем бы вы не были: художником, музыкантом, писателем или любым другим творческим деятелем, вы найдете что-то интересное для себя на нашей платформе
               </p>
               <div className="flex my-2 flex-wrap select-none">
                 <div className="start-tag mr-2">
@@ -113,7 +117,7 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
               <div className="mt-16 w-max mx-auto sm:mx-0 flex flex-col sm:flex-row">
                 <NavLink className="relative z-20" to={"/login"}>
                   <div className="group mr-5 mb-3 sm:mb-0 w-max px-5 py-1 flex items-center rounded-full bg-gradient-to-l from-[#635BFF] to-[#b9b6ff]">
-                    <span className="font-medium mr-1">Getting started</span>
+                    <span className="font-medium mr-1">Начать</span>
                     <svg
                       className="group-hover:ml-1 group-hover:rotate-45 transition-all"
                       xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +141,7 @@ const Start: React.FC<TProps> = ({ setTheme }) => {
                 </NavLink>
                 <NavLink className="relative z-20" to={"/show"}>
                   <div className="w-max px-5 py-[2px] flex items-center rounded-full border-2 border-[#ffffff00] hover:border-white transition-colors">
-                    <span className="font-medium">Look at museum</span>
+                    <span className="font-medium">Заглянуть в музей</span>
                   </div>
                 </NavLink>
               </div>

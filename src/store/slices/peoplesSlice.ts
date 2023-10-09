@@ -34,7 +34,6 @@ const peoplesSlice = createSlice({
     },
     deletePeople: (state, action) => {
       if (state.peoples) {
-        // @ts-ignore
         state.peoples = state.peoples.filter(
           (friend) => friend._id !== action.payload._id
         );

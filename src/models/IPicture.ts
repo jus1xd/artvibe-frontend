@@ -5,4 +5,5 @@ export interface IPicture {
   year: number;
   author: string;
   image: string;
+  description: string;
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../artvibe-backend/.idea/artvibe-backend.iml" filepath="$PROJECT_DIR$/../../artvibe-backend/.idea/artvibe-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/artvibe-frontend.iml" filepath="$PROJECT_DIR$/.idea/artvibe-frontend.iml" />
+    </modules>
+  </component>
+</project>
